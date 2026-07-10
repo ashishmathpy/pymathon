@@ -6,15 +6,15 @@
       version="2.0">
 <channel>
 <title>Pymathon</title>
-<link>https://your-website-url.example.com/</link>
-<atom:link href="https://your-website-url.example.com/index.xml" rel="self" type="application/rss+xml"/>
+<link>https://ashishmathpy.github.io/pymathon/</link>
+<atom:link href="https://ashishmathpy.github.io/pymathon/index.xml" rel="self" type="application/rss+xml"/>
 <description>Mathematics, JEE problem solving, and Python by Ashish K. Srivastava</description>
 <generator>quarto-1.9.38</generator>
 <lastBuildDate>Thu, 09 Jul 2026 18:30:00 GMT</lastBuildDate>
 <item>
   <title>Four Ways to Count Positive Integer Solutions</title>
   <dc:creator>Ashish K. Srivastava</dc:creator>
-  <link>https://your-website-url.example.com/posts/positive-integer-solutions/</link>
+  <link>https://ashishmathpy.github.io/pymathon/posts/positive-integer-solutions/</link>
   <description><![CDATA[ 
 
 
@@ -302,7 +302,7 @@ Total number of solutions: 12</code></pre>
   <category>Combinatorics</category>
   <category>Python</category>
   <category>Problem Solving</category>
-  <guid>https://your-website-url.example.com/posts/positive-integer-solutions/</guid>
+  <guid>https://ashishmathpy.github.io/pymathon/posts/positive-integer-solutions/</guid>
   <pubDate>Thu, 09 Jul 2026 18:30:00 GMT</pubDate>
 </item>
 </channel>

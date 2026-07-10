@@ -5,7 +5,7 @@ project:
 website:
   title: "Pymathon"
   description: "Mathematics, JEE problem solving, and Python by Ashish K. Srivastava"
-  site-url: https://your-website-url.example.com # you must change this appropriately for RSS feeds to work properly
+  site-url: https://ashishmathpy.github.io/pymathon/
   search: true
   navbar:
     left:
@@ -18,4 +18,3 @@ format:
     theme: cosmo
     toc: true
     css: styles.css
-
