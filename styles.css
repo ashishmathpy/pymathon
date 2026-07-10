@@ -1,0 +1,180 @@
+/* Restrained, readable styling for Pymathon. */
+:root {
+  --pymathon-ink: #233044;
+  --pymathon-muted: #5d6878;
+  --pymathon-accent: #245b8a;
+  --pymathon-border: #dfe5eb;
+  --pymathon-soft: #f5f8fb;
+}
+
+body {
+  color: var(--pymathon-ink);
+  font-size: 1.05rem;
+  line-height: 1.72;
+}
+
+main.content {
+  max-width: 920px;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  margin-top: 2.25rem;
+}
+
+p,
+li {
+  max-width: 76ch;
+}
+
+.pymathon-cta {
+  margin: 0.4rem 0 1.25rem;
+  padding: 0.65rem 1rem;
+  background-color: var(--pymathon-accent);
+  border-color: var(--pymathon-accent);
+}
+
+.pymathon-home-hero {
+  position: relative;
+  margin: 0.5rem 0 2.5rem;
+  padding: clamp(1.75rem, 5vw, 3.5rem);
+  overflow: hidden;
+  color: #f8fbff;
+  background:
+    radial-gradient(circle at 88% 15%, rgb(85 180 184 / 32%), transparent 30%),
+    radial-gradient(circle at 12% 95%, rgb(219 170 84 / 25%), transparent 32%),
+    linear-gradient(135deg, #102b47, #1d4d72);
+  border-radius: 0.9rem;
+  box-shadow: 0 14px 32px rgb(25 54 82 / 18%);
+}
+
+.pymathon-home-hero::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background-image: linear-gradient(rgb(255 255 255 / 6%) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 6%) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to right, black, transparent 80%);
+}
+
+.pymathon-home-hero > * {
+  position: relative;
+  z-index: 1;
+  max-width: 68ch;
+}
+
+.pymathon-home-hero h1 {
+  margin: 0.45rem 0 1rem;
+  color: #fff;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+}
+
+.pymathon-home-hero p {
+  color: #e6eff7;
+}
+
+.pymathon-home-kicker {
+  color: #f3c56b;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.pymathon-home-hero .pymathon-cta {
+  margin-bottom: 0;
+  color: #173c5e;
+  background: #f3c56b;
+  border-color: #f3c56b;
+}
+
+.pymathon-home-hero .pymathon-cta:hover,
+.pymathon-home-hero .pymathon-cta:focus {
+  color: #102b47;
+  background: #ffe0a0;
+  border-color: #ffe0a0;
+}
+
+.about-hero {
+  display: grid;
+  grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);
+  gap: 2.25rem;
+  align-items: center;
+  margin: 1rem 0 2.5rem;
+  padding: 1.5rem;
+  background: var(--pymathon-soft);
+  border: 1px solid var(--pymathon-border);
+  border-radius: 0.75rem;
+}
+
+.about-intro h2 {
+  margin-top: 0;
+}
+
+.about-intro p:last-child {
+  margin-bottom: 0;
+}
+
+.about-portrait {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 8px 24px rgb(26 39 55 / 14%);
+}
+
+pre,
+.sourceCode {
+  max-width: 100%;
+  overflow-x: auto;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  border-radius: 0.4rem;
+}
+
+.math.display,
+.MathJax_Display,
+div[id^="MathJax-Element-"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .about-hero {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1rem;
+  }
+
+  .about-portrait {
+    max-width: 210px;
+  }
+
+  .about-intro {
+    text-align: left;
+  }
+}

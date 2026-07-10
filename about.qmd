@@ -1,0 +1,57 @@
+---
+title: "About"
+author: "Ashish K. Srivastava"
+toc: true
+page-layout: article
+---
+
+::: {.about-hero}
+::: {.about-photo}
+![](pymathon-mathematics-python.png){.about-portrait}
+:::
+
+::: {.about-intro}
+## Ashish K. Srivastava
+
+I am a mathematics teacher specialising in **JEE Mathematics**, with several years of experience teaching students for competitive examinations.
+
+Through Pymathon, I combine classical mathematical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain mathematics clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving.
+:::
+:::
+
+## Main Interests
+
+- JEE Mathematics
+- Algebra
+- Calculus
+- Coordinate Geometry
+- Combinatorics
+- Number Theory
+- Python for Mathematics
+- Mathematical Visualisation
+- Manim animations
+
+## Why I Created Pymathon
+
+I created Pymathon as a place where mathematics and Python can strengthen one another. Here, I want to:
+
+- connect mathematics with Python;
+- present multiple approaches to a problem;
+- verify results computationally;
+- produce clear visual explanations; and
+- help students and teachers explore mathematics more deeply.
+
+The goal is not merely to arrive at an answer. It is to understand why the answer is correct, see how different ideas are connected, and use computation to investigate those ideas further.
+
+## My Teaching Philosophy
+
+I believe that **understanding must come before memorisation**. A formula becomes truly useful only when a student understands where it comes from and when it applies.
+
+Traditional step-by-step reasoning remains central to my teaching. I encourage students to write complete arguments, examine more than one solution method, and develop a visual understanding wherever possible. Algebraic, geometric, combinatorial, and computational viewpoints can often illuminate different parts of the same problem.
+
+I use computation responsibly: Python can test examples, reveal patterns, verify calculations, and create illuminating visualisations, but it should support mathematical proof rather than replace it.
+
+## Connect
+
+- **GitHub:** [https://github.com/ashishmathpy](https://github.com/ashishmathpy)
+- **Email:** [aks.math.py@gmail.com](mailto:aks.math.py@gmail.com)

@@ -1,0 +1,29 @@
+---
+title: "Pymathon"
+listing:
+  contents: posts
+  feed: true
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+---
+
+::: {.pymathon-home-hero}
+::: {.pymathon-home-kicker}
+MATHEMATICS · PYTHON · VISUAL THINKING
+:::
+
+# Welcome to Pymathon
+
+I am **Ashish K. Srivastava**, a mathematics teacher specialising in JEE Mathematics. Pymathon is a place where classical mathematics meets modern computation.
+
+Here I explore mathematical problems through rigorous reasoning, multiple methods, Python verification, and visualisation. Pymathon is designed for students, teachers, and anyone who wants to understand mathematics more deeply.
+
+[About Ashish K. Srivastava](about.qmd){.btn .btn-primary .pymathon-cta}
+:::
+
+## Latest Articles

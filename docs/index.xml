@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Pymathon</title>
+<link>https://your-website-url.example.com/</link>
+<atom:link href="https://your-website-url.example.com/index.xml" rel="self" type="application/rss+xml"/>
+<description>Mathematics, JEE problem solving, and Python by Ashish K. Srivastava</description>
+<generator>quarto-1.9.38</generator>
+<lastBuildDate>Thu, 09 Jul 2026 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>Four Ways to Count Positive Integer Solutions</title>
+  <dc:creator>Ashish K. Srivastava</dc:creator>
+  <link>https://your-website-url.example.com/posts/positive-integer-solutions/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word <strong>positive</strong> matters: each variable must be at least <img src="https://latex.codecogs.com/png.latex?1">, not merely non-negative.</p>
+<p>We will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.</p>
+</section>
+<section id="problem" class="level2">
+<h2 class="anchored" data-anchor-id="problem">Problem</h2>
+<p>Find the number of positive integer solutions of</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax+2y+3z=15,%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?x,y,z%5Cin%5Cmathbb%20Z%5E+">. The answer will be</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B12%7D.%0A"></p>
+</section>
+<section id="method-1-fix-one-variable-and-count" class="level2">
+<h2 class="anchored" data-anchor-id="method-1-fix-one-variable-and-count">Method 1: Fix One Variable and Count</h2>
+<p>Solving for <img src="https://latex.codecogs.com/png.latex?x"> gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax=15-2y-3z.%0A"></p>
+<p>Since <img src="https://latex.codecogs.com/png.latex?x%5Cgeq1">, we have <img src="https://latex.codecogs.com/png.latex?2y+3z%5Cleq14">. Because <img src="https://latex.codecogs.com/png.latex?y%5Cgeq1">, this gives <img src="https://latex.codecogs.com/png.latex?2+3z%5Cleq14">, so <img src="https://latex.codecogs.com/png.latex?z%5Cleq4">. Thus <img src="https://latex.codecogs.com/png.latex?z=1,2,3,4">.</p>
+<p>For each fixed <img src="https://latex.codecogs.com/png.latex?z">, count the positive values of <img src="https://latex.codecogs.com/png.latex?y"> for which <img src="https://latex.codecogs.com/png.latex?x=15-2y-3z"> stays positive.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Value of <img src="https://latex.codecogs.com/png.latex?z"></th>
+<th>Equation for <img src="https://latex.codecogs.com/png.latex?x"> and <img src="https://latex.codecogs.com/png.latex?y"></th>
+<th>Allowed values of <img src="https://latex.codecogs.com/png.latex?y"></th>
+<th style="text-align: right;">Number of solutions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1"></td>
+<td><img src="https://latex.codecogs.com/png.latex?x+2y=12"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1,2,3,4,5"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?5"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?2"></td>
+<td><img src="https://latex.codecogs.com/png.latex?x+2y=9"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1,2,3,4"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?4"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3"></td>
+<td><img src="https://latex.codecogs.com/png.latex?x+2y=6"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1,2"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?2"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?4"></td>
+<td><img src="https://latex.codecogs.com/png.latex?x+2y=3"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1"></td>
+</tr>
+</tbody>
+</table>
+<p>Therefore,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A5+4+2+1=%5Cboxed%7B12%7D.%0A"></p>
+</section>
+<section id="method-2-convert-positive-integers-to-non-negative-integers" class="level2">
+<h2 class="anchored" data-anchor-id="method-2-convert-positive-integers-to-non-negative-integers">Method 2: Convert Positive Integers to Non-negative Integers</h2>
+<p>Write</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax=a+1,%5Cqquad%20y=b+1,%5Cqquad%20z=c+1,%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?a,b,c%5Cgeq0">. Substitution gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A(a+1)+2(b+1)+3(c+1)=15,%0A"></p>
+<p>and hence</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa+2b+3c=9.%0A"></p>
+<p>For fixed <img src="https://latex.codecogs.com/png.latex?c">, this becomes <img src="https://latex.codecogs.com/png.latex?a+2b=9-3c">. An equation <img src="https://latex.codecogs.com/png.latex?a+2b=N">, with <img src="https://latex.codecogs.com/png.latex?a,b%5Cgeq0">, has <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clfloor%20N/2%5Cright%5Crfloor+1"> solutions because <img src="https://latex.codecogs.com/png.latex?b"> ranges from <img src="https://latex.codecogs.com/png.latex?0"> to <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clfloor%20N/2%5Cright%5Crfloor">.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?c"></th>
+<th>Equation</th>
+<th style="text-align: right;">Number of solutions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td><img src="https://latex.codecogs.com/png.latex?a+2b=9"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clfloor9/2%5Cright%5Crfloor+1=5"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1"></td>
+<td><img src="https://latex.codecogs.com/png.latex?a+2b=6"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clfloor6/2%5Cright%5Crfloor+1=4"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?2"></td>
+<td><img src="https://latex.codecogs.com/png.latex?a+2b=3"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?%5Cleft%5Clfloor3/2%5Cright%5Crfloor+1=2"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3"></td>
+<td><img src="https://latex.codecogs.com/png.latex?a+2b=0"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1"></td>
+</tr>
+</tbody>
+</table>
+<p>Again,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A5+4+2+1=%5Cboxed%7B12%7D.%0A"></p>
+</section>
+<section id="method-3-direct-floor-function-formula" class="level2">
+<h2 class="anchored" data-anchor-id="method-3-direct-floor-function-formula">Method 3: Direct Floor-Function Formula</h2>
+<p>For fixed positive integer <img src="https://latex.codecogs.com/png.latex?z">, positivity of <img src="https://latex.codecogs.com/png.latex?x"> implies</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A15-2y-3z%5Cgeq1,%0A"></p>
+<p>so</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ay%5Cleq%5Cfrac%7B14-3z%7D%7B2%7D.%0A"></p>
+<p>The number of positive integer values of <img src="https://latex.codecogs.com/png.latex?y"> is therefore</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cleft%5Clfloor%5Cfrac%7B14-3z%7D%7B2%7D%5Cright%5Crfloor.%0A"></p>
+<p>Since <img src="https://latex.codecogs.com/png.latex?z=1,2,3,4">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AN=%5Csum_%7Bz=1%7D%5E%7B4%7D%5Cleft%5Clfloor%5Cfrac%7B14-3z%7D%7B2%7D%5Cright%5Crfloor.%0A"></p>
+<p>Evaluating the sum,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AN=%0A%5Cleft%5Clfloor%5Cfrac%7B11%7D%7B2%7D%5Cright%5Crfloor+%0A%5Cleft%5Clfloor%5Cfrac%7B8%7D%7B2%7D%5Cright%5Crfloor+%0A%5Cleft%5Clfloor%5Cfrac%7B5%7D%7B2%7D%5Cright%5Crfloor+%0A%5Cleft%5Clfloor%5Cfrac%7B2%7D%7B2%7D%5Cright%5Crfloor%0A=5+4+2+1=%5Cboxed%7B12%7D.%0A"></p>
+</section>
+<section id="method-4-generating-functions" class="level2">
+<h2 class="anchored" data-anchor-id="method-4-generating-functions">Method 4: Generating Functions</h2>
+<p>The positive values of <img src="https://latex.codecogs.com/png.latex?x">, <img src="https://latex.codecogs.com/png.latex?2y">, and <img src="https://latex.codecogs.com/png.latex?3z"> are encoded respectively by</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7Bt%7D%7B1-t%7D,%5Cqquad%0A%5Cfrac%7Bt%5E2%7D%7B1-t%5E2%7D,%5Cqquad%0A%5Cfrac%7Bt%5E3%7D%7B1-t%5E3%7D.%0A"></p>
+<p>Their product is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AG(t)=%0A%5Cleft(%5Cfrac%7Bt%7D%7B1-t%7D%5Cright)%0A%5Cleft(%5Cfrac%7Bt%5E2%7D%7B1-t%5E2%7D%5Cright)%0A%5Cleft(%5Cfrac%7Bt%5E3%7D%7B1-t%5E3%7D%5Cright)%0A=%5Cfrac%7Bt%5E6%7D%7B(1-t)(1-t%5E2)(1-t%5E3)%7D.%0A"></p>
+<p>Choosing <img src="https://latex.codecogs.com/png.latex?t%5Ex">, <img src="https://latex.codecogs.com/png.latex?t%5E%7B2y%7D">, and <img src="https://latex.codecogs.com/png.latex?t%5E%7B3z%7D"> from the three factors produces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0At%5Ex%5Ccdot%20t%5E%7B2y%7D%5Ccdot%20t%5E%7B3z%7D=t%5E%7Bx+2y+3z%7D.%0A"></p>
+<p>Thus every positive solution contributes exactly one <img src="https://latex.codecogs.com/png.latex?t%5E%7B15%7D"> term, so the answer is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Bt%5E%7B15%7D%5DG(t)%0A=%5Bt%5E9%5D%5Cfrac%7B1%7D%7B(1-t)(1-t%5E2)(1-t%5E3)%7D.%0A"></p>
+<p>That coefficient is <img src="https://latex.codecogs.com/png.latex?12">, in agreement with the direct counts.</p>
+</section>
+<section id="python-verification" class="level2">
+<h2 class="anchored" data-anchor-id="python-verification">Python Verification</h2>
+<p>The following program uses the equation to compute <img src="https://latex.codecogs.com/png.latex?x"> after choosing positive <img src="https://latex.codecogs.com/png.latex?y"> and <img src="https://latex.codecogs.com/png.latex?z">. It prints the triples in the same order as the hand-counting method.</p>
+<div id="1587e8c1" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">solutions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> z <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>):</span>
+<span id="cb1-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> y <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>):</span>
+<span id="cb1-5">        x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> z</span>
+<span id="cb1-6">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb1-7">            solution <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (x, y, z)</span>
+<span id="cb1-8">            solutions.append(solution)</span>
+<span id="cb1-9">            <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(solution)</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Total number of solutions:"</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(solutions))</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(10, 1, 1)
+(8, 2, 1)
+(6, 3, 1)
+(4, 4, 1)
+(2, 5, 1)
+(7, 1, 2)
+(5, 2, 2)
+(3, 3, 2)
+(1, 4, 2)
+(4, 1, 3)
+(2, 2, 3)
+(1, 1, 4)
+Total number of solutions: 12</code></pre>
+</div>
+</div>
+<p>The program confirms the count, but the earlier methods explain <em>why</em> the count is <img src="https://latex.codecogs.com/png.latex?12">.</p>
+</section>
+<section id="complete-list-of-solutions" class="level2">
+<h2 class="anchored" data-anchor-id="complete-list-of-solutions">Complete List of Solutions</h2>
+<p>The complete solution list is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Az=1:&amp;%5Cquad%20(10,1,1),%5C%20(8,2,1),%5C%20(6,3,1),%5C%20(4,4,1),%5C%20(2,5,1),%5C%5C%0Az=2:&amp;%5Cquad%20(7,1,2),%5C%20(5,2,2),%5C%20(3,3,2),%5C%20(1,4,2),%5C%5C%0Az=3:&amp;%5Cquad%20(4,1,3),%5C%20(2,2,3),%5C%5C%0Az=4:&amp;%5Cquad%20(1,1,4).%0A%5Cend%7Baligned%7D%0A"></p>
+<p>Every listed triple satisfies <img src="https://latex.codecogs.com/png.latex?x+2y+3z=15">, and the list contains <img src="https://latex.codecogs.com/png.latex?5+4+2+1=12"> triples.</p>
+</section>
+<section id="comparison-of-methods" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-of-methods">Comparison of Methods</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Main idea</th>
+<th>Best use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fix one variable</td>
+<td>Count directly after fixing <img src="https://latex.codecogs.com/png.latex?z"></td>
+<td>Small equations and hand calculations</td>
+</tr>
+<tr class="even">
+<td>Shift variables</td>
+<td>Replace positivity by non-negativity</td>
+<td>Connecting with standard combinatorics</td>
+</tr>
+<tr class="odd">
+<td>Floor formula</td>
+<td>Express each row count compactly</td>
+<td>General formulas</td>
+</tr>
+<tr class="even">
+<td>Generating functions</td>
+<td>Read a coefficient from a product of series</td>
+<td>Weighted counting problems</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The four methods illuminate the same result from different angles: direct counting is concrete, shifting variables connects the problem to non-negative solutions, floor functions compress the count, and generating functions give a powerful general framework. Python verifies the final list.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B12%5Ctext%7B%20positive%20integer%20solutions%7D%7D.%0A"></p>
+
+
+</section>
+
+ ]]></description>
+  <category>Mathematics</category>
+  <category>Combinatorics</category>
+  <category>Python</category>
+  <category>Problem Solving</category>
+  <guid>https://your-website-url.example.com/posts/positive-integer-solutions/</guid>
+  <pubDate>Thu, 09 Jul 2026 18:30:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

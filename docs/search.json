@@ -1,0 +1,156 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I am a mathematics teacher specialising in JEE Mathematics, with several years of experience teaching students for competitive examinations.\nThrough Pymathon, I combine classical mathematical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain mathematics clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
+  },
+  {
+    "objectID": "about.html#ashish-k.-srivastava",
+    "href": "about.html#ashish-k.-srivastava",
+    "title": "About",
+    "section": "",
+    "text": "I am a mathematics teacher specialising in JEE Mathematics, with several years of experience teaching students for competitive examinations.\nThrough Pymathon, I combine classical mathematical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain mathematics clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
+  },
+  {
+    "objectID": "about.html#main-interests",
+    "href": "about.html#main-interests",
+    "title": "About",
+    "section": "Main Interests",
+    "text": "Main Interests\n\nJEE Mathematics\nAlgebra\nCalculus\nCoordinate Geometry\nCombinatorics\nNumber Theory\nPython for Mathematics\nMathematical Visualisation\nManim animations"
+  },
+  {
+    "objectID": "about.html#why-i-created-pymathon",
+    "href": "about.html#why-i-created-pymathon",
+    "title": "About",
+    "section": "Why I Created Pymathon",
+    "text": "Why I Created Pymathon\nI created Pymathon as a place where mathematics and Python can strengthen one another. Here, I want to:\n\nconnect mathematics with Python;\npresent multiple approaches to a problem;\nverify results computationally;\nproduce clear visual explanations; and\nhelp students and teachers explore mathematics more deeply.\n\nThe goal is not merely to arrive at an answer. It is to understand why the answer is correct, see how different ideas are connected, and use computation to investigate those ideas further."
+  },
+  {
+    "objectID": "about.html#my-teaching-philosophy",
+    "href": "about.html#my-teaching-philosophy",
+    "title": "About",
+    "section": "My Teaching Philosophy",
+    "text": "My Teaching Philosophy\nI believe that understanding must come before memorisation. A formula becomes truly useful only when a student understands where it comes from and when it applies.\nTraditional step-by-step reasoning remains central to my teaching. I encourage students to write complete arguments, examine more than one solution method, and develop a visual understanding wherever possible. Algebraic, geometric, combinatorial, and computational viewpoints can often illuminate different parts of the same problem.\nI use computation responsibly: Python can test examples, reveal patterns, verify calculations, and create illuminating visualisations, but it should support mathematical proof rather than replace it."
+  },
+  {
+    "objectID": "about.html#connect",
+    "href": "about.html#connect",
+    "title": "About",
+    "section": "Connect",
+    "text": "Connect\n\nGitHub: https://github.com/ashishmathpy\nEmail: aks.math.py@gmail.com"
+  },
+  {
+    "objectID": "source-notebooks/positive-integer-solutions.html",
+    "href": "source-notebooks/positive-integer-solutions.html",
+    "title": "Positive Integer Solutions of a Linear Equation",
+    "section": "",
+    "text": "Find the number of positive integer solutions of\n\\[\nx+2y+3z=15,\n\\]\nwhere\n\\[\nx,y,z\\in\\mathbb{Z}^{+}.\n\\]"
+  },
+  {
+    "objectID": "source-notebooks/positive-integer-solutions.html#problem",
+    "href": "source-notebooks/positive-integer-solutions.html#problem",
+    "title": "Positive Integer Solutions of a Linear Equation",
+    "section": "",
+    "text": "Find the number of positive integer solutions of\n\\[\nx+2y+3z=15,\n\\]\nwhere\n\\[\nx,y,z\\in\\mathbb{Z}^{+}.\n\\]"
+  },
+  {
+    "objectID": "source-notebooks/positive-integer-solutions.html#counting-the-non-negative-integer-solutions",
+    "href": "source-notebooks/positive-integer-solutions.html#counting-the-non-negative-integer-solutions",
+    "title": "Positive Integer Solutions of a Linear Equation",
+    "section": "Counting the Non-negative Integer Solutions",
+    "text": "Counting the Non-negative Integer Solutions\nFor every fixed value of \\(c\\),\n\\[\na+2b=9-3c.\n\\]\nSince \\(a,b,c\\geq 0\\), the possible values of \\(c\\) are\n\\[\nc=0,1,2,3.\n\\]\nFor an equation of the form\n\\[\na+2b=N,\n\\]\nwe have\n\\[\na=N-2b.\n\\]\nTherefore, \\(b\\) may take the values\n\\[\n0,1,2,\\ldots,\\left\\lfloor\\frac{N}{2}\\right\\rfloor.\n\\]\nHence, the number of non-negative integer solutions is\n\\[\n\\left\\lfloor\\frac{N}{2}\\right\\rfloor+1.\n\\]\nNow consider each value of \\(c\\).\n\nWhen \\(c=0\\)\n\\[\na+2b=9.\n\\]\nNumber of solutions:\n\\[\n\\left\\lfloor\\frac{9}{2}\\right\\rfloor+1=5.\n\\]\n\n\nWhen \\(c=1\\)\n\\[\na+2b=6.\n\\]\nNumber of solutions:\n\\[\n\\left\\lfloor\\frac{6}{2}\\right\\rfloor+1=4.\n\\]\n\n\nWhen \\(c=2\\)\n\\[\na+2b=3.\n\\]\nNumber of solutions:\n\\[\n\\left\\lfloor\\frac{3}{2}\\right\\rfloor+1=2.\n\\]\n\n\nWhen \\(c=3\\)\n\\[\na+2b=0.\n\\]\nNumber of solutions:\n\\[\n1.\n\\]\nTherefore,\n\\[\n5+4+2+1=12.\n\\]\nHence,\n\\[\n\\boxed{12}\n\\]"
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html",
+    "href": "posts/positive-integer-solutions/index.html",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "",
+    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification."
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#introduction",
+    "href": "posts/positive-integer-solutions/index.html#introduction",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "",
+    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification."
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#problem",
+    "href": "posts/positive-integer-solutions/index.html#problem",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Problem",
+    "text": "Problem\nFind the number of positive integer solutions of\n\\[\nx+2y+3z=15,\n\\]\nwhere \\(x,y,z\\in\\mathbb Z^+\\). The answer will be\n\\[\n\\boxed{12}.\n\\]"
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#method-1-fix-one-variable-and-count",
+    "href": "posts/positive-integer-solutions/index.html#method-1-fix-one-variable-and-count",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Method 1: Fix One Variable and Count",
+    "text": "Method 1: Fix One Variable and Count\nSolving for \\(x\\) gives\n\\[\nx=15-2y-3z.\n\\]\nSince \\(x\\geq1\\), we have \\(2y+3z\\leq14\\). Because \\(y\\geq1\\), this gives \\(2+3z\\leq14\\), so \\(z\\leq4\\). Thus \\(z=1,2,3,4\\).\nFor each fixed \\(z\\), count the positive values of \\(y\\) for which \\(x=15-2y-3z\\) stays positive.\n\n\n\n\n\n\n\n\n\nValue of \\(z\\)\nEquation for \\(x\\) and \\(y\\)\nAllowed values of \\(y\\)\nNumber of solutions\n\n\n\n\n\\(1\\)\n\\(x+2y=12\\)\n\\(1,2,3,4,5\\)\n\\(5\\)\n\n\n\\(2\\)\n\\(x+2y=9\\)\n\\(1,2,3,4\\)\n\\(4\\)\n\n\n\\(3\\)\n\\(x+2y=6\\)\n\\(1,2\\)\n\\(2\\)\n\n\n\\(4\\)\n\\(x+2y=3\\)\n\\(1\\)\n\\(1\\)\n\n\n\nTherefore,\n\\[\n5+4+2+1=\\boxed{12}.\n\\]"
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#method-2-convert-positive-integers-to-non-negative-integers",
+    "href": "posts/positive-integer-solutions/index.html#method-2-convert-positive-integers-to-non-negative-integers",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Method 2: Convert Positive Integers to Non-negative Integers",
+    "text": "Method 2: Convert Positive Integers to Non-negative Integers\nWrite\n\\[\nx=a+1,\\qquad y=b+1,\\qquad z=c+1,\n\\]\nwhere \\(a,b,c\\geq0\\). Substitution gives\n\\[\n(a+1)+2(b+1)+3(c+1)=15,\n\\]\nand hence\n\\[\na+2b+3c=9.\n\\]\nFor fixed \\(c\\), this becomes \\(a+2b=9-3c\\). An equation \\(a+2b=N\\), with \\(a,b\\geq0\\), has \\(\\left\\lfloor N/2\\right\\rfloor+1\\) solutions because \\(b\\) ranges from \\(0\\) to \\(\\left\\lfloor N/2\\right\\rfloor\\).\n\n\n\n\\(c\\)\nEquation\nNumber of solutions\n\n\n\n\n\\(0\\)\n\\(a+2b=9\\)\n\\(\\left\\lfloor9/2\\right\\rfloor+1=5\\)\n\n\n\\(1\\)\n\\(a+2b=6\\)\n\\(\\left\\lfloor6/2\\right\\rfloor+1=4\\)\n\n\n\\(2\\)\n\\(a+2b=3\\)\n\\(\\left\\lfloor3/2\\right\\rfloor+1=2\\)\n\n\n\\(3\\)\n\\(a+2b=0\\)\n\\(1\\)\n\n\n\nAgain,\n\\[\n5+4+2+1=\\boxed{12}.\n\\]"
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#method-3-direct-floor-function-formula",
+    "href": "posts/positive-integer-solutions/index.html#method-3-direct-floor-function-formula",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Method 3: Direct Floor-Function Formula",
+    "text": "Method 3: Direct Floor-Function Formula\nFor fixed positive integer \\(z\\), positivity of \\(x\\) implies\n\\[\n15-2y-3z\\geq1,\n\\]\nso\n\\[\ny\\leq\\frac{14-3z}{2}.\n\\]\nThe number of positive integer values of \\(y\\) is therefore\n\\[\n\\left\\lfloor\\frac{14-3z}{2}\\right\\rfloor.\n\\]\nSince \\(z=1,2,3,4\\),\n\\[\nN=\\sum_{z=1}^{4}\\left\\lfloor\\frac{14-3z}{2}\\right\\rfloor.\n\\]\nEvaluating the sum,\n\\[\nN=\n\\left\\lfloor\\frac{11}{2}\\right\\rfloor+\n\\left\\lfloor\\frac{8}{2}\\right\\rfloor+\n\\left\\lfloor\\frac{5}{2}\\right\\rfloor+\n\\left\\lfloor\\frac{2}{2}\\right\\rfloor\n=5+4+2+1=\\boxed{12}.\n\\]"
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#method-4-generating-functions",
+    "href": "posts/positive-integer-solutions/index.html#method-4-generating-functions",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Method 4: Generating Functions",
+    "text": "Method 4: Generating Functions\nThe positive values of \\(x\\), \\(2y\\), and \\(3z\\) are encoded respectively by\n\\[\n\\frac{t}{1-t},\\qquad\n\\frac{t^2}{1-t^2},\\qquad\n\\frac{t^3}{1-t^3}.\n\\]\nTheir product is\n\\[\nG(t)=\n\\left(\\frac{t}{1-t}\\right)\n\\left(\\frac{t^2}{1-t^2}\\right)\n\\left(\\frac{t^3}{1-t^3}\\right)\n=\\frac{t^6}{(1-t)(1-t^2)(1-t^3)}.\n\\]\nChoosing \\(t^x\\), \\(t^{2y}\\), and \\(t^{3z}\\) from the three factors produces\n\\[\nt^x\\cdot t^{2y}\\cdot t^{3z}=t^{x+2y+3z}.\n\\]\nThus every positive solution contributes exactly one \\(t^{15}\\) term, so the answer is\n\\[\n[t^{15}]G(t)\n=[t^9]\\frac{1}{(1-t)(1-t^2)(1-t^3)}.\n\\]\nThat coefficient is \\(12\\), in agreement with the direct counts."
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#python-verification",
+    "href": "posts/positive-integer-solutions/index.html#python-verification",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Python Verification",
+    "text": "Python Verification\nThe following program uses the equation to compute \\(x\\) after choosing positive \\(y\\) and \\(z\\). It prints the triples in the same order as the hand-counting method.\n\nsolutions = []\n\nfor z in range(1, 5):\n    for y in range(1, 16):\n        x = 15 - 2 * y - 3 * z\n        if x &gt; 0:\n            solution = (x, y, z)\n            solutions.append(solution)\n            print(solution)\n\nprint(\"Total number of solutions:\", len(solutions))\n\n(10, 1, 1)\n(8, 2, 1)\n(6, 3, 1)\n(4, 4, 1)\n(2, 5, 1)\n(7, 1, 2)\n(5, 2, 2)\n(3, 3, 2)\n(1, 4, 2)\n(4, 1, 3)\n(2, 2, 3)\n(1, 1, 4)\nTotal number of solutions: 12\n\n\nThe program confirms the count, but the earlier methods explain why the count is \\(12\\)."
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#complete-list-of-solutions",
+    "href": "posts/positive-integer-solutions/index.html#complete-list-of-solutions",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Complete List of Solutions",
+    "text": "Complete List of Solutions\nThe complete solution list is\n\\[\n\\begin{aligned}\nz=1:&\\quad (10,1,1),\\ (8,2,1),\\ (6,3,1),\\ (4,4,1),\\ (2,5,1),\\\\\nz=2:&\\quad (7,1,2),\\ (5,2,2),\\ (3,3,2),\\ (1,4,2),\\\\\nz=3:&\\quad (4,1,3),\\ (2,2,3),\\\\\nz=4:&\\quad (1,1,4).\n\\end{aligned}\n\\]\nEvery listed triple satisfies \\(x+2y+3z=15\\), and the list contains \\(5+4+2+1=12\\) triples."
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#comparison-of-methods",
+    "href": "posts/positive-integer-solutions/index.html#comparison-of-methods",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Comparison of Methods",
+    "text": "Comparison of Methods\n\n\n\n\n\n\n\n\nMethod\nMain idea\nBest use\n\n\n\n\nFix one variable\nCount directly after fixing \\(z\\)\nSmall equations and hand calculations\n\n\nShift variables\nReplace positivity by non-negativity\nConnecting with standard combinatorics\n\n\nFloor formula\nExpress each row count compactly\nGeneral formulas\n\n\nGenerating functions\nRead a coefficient from a product of series\nWeighted counting problems"
+  },
+  {
+    "objectID": "posts/positive-integer-solutions/index.html#conclusion",
+    "href": "posts/positive-integer-solutions/index.html#conclusion",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe four methods illuminate the same result from different angles: direct counting is concrete, shifting variables connects the problem to non-negative solutions, floor functions compress the count, and generating functions give a powerful general framework. Python verifies the final list.\n\\[\n\\boxed{12\\text{ positive integer solutions}}.\n\\]"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Pymathon",
+    "section": "",
+    "text": "MATHEMATICS · PYTHON · VISUAL THINKING\n\n\n\nI am Ashish K. Srivastava, a mathematics teacher specialising in JEE Mathematics. Pymathon is a place where classical mathematics meets modern computation.\nHere I explore mathematical problems through rigorous reasoning, multiple methods, Python verification, and visualisation. Pymathon is designed for students, teachers, and anyone who wants to understand mathematics more deeply.\nAbout Ashish K. Srivastava"
+  },
+  {
+    "objectID": "index.html#latest-articles",
+    "href": "index.html#latest-articles",
+    "title": "Pymathon",
+    "section": "Latest Articles",
+    "text": "Latest Articles"
+  }
+]

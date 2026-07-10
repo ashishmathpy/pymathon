@@ -1,0 +1,23 @@
+# Operating-system and Python temporary files
+.DS_Store
+**pycache**/
+*.pyc
+
+# Notebook and Quarto working files
+.ipynb_checkpoints/
+.quarto/
+_freeze/
+_site/
+*.quarto_ipynb
+
+# Local secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+
+# Unused personal photograph containing location metadata
+ashish-kumar.jpg
+
+/.quarto/
+**/*.quarto_ipynb

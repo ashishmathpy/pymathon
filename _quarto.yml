@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Pymathon"
+  description: "Mathematics, JEE problem solving, and Python by Ashish K. Srivastava"
+  site-url: https://your-website-url.example.com # you must change this appropriately for RSS feeds to work properly
+  search: true
+  navbar:
+    left:
+      - text: Home
+        href: index.qmd
+      - text: About
+        href: about.qmd
+format:
+  html:
+    theme: cosmo
+    toc: true
+    css: styles.css
+
