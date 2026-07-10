@@ -1,16 +1,54 @@
 /* Restrained, readable styling for Pymathon. */
 :root {
-  --pymathon-ink: #233044;
-  --pymathon-muted: #5d6878;
-  --pymathon-accent: #245b8a;
-  --pymathon-border: #dfe5eb;
-  --pymathon-soft: #f5f8fb;
+  --pymathon-ink: #e7edf4;
+  --pymathon-muted: #aebdcb;
+  --pymathon-accent: #57b9c5;
+  --pymathon-border: #2c4055;
+  --pymathon-soft: #142235;
+  --pymathon-page: #0c1521;
+  --pymathon-surface: #101d2d;
+  --pymathon-code: #0a111b;
 }
 
 body {
   color: var(--pymathon-ink);
+  background-color: var(--pymathon-page);
   font-size: 1.05rem;
   line-height: 1.72;
+}
+
+a,
+a:hover,
+a:focus {
+  color: #74d0da;
+}
+
+.navbar,
+.quarto-title-banner,
+footer.footer {
+  color: var(--pymathon-ink);
+  background-color: var(--pymathon-surface);
+  border-color: var(--pymathon-border);
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link,
+.quarto-title-banner .quarto-title .title {
+  color: var(--pymathon-ink);
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: #f3c56b;
+}
+
+.quarto-title-meta,
+.quarto-title-meta-heading,
+.description,
+.listing-description,
+.listing-date,
+.listing-author {
+  color: var(--pymathon-muted);
 }
 
 main.content {
@@ -36,6 +74,7 @@ li {
 .pymathon-cta {
   margin: 0.4rem 0 1.25rem;
   padding: 0.65rem 1rem;
+  color: #071019;
   background-color: var(--pymathon-accent);
   border-color: var(--pymathon-accent);
 }
@@ -130,17 +169,185 @@ li {
   object-fit: cover;
   object-position: center top;
   border-radius: 50%;
-  border: 4px solid #fff;
-  box-shadow: 0 8px 24px rgb(26 39 55 / 14%);
+  border: 4px solid #d3eced;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 32%);
 }
 
 pre,
 .sourceCode {
   max-width: 100%;
   overflow-x: auto;
+  color: #e5edf5;
+  background-color: var(--pymathon-code);
+  border: 1px solid var(--pymathon-border);
   font-size: 0.92rem;
   line-height: 1.55;
   border-radius: 0.4rem;
+}
+
+div.sourceCode,
+div.sourceCode pre.sourceCode,
+pre.sourceCode {
+  color: #e8f0f7 !important;
+  background: #1a293a !important;
+  border: 1px solid #3e5870;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
+}
+
+code.sourceCode > span,
+pre > code.sourceCode > span,
+code span,
+code span.va,
+code span.bu,
+code span.ex {
+  color: #e8f0f7 !important;
+}
+
+code span.kw,
+code span.cf,
+code span.ot {
+  color: #f6d17a !important;
+}
+
+code span.fu,
+code span.im {
+  color: #7dd3fc !important;
+}
+
+code span.st,
+code span.ch,
+code span.ss,
+code span.vs {
+  color: #9fe6b8 !important;
+}
+
+code span.dv,
+code span.fl,
+code span.bn,
+code span.cn,
+code span.dt,
+code span.pp,
+code span.er,
+code span.al {
+  color: #f8a7a7 !important;
+}
+
+code span.op,
+code span.co,
+code span.an,
+code span.cv,
+code span.do,
+code span.in,
+code span.sc {
+  color: #b8c7d8 !important;
+}
+
+.cell-output,
+.cell-output pre {
+  color: #d6e3ee;
+  background-color: #111d2c;
+  border-color: #36516a;
+}
+
+.table,
+table {
+  --bs-table-color: var(--pymathon-ink);
+  --bs-table-bg: transparent;
+  --bs-table-border-color: var(--pymathon-border);
+  --bs-table-striped-color: var(--pymathon-ink);
+  --bs-table-striped-bg: rgb(255 255 255 / 4%);
+  --bs-table-hover-color: var(--pymathon-ink);
+  --bs-table-hover-bg: rgb(87 185 197 / 10%);
+}
+
+.quarto-listing .listing,
+.quarto-listing .listing .listing-item {
+  border-color: var(--pymathon-border);
+}
+
+.quarto-listing .listing .listing-item:hover {
+  background-color: rgb(87 185 197 / 7%);
+}
+
+.quarto-listing .quarto-post {
+  margin: 1.25rem 0;
+  padding: 1.35rem;
+  background: linear-gradient(135deg, #15263a, #122033);
+  border: 1px solid #35516a;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 16%);
+}
+
+.quarto-listing .listing-title {
+  margin-bottom: 0.45rem;
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+}
+
+.quarto-listing .listing-title a {
+  color: #f1f6fb;
+}
+
+.quarto-listing .listing-title a:hover {
+  color: #f3c56b;
+}
+
+.quarto-listing .listing-subtitle,
+.quarto-listing .listing-subtitle a {
+  color: #b9cce0;
+  font-size: 1.02rem;
+}
+
+.quarto-listing .listing-description,
+.quarto-listing .listing-description a {
+  color: #d2dfeb;
+  line-height: 1.65;
+}
+
+.quarto-listing .listing-date,
+.quarto-listing .listing-author,
+.quarto-listing .metadata a {
+  color: #a9bfd1;
+}
+
+.quarto-listing .listing-category {
+  color: #d7edf0;
+  background: #1b4052;
+  border-color: #5aaeba;
+}
+
+.quarto-listing .listing-category:hover {
+  color: #08131d;
+  background: #8ed7dc;
+}
+
+.sidebar,
+#TOC,
+.page-navigation {
+  color: var(--pymathon-muted);
+}
+
+.sidebar a,
+#TOC a,
+.page-navigation a {
+  color: var(--pymathon-muted);
+}
+
+.sidebar a:hover,
+#TOC a:hover,
+#TOC a.active,
+.page-navigation a:hover {
+  color: #f3c56b;
+}
+
+.btn-outline-secondary {
+  color: var(--pymathon-ink);
+  border-color: var(--pymathon-border);
+}
+
+.btn-outline-secondary:hover {
+  color: #071019;
+  background-color: var(--pymathon-accent);
+  border-color: var(--pymathon-accent);
 }
 
 .math.display,
