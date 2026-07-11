@@ -350,6 +350,77 @@ table {
   border-color: var(--pymathon-accent);
 }
 
+.article-share,
+.article-discussion {
+  margin-top: 2.5rem;
+  padding: 1.4rem;
+  background: linear-gradient(135deg, #15263a, #122033);
+  border: 1px solid #35516a;
+  border-radius: 0.75rem;
+}
+
+.article-discussion {
+  margin-top: 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.article-share h2,
+.article-discussion h2 {
+  margin-top: 0;
+  color: #f1f6fb;
+  font-size: 1.35rem;
+}
+
+.article-share p,
+.article-discussion p {
+  color: #c8d7e5;
+}
+
+.share-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.share-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.8rem;
+  color: #e7f2f4;
+  background: #1b4052;
+  border: 1px solid #5aaeba;
+  border-radius: 0.4rem;
+  font: inherit;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.share-button:hover,
+.share-button:focus-visible {
+  color: #08131d;
+  background: #8ed7dc;
+  border-color: #8ed7dc;
+  outline: none;
+}
+
+.giscus {
+  margin-top: 1rem;
+}
+
+@media (max-width: 700px) {
+  .article-share,
+  .article-discussion {
+    padding: 1rem;
+  }
+
+  .share-button {
+    flex: 1 1 calc(50% - 0.65rem);
+  }
+}
+
 .math.display,
 .MathJax_Display,
 div[id^="MathJax-Element-"] {

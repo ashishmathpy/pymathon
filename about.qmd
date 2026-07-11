@@ -1,6 +1,7 @@
 ---
 title: "About"
 author: "Ashish K. Srivastava"
+comments: false
 toc: true
 page-layout: article
 ---
@@ -13,33 +14,33 @@ page-layout: article
 ::: {.about-intro}
 ## Ashish K. Srivastava
 
-I am a mathematics teacher specialising in **JEE Mathematics**, with several years of experience teaching students for competitive examinations.
+I am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.
 
-Through Pymathon, I combine classical mathematical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain mathematics clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving.
+Through Pymathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving.
 :::
 :::
 
 ## Main Interests
 
-- JEE Mathematics
+- JEE Problem Solving
 - Algebra
 - Calculus
 - Coordinate Geometry
 - Combinatorics
 - Number Theory
-- Python for Mathematics
-- Mathematical Visualisation
-- Manim animations
+- Python for Problem Solving
+- Visualisation
+- Manim
 
 ## Why I Created Pymathon
 
-I created Pymathon as a place where mathematics and Python can strengthen one another. Here, I want to:
+I created Pymathon as a place where problem solving and Python can strengthen one another. Here, I want to:
 
-- connect mathematics with Python;
+- connect ideas with Python;
 - present multiple approaches to a problem;
 - verify results computationally;
 - produce clear visual explanations; and
-- help students and teachers explore mathematics more deeply.
+- help students and teachers explore concepts more deeply.
 
 The goal is not merely to arrive at an answer. It is to understand why the answer is correct, see how different ideas are connected, and use computation to investigate those ideas further.
 
@@ -53,5 +54,4 @@ I use computation responsibly: Python can test examples, reveal patterns, verify
 
 ## Connect
 
-- **GitHub:** [https://github.com/ashishmathpy](https://github.com/ashishmathpy)
-- **Email:** [aks.math.py@gmail.com](mailto:aks.math.py@gmail.com)
+- **Email:** [kumarashish3066@gmail.com](mailto:kumarashish3066@gmail.com)

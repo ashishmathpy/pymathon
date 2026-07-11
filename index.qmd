@@ -1,5 +1,6 @@
 ---
 title: "Pymathon"
+comments: false
 listing:
   contents: posts
   feed: true
@@ -19,7 +20,7 @@ MATHEMATICS · PYTHON · VISUAL THINKING
 
 # Welcome to Pymathon
 
-I am **Ashish K. Srivastava**, a mathematics teacher specialising in JEE Mathematics. Pymathon is a place where classical mathematics meets modern computation.
+I am **Ashish K. Srivastava**, a curious problem solver who enjoys exploring ideas through clear reasoning, computation, and visual thinking. Pymathon is a place where classical mathematics meets modern computation.
 
 Here I explore mathematical problems through rigorous reasoning, multiple methods, Python verification, and visualisation. Pymathon is designed for students, teachers, and anyone who wants to understand mathematics more deeply.
 

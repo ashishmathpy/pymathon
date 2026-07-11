@@ -6,3 +6,6 @@ freeze: true
 
 # Enable banner style title blocks
 title-block-banner: true
+
+# Posts inherit the configured Giscus discussion system and shared article tools.
+include-after-body: ../../includes/share-discussion.html

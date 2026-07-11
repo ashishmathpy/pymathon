@@ -4,28 +4,28 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "I am a mathematics teacher specialising in JEE Mathematics, with several years of experience teaching students for competitive examinations.\nThrough Pymathon, I combine classical mathematical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain mathematics clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
+    "text": "I am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.\nThrough Pymathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
   },
   {
     "objectID": "about.html#ashish-k.-srivastava",
     "href": "about.html#ashish-k.-srivastava",
     "title": "About",
     "section": "",
-    "text": "I am a mathematics teacher specialising in JEE Mathematics, with several years of experience teaching students for competitive examinations.\nThrough Pymathon, I combine classical mathematical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain mathematics clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
+    "text": "I am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.\nThrough Pymathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
   },
   {
     "objectID": "about.html#main-interests",
     "href": "about.html#main-interests",
     "title": "About",
     "section": "Main Interests",
-    "text": "Main Interests\n\nJEE Mathematics\nAlgebra\nCalculus\nCoordinate Geometry\nCombinatorics\nNumber Theory\nPython for Mathematics\nMathematical Visualisation\nManim animations"
+    "text": "Main Interests\n\nJEE Problem Solving\nAlgebra\nCalculus\nCoordinate Geometry\nCombinatorics\nNumber Theory\nPython for Problem Solving\nVisualisation\nManim"
   },
   {
     "objectID": "about.html#why-i-created-pymathon",
     "href": "about.html#why-i-created-pymathon",
     "title": "About",
     "section": "Why I Created Pymathon",
-    "text": "Why I Created Pymathon\nI created Pymathon as a place where mathematics and Python can strengthen one another. Here, I want to:\n\nconnect mathematics with Python;\npresent multiple approaches to a problem;\nverify results computationally;\nproduce clear visual explanations; and\nhelp students and teachers explore mathematics more deeply.\n\nThe goal is not merely to arrive at an answer. It is to understand why the answer is correct, see how different ideas are connected, and use computation to investigate those ideas further."
+    "text": "Why I Created Pymathon\nI created Pymathon as a place where problem solving and Python can strengthen one another. Here, I want to:\n\nconnect ideas with Python;\npresent multiple approaches to a problem;\nverify results computationally;\nproduce clear visual explanations; and\nhelp students and teachers explore concepts more deeply.\n\nThe goal is not merely to arrive at an answer. It is to understand why the answer is correct, see how different ideas are connected, and use computation to investigate those ideas further."
   },
   {
     "objectID": "about.html#my-teaching-philosophy",
@@ -39,7 +39,7 @@
     "href": "about.html#connect",
     "title": "About",
     "section": "Connect",
-    "text": "Connect\n\nGitHub: https://github.com/ashishmathpy\nEmail: aks.math.py@gmail.com"
+    "text": "Connect\n\nEmail: kumarashish3066@gmail.com"
   },
   {
     "objectID": "source-notebooks/positive-integer-solutions.html",
@@ -144,7 +144,7 @@
     "href": "index.html",
     "title": "Pymathon",
     "section": "",
-    "text": "MATHEMATICS · PYTHON · VISUAL THINKING\n\n\n\nI am Ashish K. Srivastava, a mathematics teacher specialising in JEE Mathematics. Pymathon is a place where classical mathematics meets modern computation.\nHere I explore mathematical problems through rigorous reasoning, multiple methods, Python verification, and visualisation. Pymathon is designed for students, teachers, and anyone who wants to understand mathematics more deeply.\nAbout Ashish K. Srivastava"
+    "text": "MATHEMATICS · PYTHON · VISUAL THINKING\n\n\n\nI am Ashish K. Srivastava, a curious problem solver who enjoys exploring ideas through clear reasoning, computation, and visual thinking. Pymathon is a place where classical mathematics meets modern computation.\nHere I explore mathematical problems through rigorous reasoning, multiple methods, Python verification, and visualisation. Pymathon is designed for students, teachers, and anyone who wants to understand mathematics more deeply.\nAbout Ashish K. Srivastava"
   },
   {
     "objectID": "index.html#latest-articles",

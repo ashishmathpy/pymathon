@@ -1,12 +1,25 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - share.js
 
 website:
   title: "Pymathon"
   description: "Mathematics, JEE problem solving, and Python by Ashish K. Srivastava"
   site-url: https://ashishmathpy.github.io/pymathon/
   search: true
+  comments:
+    giscus:
+      repo: ashishmathpy/pymathon
+      repo-id: R_kgDOTUsK1g
+      category: General
+      category-id: DIC_kwDOTUsK1s4DA9kg
+      mapping: pathname
+      reactions-enabled: true
+      loading: lazy
+      input-position: bottom
+      theme: dark_dimmed
   navbar:
     left:
       - text: Home
