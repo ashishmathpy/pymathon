@@ -1,47 +1,5 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "I am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.\nThrough Pymathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
-  },
-  {
-    "objectID": "about.html#ashish-k.-srivastava",
-    "href": "about.html#ashish-k.-srivastava",
-    "title": "About",
-    "section": "",
-    "text": "I am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.\nThrough Pymathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
-  },
-  {
-    "objectID": "about.html#main-interests",
-    "href": "about.html#main-interests",
-    "title": "About",
-    "section": "Main Interests",
-    "text": "Main Interests\n\nJEE Problem Solving\nAlgebra\nCalculus\nCoordinate Geometry\nCombinatorics\nNumber Theory\nPython for Problem Solving\nVisualisation\nManim"
-  },
-  {
-    "objectID": "about.html#why-i-created-pymathon",
-    "href": "about.html#why-i-created-pymathon",
-    "title": "About",
-    "section": "Why I Created Pymathon",
-    "text": "Why I Created Pymathon\nI created Pymathon as a place where problem solving and Python can strengthen one another. Here, I want to:\n\nconnect ideas with Python;\npresent multiple approaches to a problem;\nverify results computationally;\nproduce clear visual explanations; and\nhelp students and teachers explore concepts more deeply.\n\nThe goal is not merely to arrive at an answer. It is to understand why the answer is correct, see how different ideas are connected, and use computation to investigate those ideas further."
-  },
-  {
-    "objectID": "about.html#my-teaching-philosophy",
-    "href": "about.html#my-teaching-philosophy",
-    "title": "About",
-    "section": "My Teaching Philosophy",
-    "text": "My Teaching Philosophy\nI believe that understanding must come before memorisation. A formula becomes truly useful only when a student understands where it comes from and when it applies.\nTraditional step-by-step reasoning remains central to my teaching. I encourage students to write complete arguments, examine more than one solution method, and develop a visual understanding wherever possible. Algebraic, geometric, combinatorial, and computational viewpoints can often illuminate different parts of the same problem.\nI use computation responsibly: Python can test examples, reveal patterns, verify calculations, and create illuminating visualisations, but it should support mathematical proof rather than replace it."
-  },
-  {
-    "objectID": "about.html#connect",
-    "href": "about.html#connect",
-    "title": "About",
-    "section": "Connect",
-    "text": "Connect\n\nEmail: kumarashish3066@gmail.com"
-  },
-  {
     "objectID": "source-notebooks/positive-integer-solutions.html",
     "href": "source-notebooks/positive-integer-solutions.html",
     "title": "Positive Integer Solutions of a Linear Equation",
@@ -63,18 +21,151 @@
     "text": "Counting the Non-negative Integer Solutions\nFor every fixed value of \\(c\\),\n\\[\na+2b=9-3c.\n\\]\nSince \\(a,b,c\\geq 0\\), the possible values of \\(c\\) are\n\\[\nc=0,1,2,3.\n\\]\nFor an equation of the form\n\\[\na+2b=N,\n\\]\nwe have\n\\[\na=N-2b.\n\\]\nTherefore, \\(b\\) may take the values\n\\[\n0,1,2,\\ldots,\\left\\lfloor\\frac{N}{2}\\right\\rfloor.\n\\]\nHence, the number of non-negative integer solutions is\n\\[\n\\left\\lfloor\\frac{N}{2}\\right\\rfloor+1.\n\\]\nNow consider each value of \\(c\\).\n\nWhen \\(c=0\\)\n\\[\na+2b=9.\n\\]\nNumber of solutions:\n\\[\n\\left\\lfloor\\frac{9}{2}\\right\\rfloor+1=5.\n\\]\n\n\nWhen \\(c=1\\)\n\\[\na+2b=6.\n\\]\nNumber of solutions:\n\\[\n\\left\\lfloor\\frac{6}{2}\\right\\rfloor+1=4.\n\\]\n\n\nWhen \\(c=2\\)\n\\[\na+2b=3.\n\\]\nNumber of solutions:\n\\[\n\\left\\lfloor\\frac{3}{2}\\right\\rfloor+1=2.\n\\]\n\n\nWhen \\(c=3\\)\n\\[\na+2b=0.\n\\]\nNumber of solutions:\n\\[\n1.\n\\]\nTherefore,\n\\[\n5+4+2+1=12.\n\\]\nHence,\n\\[\n\\boxed{12}\n\\]"
   },
   {
+    "objectID": "topics.html",
+    "href": "topics.html",
+    "title": "Topics",
+    "section": "",
+    "text": "Browse the ideas that PyMathon develops. The article filter below shows the categories available in published posts; this topic map will grow as new articles are added.\n\n\n\nEquations, identities, inequalities, and structural reasoning.\n\n\n\nLimits, derivatives, integrals, and their applications.\n\n\n\nLines, conics, loci, and geometric methods on the coordinate plane.\n\n\n\nCounting, arrangements, recurrences, and discrete structures.\n\n\n\nDivisibility, congruences, primes, and integer patterns.\n\n\n\nProblem-solving methods and carefully reasoned exam-style questions.\n\n\n\nSmall programs that verify patterns, calculations, and examples.\n\n\n\nGraphs, diagrams, and dynamic ways to see an idea clearly."
+  },
+  {
+    "objectID": "topics.html#algebra",
+    "href": "topics.html#algebra",
+    "title": "Topics",
+    "section": "",
+    "text": "Equations, identities, inequalities, and structural reasoning."
+  },
+  {
+    "objectID": "topics.html#calculus",
+    "href": "topics.html#calculus",
+    "title": "Topics",
+    "section": "",
+    "text": "Limits, derivatives, integrals, and their applications."
+  },
+  {
+    "objectID": "topics.html#coordinate-geometry",
+    "href": "topics.html#coordinate-geometry",
+    "title": "Topics",
+    "section": "",
+    "text": "Lines, conics, loci, and geometric methods on the coordinate plane."
+  },
+  {
+    "objectID": "topics.html#combinatorics",
+    "href": "topics.html#combinatorics",
+    "title": "Topics",
+    "section": "",
+    "text": "Counting, arrangements, recurrences, and discrete structures."
+  },
+  {
+    "objectID": "topics.html#number-theory",
+    "href": "topics.html#number-theory",
+    "title": "Topics",
+    "section": "",
+    "text": "Divisibility, congruences, primes, and integer patterns."
+  },
+  {
+    "objectID": "topics.html#jee-mathematics",
+    "href": "topics.html#jee-mathematics",
+    "title": "Topics",
+    "section": "",
+    "text": "Problem-solving methods and carefully reasoned exam-style questions."
+  },
+  {
+    "objectID": "topics.html#python-for-mathematics",
+    "href": "topics.html#python-for-mathematics",
+    "title": "Topics",
+    "section": "",
+    "text": "Small programs that verify patterns, calculations, and examples."
+  },
+  {
+    "objectID": "topics.html#mathematical-visualisation",
+    "href": "topics.html#mathematical-visualisation",
+    "title": "Topics",
+    "section": "",
+    "text": "Graphs, diagrams, and dynamic ways to see an idea clearly."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PyMathon",
+    "section": "",
+    "text": "MATHEMATICS · PYTHON · VISUAL THINKING\n\n\n\nI am Ashish K. Srivastava, a curious problem solver who enjoys exploring ideas through clear reasoning, computation, and visual thinking. PyMathon brings Mathematics, Python, JEE Mathematics, and Problem Solving together in one place.\nHere you will find concise explanations that move from a clear idea to a complete solution, with computation used to verify rather than replace reasoning.\nAbout Ashish K. Srivastava"
+  },
+  {
+    "objectID": "index.html#featured-article",
+    "href": "index.html#featured-article",
+    "title": "PyMathon",
+    "section": "Featured Article",
+    "text": "Featured Article\n\nFour Ways to Count Positive Integer Solutions\nLearn how direct counting, non-negative substitutions, floor functions, generating functions, and Python all lead to the same answer.\nRead the article"
+  },
+  {
+    "objectID": "index.html#what-you-will-find-here",
+    "href": "index.html#what-you-will-find-here",
+    "title": "PyMathon",
+    "section": "What You Will Find Here",
+    "text": "What You Will Find Here\n\nrigorous mathematical solutions;\nmultiple approaches to the same problem;\nPython verification;\nvisual explanations; and\npractice problems to extend each idea."
+  },
+  {
+    "objectID": "index.html#latest-articles",
+    "href": "index.html#latest-articles",
+    "title": "PyMathon",
+    "section": "Latest Articles",
+    "text": "Latest Articles"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "PyMathon logo\n\n\n\n\n\nI am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.\nThrough PyMathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
+  },
+  {
+    "objectID": "about.html#ashish-k.-srivastava",
+    "href": "about.html#ashish-k.-srivastava",
+    "title": "About",
+    "section": "",
+    "text": "I am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.\nThrough PyMathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving."
+  },
+  {
+    "objectID": "about.html#main-interests",
+    "href": "about.html#main-interests",
+    "title": "About",
+    "section": "Main Interests",
+    "text": "Main Interests\n\nJEE Problem Solving\nAlgebra\nCalculus\nCoordinate Geometry\nCombinatorics\nNumber Theory\nPython for Problem Solving\nVisualisation\nManim"
+  },
+  {
+    "objectID": "about.html#why-i-created-pymathon",
+    "href": "about.html#why-i-created-pymathon",
+    "title": "About",
+    "section": "Why I Created PyMathon",
+    "text": "Why I Created PyMathon\nI created PyMathon as a place where problem solving and Python can strengthen one another. Here, I want to:\n\nconnect ideas with Python;\npresent multiple approaches to a problem;\nverify results computationally;\nproduce clear visual explanations; and\nhelp students and teachers explore concepts more deeply.\n\nThe goal is not merely to arrive at an answer. It is to understand why the answer is correct, see how different ideas are connected, and use computation to investigate those ideas further."
+  },
+  {
+    "objectID": "about.html#my-teaching-philosophy",
+    "href": "about.html#my-teaching-philosophy",
+    "title": "About",
+    "section": "My Teaching Philosophy",
+    "text": "My Teaching Philosophy\nI believe that understanding must come before memorisation. A formula becomes truly useful only when a student understands where it comes from and when it applies.\nTraditional step-by-step reasoning remains central to my teaching. I encourage students to write complete arguments, examine more than one solution method, and develop a visual understanding wherever possible. Algebraic, geometric, combinatorial, and computational viewpoints can often illuminate different parts of the same problem.\nI use computation responsibly: Python can test examples, reveal patterns, verify calculations, and create illuminating visualisations, but it should support mathematical proof rather than replace it."
+  },
+  {
+    "objectID": "about.html#connect",
+    "href": "about.html#connect",
+    "title": "About",
+    "section": "Connect",
+    "text": "Connect\n\nEmail: kumarashish3066@gmail.com"
+  },
+  {
     "objectID": "posts/positive-integer-solutions/index.html",
     "href": "posts/positive-integer-solutions/index.html",
     "title": "Four Ways to Count Positive Integer Solutions",
     "section": "",
-    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification."
+    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.\n\nDifficulty: Intermediate\nPrerequisites: Basic algebra, inequalities, and elementary counting\nEstimated reading time: 8 minutes"
   },
   {
     "objectID": "posts/positive-integer-solutions/index.html#introduction",
     "href": "posts/positive-integer-solutions/index.html#introduction",
     "title": "Four Ways to Count Positive Integer Solutions",
     "section": "",
-    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification."
+    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.\n\nDifficulty: Intermediate\nPrerequisites: Basic algebra, inequalities, and elementary counting\nEstimated reading time: 8 minutes"
   },
   {
     "objectID": "posts/positive-integer-solutions/index.html#problem",
@@ -140,17 +231,17 @@
     "text": "Conclusion\nThe four methods illuminate the same result from different angles: direct counting is concrete, shifting variables connects the problem to non-negative solutions, floor functions compress the count, and generating functions give a powerful general framework. Python verifies the final list.\n\\[\n\\boxed{12\\text{ positive integer solutions}}.\n\\]"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Pymathon",
-    "section": "",
-    "text": "MATHEMATICS · PYTHON · VISUAL THINKING\n\n\n\nI am Ashish K. Srivastava, a curious problem solver who enjoys exploring ideas through clear reasoning, computation, and visual thinking. Pymathon is a place where classical mathematics meets modern computation.\nHere I explore mathematical problems through rigorous reasoning, multiple methods, Python verification, and visualisation. Pymathon is designed for students, teachers, and anyone who wants to understand mathematics more deeply.\nAbout Ashish K. Srivastava"
+    "objectID": "posts/positive-integer-solutions/index.html#try-it-yourself",
+    "href": "posts/positive-integer-solutions/index.html#try-it-yourself",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Try It Yourself",
+    "text": "Try It Yourself\n\nFind the number of positive integer solutions of \\(x+2y+3z=18\\).\nFind the number of non-negative integer solutions of \\(a+2b+3c=10\\).\nFind the number of positive integer solutions of \\(x+3y+4z=20\\).\n\n\n\n\n\n\n\nTipHint for Problem 1\n\n\n\n\n\nFix \\(z\\) first. For each allowed value of \\(z\\), count the positive values of \\(y\\) that keep \\(x=18-2y-3z\\) positive.\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 1\n\n\n\n\n\nThe possible values are \\(z=1,2,3,4,5\\). The row counts are \\(7,5,4,2,1\\), so the total is\n\\[\n7+5+4+2+1=\\boxed{19}.\n\\]\n\n\n\n\n\n\n\n\n\nTipHint for Problem 2\n\n\n\n\n\nFix \\(c=0,1,2,3\\). For each \\(c\\), solve \\(a+2b=10-3c\\) with \\(a,b\\geq0\\).\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 2\n\n\n\n\n\nThe row counts are \\(6,4,3,1\\), giving\n\\[\n6+4+3+1=\\boxed{14}.\n\\]\n\n\n\n\n\n\n\n\n\nTipHint for Problem 3\n\n\n\n\n\nUse \\(x=20-3y-4z\\) and count the positive values of \\(y\\) for each possible positive \\(z\\).\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 3\n\n\n\n\n\nFor \\(z=1,2,3,4\\), the possible values of \\(y\\) number \\(5,3,2,1\\) respectively. Hence the total is\n\\[\n5+3+2+1=\\boxed{11}.\n\\]"
   },
   {
-    "objectID": "index.html#latest-articles",
-    "href": "index.html#latest-articles",
-    "title": "Pymathon",
-    "section": "Latest Articles",
-    "text": "Latest Articles"
+    "objectID": "posts/positive-integer-solutions/index.html#downloads",
+    "href": "posts/positive-integer-solutions/index.html#downloads",
+    "title": "Four Ways to Count Positive Integer Solutions",
+    "section": "Downloads",
+    "text": "Downloads\nDownload the source notebook"
   }
 ]

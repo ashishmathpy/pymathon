@@ -1,6 +1,7 @@
 ---
-title: "Pymathon"
+title: "PyMathon"
 comments: false
+description: "PyMathon explores Mathematics, Python, JEE Mathematics, and problem solving through clear explanations and visual thinking."
 listing:
   contents: posts
   feed: true
@@ -18,13 +19,31 @@ title-block-banner: true
 MATHEMATICS · PYTHON · VISUAL THINKING
 :::
 
-# Welcome to Pymathon
+# Welcome to PyMathon
 
-I am **Ashish K. Srivastava**, a curious problem solver who enjoys exploring ideas through clear reasoning, computation, and visual thinking. Pymathon is a place where classical mathematics meets modern computation.
+I am **Ashish K. Srivastava**, a curious problem solver who enjoys exploring ideas through clear reasoning, computation, and visual thinking. PyMathon brings **Mathematics**, **Python**, **JEE Mathematics**, and **Problem Solving** together in one place.
 
-Here I explore mathematical problems through rigorous reasoning, multiple methods, Python verification, and visualisation. Pymathon is designed for students, teachers, and anyone who wants to understand mathematics more deeply.
+Here you will find concise explanations that move from a clear idea to a complete solution, with computation used to verify rather than replace reasoning.
 
 [About Ashish K. Srivastava](about.qmd){.btn .btn-primary .pymathon-cta}
 :::
+
+## Featured Article
+
+::: {.featured-article}
+### [Four Ways to Count Positive Integer Solutions](posts/positive-integer-solutions/index.qmd)
+
+Learn how direct counting, non-negative substitutions, floor functions, generating functions, and Python all lead to the same answer.
+
+[Read the article](posts/positive-integer-solutions/index.qmd){.btn .btn-outline-secondary}
+:::
+
+## What You Will Find Here
+
+- rigorous mathematical solutions;
+- multiple approaches to the same problem;
+- Python verification;
+- visual explanations; and
+- practice problems to extend each idea.
 
 ## Latest Articles

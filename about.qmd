@@ -8,7 +8,7 @@ page-layout: article
 
 ::: {.about-hero}
 ::: {.about-photo}
-![](pymathon-mathematics-python.png){.about-portrait}
+![PyMathon logo](image.png){.about-logo}
 :::
 
 ::: {.about-intro}
@@ -16,7 +16,7 @@ page-layout: article
 
 I am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.
 
-Through Pymathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving.
+Through PyMathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving.
 :::
 :::
 
@@ -32,9 +32,9 @@ Through Pymathon, I combine classical reasoning with modern computational tools 
 - Visualisation
 - Manim
 
-## Why I Created Pymathon
+## Why I Created PyMathon
 
-I created Pymathon as a place where problem solving and Python can strengthen one another. Here, I want to:
+I created PyMathon as a place where problem solving and Python can strengthen one another. Here, I want to:
 
 - connect ideas with Python;
 - present multiple approaches to a problem;

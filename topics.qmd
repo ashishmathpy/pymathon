@@ -1,0 +1,68 @@
+---
+title: "Topics"
+description: "Browse PyMathon articles by topic and use the category filter to explore published work."
+comments: false
+page-layout: full
+listing:
+  contents: posts
+  type: default
+  categories: true
+  filter-ui: true
+  sort: "date desc"
+---
+
+# Topics
+
+Browse the ideas that PyMathon develops. The article filter below shows the categories available in published posts; this topic map will grow as new articles are added.
+
+::: {.topic-grid}
+::: {.topic-card}
+## Algebra
+
+Equations, identities, inequalities, and structural reasoning.
+:::
+
+::: {.topic-card}
+## Calculus
+
+Limits, derivatives, integrals, and their applications.
+:::
+
+::: {.topic-card}
+## Coordinate Geometry
+
+Lines, conics, loci, and geometric methods on the coordinate plane.
+:::
+
+::: {.topic-card}
+## Combinatorics
+
+Counting, arrangements, recurrences, and discrete structures.
+:::
+
+::: {.topic-card}
+## Number Theory
+
+Divisibility, congruences, primes, and integer patterns.
+:::
+
+::: {.topic-card}
+## JEE Mathematics
+
+Problem-solving methods and carefully reasoned exam-style questions.
+:::
+
+::: {.topic-card}
+## Python for Mathematics
+
+Small programs that verify patterns, calculations, and examples.
+:::
+
+::: {.topic-card}
+## Mathematical Visualisation
+
+Graphs, diagrams, and dynamic ways to see an idea clearly.
+:::
+:::
+
+## Articles by Category

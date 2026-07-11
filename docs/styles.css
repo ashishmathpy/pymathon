@@ -1,4 +1,4 @@
-/* Restrained, readable styling for Pymathon. */
+/* Restrained, readable styling for PyMathon. */
 :root {
   --pymathon-ink: #e7edf4;
   --pymathon-muted: #aebdcb;
@@ -35,6 +35,19 @@ footer.footer {
 .navbar .nav-link,
 .quarto-title-banner .quarto-title .title {
   color: var(--pymathon-ink);
+}
+
+.navbar-brand img {
+  width: min(10rem, 42vw);
+  height: 2.75rem;
+  margin-right: 0.2rem;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+}
+
+.navbar-brand .navbar-title {
+  display: none;
 }
 
 .navbar .nav-link:hover,
@@ -140,6 +153,60 @@ li {
   border-color: #ffe0a0;
 }
 
+.featured-article {
+  margin: 1.25rem 0 2.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #18314b, #13253a);
+  border: 1px solid #4b7897;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 16%);
+}
+
+.featured-article h3 {
+  margin-top: 0;
+  color: #f3c56b;
+}
+
+.featured-article p {
+  color: #d3e1eb;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.topic-card,
+.article-info {
+  padding: 1.1rem 1.2rem;
+  background: #14263a;
+  border: 1px solid #35516a;
+  border-radius: 0.65rem;
+}
+
+.topic-card h2 {
+  margin-top: 0;
+  color: #f3c56b;
+  font-size: 1.2rem;
+}
+
+.topic-card p {
+  margin-bottom: 0;
+  color: #c8d7e5;
+}
+
+.article-info {
+  margin: 1.5rem 0;
+  color: #d8e7ef;
+  border-left: 4px solid #57b9c5;
+}
+
+.article-info strong {
+  color: #f3c56b;
+}
+
 .about-hero {
   display: grid;
   grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);
@@ -170,6 +237,21 @@ li {
   object-position: center top;
   border-radius: 50%;
   border: 4px solid #d3eced;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 32%);
+}
+
+.about-logo {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin: 0 auto;
+  padding: 0.6rem;
+  object-fit: contain;
+  object-position: center;
+  background: #0a111b;
+  border: 1px solid #35516a;
+  border-radius: 0.75rem;
   box-shadow: 0 8px 24px rgb(0 0 0 / 32%);
 }
 
@@ -450,6 +532,10 @@ table {
 
   .about-portrait {
     max-width: 210px;
+  }
+
+  .about-logo {
+    max-width: 100%;
   }
 
   .about-intro {

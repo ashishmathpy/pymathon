@@ -8,8 +8,9 @@
 
 <meta name="author" content="Ashish K. Srivastava">
 <meta name="dcterms.date" content="2026-07-10">
+<meta name="description" content="Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, generating functions, and Python verification.">
 
-<title>Four Ways to Count Positive Integer Solutions – Pymathon</title>
+<title>Four Ways to Count Positive Integer Solutions – PyMathon</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -139,6 +140,14 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Four Ways to Count Positive Integer Solutions – PyMathon">
+<meta property="og:description" content="Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, generating functions, and Python verification.">
+<meta property="og:image" content="https://ashishmathpy.github.io/pymathon/pymathon-mathematics-python.png">
+<meta property="og:site_name" content="PyMathon">
+<meta property="og:image:height" content="1448">
+<meta property="og:image:width" content="1086">
+<meta property="og:image:alt" content="Python-inspired illustration with mathematical curves and coordinate axes">
+<link rel="canonical" href="https://ashishmathpy.github.io/pymathon/posts/positive-integer-solutions/">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -148,8 +157,12 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../image.png" alt="PyMathon logo" class="navbar-logo light-content">
+    <img src="../../image.png" alt="PyMathon logo" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Pymathon</span>
+    <span class="navbar-title">PyMathon</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -161,6 +174,14 @@ window.Quarto = {
   <li class="nav-item">
     <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#latest-articles"> 
+<span class="menu-text">Articles</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../topics.html"> 
+<span class="menu-text">Topics</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
@@ -179,10 +200,16 @@ window.Quarto = {
     <div class="quarto-title column-body">
       <h1 class="title">Four Ways to Count Positive Integer Solutions</h1>
             <p class="subtitle lead">Solving x + 2y + 3z = 15 using mathematics and Python</p>
-                                <div class="quarto-categories">
+                  <div>
+        <div class="description">
+          Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, generating functions, and Python verification.
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">Mathematics</div>
                 <div class="quarto-category">Combinatorics</div>
-                <div class="quarto-category">Python</div>
+                <div class="quarto-category">JEE Mathematics</div>
+                <div class="quarto-category">Python for Mathematics</div>
                 <div class="quarto-category">Problem Solving</div>
               </div>
                   </div>
@@ -227,6 +254,8 @@ window.Quarto = {
   <li><a href="#complete-list-of-solutions" id="toc-complete-list-of-solutions" class="nav-link" data-scroll-target="#complete-list-of-solutions">Complete List of Solutions</a></li>
   <li><a href="#comparison-of-methods" id="toc-comparison-of-methods" class="nav-link" data-scroll-target="#comparison-of-methods">Comparison of Methods</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#try-it-yourself" id="toc-try-it-yourself" class="nav-link" data-scroll-target="#try-it-yourself">Try It Yourself</a></li>
+  <li><a href="#downloads" id="toc-downloads" class="nav-link" data-scroll-target="#downloads">Downloads</a></li>
   </ul>
 </nav>
     </div>
@@ -241,6 +270,11 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word <strong>positive</strong> matters: each variable must be at least <span class="math inline">\(1\)</span>, not merely non-negative.</p>
 <p>We will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.</p>
+<div class="article-info">
+<p><strong>Difficulty:</strong> Intermediate<br>
+<strong>Prerequisites:</strong> Basic algebra, inequalities, and elementary counting<br>
+<strong>Estimated reading time:</strong> 8 minutes</p>
+</div>
 </section>
 <section id="problem" class="level2">
 <h2 class="anchored" data-anchor-id="problem">Problem</h2>
@@ -417,7 +451,7 @@ t^x\cdot t^{2y}\cdot t^{3z}=t^{x+2y+3z}.
 <section id="python-verification" class="level2">
 <h2 class="anchored" data-anchor-id="python-verification">Python Verification</h2>
 <p>The following program uses the equation to compute <span class="math inline">\(x\)</span> after choosing positive <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>. It prints the triples in the same order as the hand-counting method.</p>
-<div id="1587e8c1" class="cell" data-execution_count="1">
+<div id="5e9adca0" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>solutions <span class="op">=</span> []</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>):</span>
@@ -505,6 +539,123 @@ z=4:&amp;\quad (1,1,4).
 <p><span class="math display">\[
 \boxed{12\text{ positive integer solutions}}.
 \]</span></p>
+</section>
+<section id="try-it-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-yourself">Try It Yourself</h2>
+<ol type="1">
+<li>Find the number of positive integer solutions of <span class="math inline">\(x+2y+3z=18\)</span>.</li>
+<li>Find the number of non-negative integer solutions of <span class="math inline">\(a+2b+3c=10\)</span>.</li>
+<li>Find the number of positive integer solutions of <span class="math inline">\(x+3y+4z=20\)</span>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint for Problem 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Fix <span class="math inline">\(z\)</span> first. For each allowed value of <span class="math inline">\(z\)</span>, count the positive values of <span class="math inline">\(y\)</span> that keep <span class="math inline">\(x=18-2y-3z\)</span> positive.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution for Problem 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The possible values are <span class="math inline">\(z=1,2,3,4,5\)</span>. The row counts are <span class="math inline">\(7,5,4,2,1\)</span>, so the total is</p>
+<p><span class="math display">\[
+7+5+4+2+1=\boxed{19}.
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint for Problem 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Fix <span class="math inline">\(c=0,1,2,3\)</span>. For each <span class="math inline">\(c\)</span>, solve <span class="math inline">\(a+2b=10-3c\)</span> with <span class="math inline">\(a,b\geq0\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution for Problem 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The row counts are <span class="math inline">\(6,4,3,1\)</span>, giving</p>
+<p><span class="math display">\[
+6+4+3+1=\boxed{14}.
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint for Problem 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Use <span class="math inline">\(x=20-3y-4z\)</span> and count the positive values of <span class="math inline">\(y\)</span> for each possible positive <span class="math inline">\(z\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution for Problem 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For <span class="math inline">\(z=1,2,3,4\)</span>, the possible values of <span class="math inline">\(y\)</span> number <span class="math inline">\(5,3,2,1\)</span> respectively. Hence the total is</p>
+<p><span class="math display">\[
+5+3+2+1=\boxed{11}.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="downloads" class="level2">
+<h2 class="anchored" data-anchor-id="downloads">Downloads</h2>
+<p><a href="https://ashishmathpy.github.io/pymathon/source-notebooks/positive-integer-solutions.ipynb?download=1" download="">Download the source notebook</a></p>
 
 
 </section>

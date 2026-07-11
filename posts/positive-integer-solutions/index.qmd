@@ -3,11 +3,19 @@ title: "Four Ways to Count Positive Integer Solutions"
 subtitle: "Solving x + 2y + 3z = 15 using mathematics and Python"
 author: "Ashish K. Srivastava"
 date: "2026-07-10"
+description: "Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, generating functions, and Python verification."
 categories:
 - Mathematics
 - Combinatorics
-- Python
+- JEE Mathematics
+- Python for Mathematics
 - Problem Solving
+difficulty: "Intermediate"
+prerequisites: "Basic algebra, inequalities, and elementary counting"
+estimated-reading-time: "8 minutes"
+image: "../../pymathon-mathematics-python.png"
+image-alt: "Python-inspired illustration with mathematical curves and coordinate axes"
+draft: false
 toc: true
 code-fold: false
 execute:
@@ -20,6 +28,12 @@ execute:
 Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word **positive** matters: each variable must be at least $1$, not merely non-negative.
 
 We will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.
+
+::: {.article-info}
+**Difficulty:** Intermediate<br>
+**Prerequisites:** Basic algebra, inequalities, and elementary counting<br>
+**Estimated reading time:** 8 minutes
+:::
 
 ## Problem
 
@@ -218,3 +232,61 @@ The four methods illuminate the same result from different angles: direct counti
 $$
 \boxed{12\text{ positive integer solutions}}.
 $$
+
+## Try It Yourself
+
+1. Find the number of positive integer solutions of $x+2y+3z=18$.
+2. Find the number of non-negative integer solutions of $a+2b+3c=10$.
+3. Find the number of positive integer solutions of $x+3y+4z=20$.
+
+::: {.callout-tip collapse="true"}
+## Hint for Problem 1
+
+Fix $z$ first. For each allowed value of $z$, count the positive values of $y$ that keep $x=18-2y-3z$ positive.
+:::
+
+::: {.callout-note collapse="true"}
+## Solution for Problem 1
+
+The possible values are $z=1,2,3,4,5$. The row counts are $7,5,4,2,1$, so the total is
+
+$$
+7+5+4+2+1=\boxed{19}.
+$$
+:::
+
+::: {.callout-tip collapse="true"}
+## Hint for Problem 2
+
+Fix $c=0,1,2,3$. For each $c$, solve $a+2b=10-3c$ with $a,b\geq0$.
+:::
+
+::: {.callout-note collapse="true"}
+## Solution for Problem 2
+
+The row counts are $6,4,3,1$, giving
+
+$$
+6+4+3+1=\boxed{14}.
+$$
+:::
+
+::: {.callout-tip collapse="true"}
+## Hint for Problem 3
+
+Use $x=20-3y-4z$ and count the positive values of $y$ for each possible positive $z$.
+:::
+
+::: {.callout-note collapse="true"}
+## Solution for Problem 3
+
+For $z=1,2,3,4$, the possible values of $y$ number $5,3,2,1$ respectively. Hence the total is
+
+$$
+5+3+2+1=\boxed{11}.
+$$
+:::
+
+## Downloads
+
+<a href="https&#58;//ashishmathpy.github.io/pymathon/source-notebooks/positive-integer-solutions.ipynb?download=1" download>Download the source notebook</a>

@@ -1,14 +1,26 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - index.qmd
+    - about.qmd
+    - topics.qmd
+    - posts/positive-integer-solutions/index.qmd
+    - source-notebooks/positive-integer-solutions.ipynb
   resources:
     - share.js
+    - source-notebooks/positive-integer-solutions.ipynb
+    # Place a Google Search Console HTML verification file in the project root.
+    # Quarto will copy a file named google*.html into docs unchanged.
+    - google*.html
 
 website:
-  title: "Pymathon"
-  description: "Mathematics, JEE problem solving, and Python by Ashish K. Srivastava"
+  title: "PyMathon"
+  description: "PyMathon explores mathematics through rigorous reasoning, multiple solution methods, Python verification, and visualisation."
   site-url: https://ashishmathpy.github.io/pymathon/
+  open-graph: true
   search: true
+  page-navigation: true
   comments:
     giscus:
       repo: ashishmathpy/pymathon
@@ -21,13 +33,20 @@ website:
       input-position: bottom
       theme: dark_dimmed
   navbar:
+    logo: image.png
+    logo-alt: PyMathon logo
     left:
       - text: Home
         href: index.qmd
+      - text: Articles
+        href: index.qmd#latest-articles
+      - text: Topics
+        href: topics.qmd
       - text: About
         href: about.qmd
 format:
   html:
     theme: cosmo
+    canonical-url: true
     toc: true
     css: styles.css
