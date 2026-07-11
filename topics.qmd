@@ -47,12 +47,6 @@ Divisibility, congruences, primes, and integer patterns.
 :::
 
 ::: {.topic-card}
-## JEE Mathematics
-
-Problem-solving methods and carefully reasoned exam-style questions.
-:::
-
-::: {.topic-card}
 ## Python for Mathematics
 
 Small programs that verify patterns, calculations, and examples.

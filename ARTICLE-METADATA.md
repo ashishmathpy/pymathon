@@ -17,4 +17,4 @@ Use these YAML fields for new blog posts. Keep title, description, author, date,
     draft: false
     ---
 
-Use draft: true while an article is unfinished. Add an article-information box near the beginning, and include downloads only when the linked file has been added to the project and confirmed in the rendered docs output.
+Use draft: true while an article is unfinished. Add an article-information box near the beginning when those details are useful to readers.

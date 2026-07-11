@@ -21,17 +21,6 @@ website:
   open-graph: true
   search: true
   page-navigation: true
-  comments:
-    giscus:
-      repo: ashishmathpy/pymathon
-      repo-id: R_kgDOTUsK1g
-      category: General
-      category-id: DIC_kwDOTUsK1s4DA9kg
-      mapping: pathname
-      reactions-enabled: true
-      loading: lazy
-      input-position: bottom
-      theme: dark_dimmed
   navbar:
     logo: image.png
     logo-alt: PyMathon logo

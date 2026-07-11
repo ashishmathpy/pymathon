@@ -7,14 +7,11 @@ description: "Count the positive integer solutions of x + 2y + 3z = 15 through d
 categories:
 - Mathematics
 - Combinatorics
-- JEE Mathematics
 - Python for Mathematics
 - Problem Solving
 difficulty: "Intermediate"
 prerequisites: "Basic algebra, inequalities, and elementary counting"
 estimated-reading-time: "8 minutes"
-image: "../../pymathon-mathematics-python.png"
-image-alt: "Python-inspired illustration with mathematical curves and coordinate axes"
 draft: false
 toc: true
 code-fold: false
@@ -286,7 +283,3 @@ $$
 5+3+2+1=\boxed{11}.
 $$
 :::
-
-## Downloads
-
-<a href="https&#58;//ashishmathpy.github.io/pymathon/source-notebooks/positive-integer-solutions.ipynb?download=1" download>Download the source notebook</a>

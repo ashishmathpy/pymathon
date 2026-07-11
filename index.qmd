@@ -1,7 +1,6 @@
 ---
 title: "PyMathon"
 comments: false
-description: "PyMathon explores Mathematics, Python, JEE Mathematics, and problem solving through clear explanations and visual thinking."
 listing:
   contents: posts
   feed: true
@@ -21,7 +20,7 @@ MATHEMATICS · PYTHON · VISUAL THINKING
 
 # Welcome to PyMathon
 
-I am **Ashish K. Srivastava**, a curious problem solver who enjoys exploring ideas through clear reasoning, computation, and visual thinking. PyMathon brings **Mathematics**, **Python**, **JEE Mathematics**, and **Problem Solving** together in one place.
+PyMathon brings **Mathematics**, **Python**, and **Problem Solving** together in one place.
 
 Here you will find concise explanations that move from a clear idea to a complete solution, with computation used to verify rather than replace reasoning.
 

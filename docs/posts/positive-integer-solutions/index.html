@@ -142,11 +142,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Four Ways to Count Positive Integer Solutions – PyMathon">
 <meta property="og:description" content="Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, generating functions, and Python verification.">
-<meta property="og:image" content="https://ashishmathpy.github.io/pymathon/pymathon-mathematics-python.png">
 <meta property="og:site_name" content="PyMathon">
-<meta property="og:image:height" content="1448">
-<meta property="og:image:width" content="1086">
-<meta property="og:image:alt" content="Python-inspired illustration with mathematical curves and coordinate axes">
 <link rel="canonical" href="https://ashishmathpy.github.io/pymathon/posts/positive-integer-solutions/">
 </head>
 
@@ -208,7 +204,6 @@ window.Quarto = {
                           <div class="quarto-categories">
                 <div class="quarto-category">Mathematics</div>
                 <div class="quarto-category">Combinatorics</div>
-                <div class="quarto-category">JEE Mathematics</div>
                 <div class="quarto-category">Python for Mathematics</div>
                 <div class="quarto-category">Problem Solving</div>
               </div>
@@ -255,7 +250,6 @@ window.Quarto = {
   <li><a href="#comparison-of-methods" id="toc-comparison-of-methods" class="nav-link" data-scroll-target="#comparison-of-methods">Comparison of Methods</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#try-it-yourself" id="toc-try-it-yourself" class="nav-link" data-scroll-target="#try-it-yourself">Try It Yourself</a></li>
-  <li><a href="#downloads" id="toc-downloads" class="nav-link" data-scroll-target="#downloads">Downloads</a></li>
   </ul>
 </nav>
     </div>
@@ -271,9 +265,7 @@ window.Quarto = {
 <p>Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word <strong>positive</strong> matters: each variable must be at least <span class="math inline">\(1\)</span>, not merely non-negative.</p>
 <p>We will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.</p>
 <div class="article-info">
-<p><strong>Difficulty:</strong> Intermediate<br>
-<strong>Prerequisites:</strong> Basic algebra, inequalities, and elementary counting<br>
-<strong>Estimated reading time:</strong> 8 minutes</p>
+<p><strong>Difficulty:</strong> Intermediate<br> <strong>Prerequisites:</strong> Basic algebra, inequalities, and elementary counting<br> <strong>Estimated reading time:</strong> 8 minutes</p>
 </div>
 </section>
 <section id="problem" class="level2">
@@ -451,7 +443,7 @@ t^x\cdot t^{2y}\cdot t^{3z}=t^{x+2y+3z}.
 <section id="python-verification" class="level2">
 <h2 class="anchored" data-anchor-id="python-verification">Python Verification</h2>
 <p>The following program uses the equation to compute <span class="math inline">\(x\)</span> after choosing positive <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>. It prints the triples in the same order as the hand-counting method.</p>
-<div id="5e9adca0" class="cell" data-execution_count="1">
+<div id="81fd65ef" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>solutions <span class="op">=</span> []</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>):</span>
@@ -652,10 +644,6 @@ z=4:&amp;\quad (1,1,4).
 </div>
 </div>
 </div>
-</section>
-<section id="downloads" class="level2">
-<h2 class="anchored" data-anchor-id="downloads">Downloads</h2>
-<p><a href="https://ashishmathpy.github.io/pymathon/source-notebooks/positive-integer-solutions.ipynb?download=1" download="">Download the source notebook</a></p>
 
 
 </section>
@@ -672,11 +660,6 @@ z=4:&amp;\quad (1,1,4).
     <a class="share-button" data-share="email" aria-label="Share this article by email">Email</a>
     <button class="share-button" type="button" data-share="copy" aria-label="Copy this article's link">Copy link</button>
   </div>
-</section>
-
-<section class="article-discussion" aria-labelledby="discussion-heading">
-  <h2 id="discussion-heading">Discussion and Questions</h2>
-  <p>Share your approach, ask a question, or suggest another method. Please keep the discussion mathematical, respectful, and constructive.</p>
 </section>
 
 <script src="../../share.js"></script>
@@ -1080,35 +1063,6 @@ z=4:&amp;\quad (1,1,4).
     }
   });
   </script>
-<input type="hidden" id="giscus-base-theme" value="dark_dimmed">
-<input type="hidden" id="giscus-alt-theme" value="dark_dimmed">
-<script>
-  function loadGiscus() {
-    // Function to get the theme based on body class
-    const getTheme = () => {
-      let baseTheme = document.getElementById('giscus-base-theme').value;
-      let altTheme = document.getElementById('giscus-alt-theme').value;
-      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
-    };
-    const script = document.createElement("script");
-    script.src = "https://giscus.app/client.js";
-    script.async = true;
-    script.dataset.repo = "ashishmathpy/pymathon";
-    script.dataset.repoId = "R_kgDOTUsK1g";
-    script.dataset.category = "General";
-    script.dataset.categoryId = "DIC_kwDOTUsK1s4DA9kg";
-    script.dataset.mapping = "pathname";
-    script.dataset.reactionsEnabled = "1";
-    script.dataset.emitMetadata = "0";
-    script.dataset.inputPosition = "bottom";
-    script.dataset.theme = getTheme();
-    script.dataset.lang = "en";
-    script.crossOrigin = "anonymous";
-    // Append the script to the desired div instead of at the end of the body
-    document.getElementById("quarto-content").appendChild(script);
-  }
-  loadGiscus();
-</script>
 </div> <!-- /content -->
 
 

@@ -432,8 +432,7 @@ table {
   border-color: var(--pymathon-accent);
 }
 
-.article-share,
-.article-discussion {
+.article-share {
   margin-top: 2.5rem;
   padding: 1.4rem;
   background: linear-gradient(135deg, #15263a, #122033);
@@ -441,20 +440,13 @@ table {
   border-radius: 0.75rem;
 }
 
-.article-discussion {
-  margin-top: 1rem;
-  padding-bottom: 0.25rem;
-}
-
-.article-share h2,
-.article-discussion h2 {
+.article-share h2 {
   margin-top: 0;
   color: #f1f6fb;
   font-size: 1.35rem;
 }
 
-.article-share p,
-.article-discussion p {
+.article-share p {
   color: #c8d7e5;
 }
 
@@ -488,13 +480,8 @@ table {
   outline: none;
 }
 
-.giscus {
-  margin-top: 1rem;
-}
-
 @media (max-width: 700px) {
-  .article-share,
-  .article-discussion {
+  .article-share {
     padding: 1rem;
   }
 

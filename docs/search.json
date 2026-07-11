@@ -25,7 +25,7 @@
     "href": "topics.html",
     "title": "Topics",
     "section": "",
-    "text": "Browse the ideas that PyMathon develops. The article filter below shows the categories available in published posts; this topic map will grow as new articles are added.\n\n\n\nEquations, identities, inequalities, and structural reasoning.\n\n\n\nLimits, derivatives, integrals, and their applications.\n\n\n\nLines, conics, loci, and geometric methods on the coordinate plane.\n\n\n\nCounting, arrangements, recurrences, and discrete structures.\n\n\n\nDivisibility, congruences, primes, and integer patterns.\n\n\n\nProblem-solving methods and carefully reasoned exam-style questions.\n\n\n\nSmall programs that verify patterns, calculations, and examples.\n\n\n\nGraphs, diagrams, and dynamic ways to see an idea clearly."
+    "text": "Browse the ideas that PyMathon develops. The article filter below shows the categories available in published posts; this topic map will grow as new articles are added.\n\n\n\nEquations, identities, inequalities, and structural reasoning.\n\n\n\nLimits, derivatives, integrals, and their applications.\n\n\n\nLines, conics, loci, and geometric methods on the coordinate plane.\n\n\n\nCounting, arrangements, recurrences, and discrete structures.\n\n\n\nDivisibility, congruences, primes, and integer patterns.\n\n\n\nSmall programs that verify patterns, calculations, and examples.\n\n\n\nGraphs, diagrams, and dynamic ways to see an idea clearly."
   },
   {
     "objectID": "topics.html#algebra",
@@ -63,13 +63,6 @@
     "text": "Divisibility, congruences, primes, and integer patterns."
   },
   {
-    "objectID": "topics.html#jee-mathematics",
-    "href": "topics.html#jee-mathematics",
-    "title": "Topics",
-    "section": "",
-    "text": "Problem-solving methods and carefully reasoned exam-style questions."
-  },
-  {
     "objectID": "topics.html#python-for-mathematics",
     "href": "topics.html#python-for-mathematics",
     "title": "Topics",
@@ -88,7 +81,7 @@
     "href": "index.html",
     "title": "PyMathon",
     "section": "",
-    "text": "MATHEMATICS · PYTHON · VISUAL THINKING\n\n\n\nI am Ashish K. Srivastava, a curious problem solver who enjoys exploring ideas through clear reasoning, computation, and visual thinking. PyMathon brings Mathematics, Python, JEE Mathematics, and Problem Solving together in one place.\nHere you will find concise explanations that move from a clear idea to a complete solution, with computation used to verify rather than replace reasoning.\nAbout Ashish K. Srivastava"
+    "text": "MATHEMATICS · PYTHON · VISUAL THINKING\n\n\n\nPyMathon brings Mathematics, Python, and Problem Solving together in one place.\nHere you will find concise explanations that move from a clear idea to a complete solution, with computation used to verify rather than replace reasoning.\nAbout Ashish K. Srivastava"
   },
   {
     "objectID": "index.html#featured-article",
@@ -158,14 +151,14 @@
     "href": "posts/positive-integer-solutions/index.html",
     "title": "Four Ways to Count Positive Integer Solutions",
     "section": "",
-    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.\n\nDifficulty: Intermediate\nPrerequisites: Basic algebra, inequalities, and elementary counting\nEstimated reading time: 8 minutes"
+    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.\n\nDifficulty: Intermediate Prerequisites: Basic algebra, inequalities, and elementary counting Estimated reading time: 8 minutes"
   },
   {
     "objectID": "posts/positive-integer-solutions/index.html#introduction",
     "href": "posts/positive-integer-solutions/index.html#introduction",
     "title": "Four Ways to Count Positive Integer Solutions",
     "section": "",
-    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.\n\nDifficulty: Intermediate\nPrerequisites: Basic algebra, inequalities, and elementary counting\nEstimated reading time: 8 minutes"
+    "text": "Counting integer solutions is a central idea in algebra, number theory, and combinatorics. Here the word positive matters: each variable must be at least \\(1\\), not merely non-negative.\nWe will count the solutions in four complementary ways. The mathematics supplies the proof; Python provides an independent verification.\n\nDifficulty: Intermediate Prerequisites: Basic algebra, inequalities, and elementary counting Estimated reading time: 8 minutes"
   },
   {
     "objectID": "posts/positive-integer-solutions/index.html#problem",
@@ -236,12 +229,5 @@
     "title": "Four Ways to Count Positive Integer Solutions",
     "section": "Try It Yourself",
     "text": "Try It Yourself\n\nFind the number of positive integer solutions of \\(x+2y+3z=18\\).\nFind the number of non-negative integer solutions of \\(a+2b+3c=10\\).\nFind the number of positive integer solutions of \\(x+3y+4z=20\\).\n\n\n\n\n\n\n\nTipHint for Problem 1\n\n\n\n\n\nFix \\(z\\) first. For each allowed value of \\(z\\), count the positive values of \\(y\\) that keep \\(x=18-2y-3z\\) positive.\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 1\n\n\n\n\n\nThe possible values are \\(z=1,2,3,4,5\\). The row counts are \\(7,5,4,2,1\\), so the total is\n\\[\n7+5+4+2+1=\\boxed{19}.\n\\]\n\n\n\n\n\n\n\n\n\nTipHint for Problem 2\n\n\n\n\n\nFix \\(c=0,1,2,3\\). For each \\(c\\), solve \\(a+2b=10-3c\\) with \\(a,b\\geq0\\).\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 2\n\n\n\n\n\nThe row counts are \\(6,4,3,1\\), giving\n\\[\n6+4+3+1=\\boxed{14}.\n\\]\n\n\n\n\n\n\n\n\n\nTipHint for Problem 3\n\n\n\n\n\nUse \\(x=20-3y-4z\\) and count the positive values of \\(y\\) for each possible positive \\(z\\).\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 3\n\n\n\n\n\nFor \\(z=1,2,3,4\\), the possible values of \\(y\\) number \\(5,3,2,1\\) respectively. Hence the total is\n\\[\n5+3+2+1=\\boxed{11}.\n\\]"
-  },
-  {
-    "objectID": "posts/positive-integer-solutions/index.html#downloads",
-    "href": "posts/positive-integer-solutions/index.html#downloads",
-    "title": "Four Ways to Count Positive Integer Solutions",
-    "section": "Downloads",
-    "text": "Downloads\nDownload the source notebook"
   }
 ]
