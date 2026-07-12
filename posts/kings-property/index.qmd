@@ -1,0 +1,269 @@
+---
+title: "King's Property for Definite Integrals"
+subtitle: "Let me show you the algebra, the geometry, and an interactive area proof"
+author: "Ashish K. Srivastava"
+date: "2026-06-21"
+description: "King's property explained using substitution, graph reflection, Python, and an interactive SVG area applet."
+categories:
+- JEE Mathematics
+- Calculus
+- Interactive Visualisation
+difficulty: "Beginner to Intermediate"
+prerequisites: "Definite integrals and substitution"
+estimated-reading-time: "9 minutes"
+draft: false
+toc: true
+code-fold: true
+code-summary: "Show the Python code"
+execute:
+  echo: true
+  warning: false
+  fig-format: svg
+include-after-body:
+  - text: |
+      <script src="king-property.js"></script>
+---
+
+## The property
+
+Let us explore one of the most useful symmetry ideas in definite integration. If $f$ is integrable on $[a,b]$, **King's property** says
+
+$$
+\boxed{\int_a^b f(x)\,dx=\int_a^b f(a+b-x)\,dx.}
+$$
+
+In simple language: reflecting the graph horizontally across the midpoint $x=(a+b)/2$ does not change its signed area over the interval.
+
+Adding the two equal forms gives the useful identity
+
+$$
+\boxed{\int_a^b f(x)\,dx
+=\frac12\int_a^b\bigl[f(x)+f(a+b-x)\bigr],dx.}
+$$
+
+::: {.article-info}
+**Important:** the property preserves **signed area**, so it remains valid even when parts of the graph lie below the $x$-axis.
+:::
+
+## Let me prove it mathematically
+
+Begin with the reflected integral
+
+$$
+I=\int_a^b f(a+b-x)\,dx.
+$$
+
+Now use the substitution
+
+$$
+u=a+b-x,\qquad du=-dx.
+$$
+
+The limits reverse:
+
+$$
+x=a\Longrightarrow u=b,
+\qquad
+x=b\Longrightarrow u=a.
+$$
+
+Therefore
+
+$$
+\begin{aligned}
+I
+&=\int_b^a f(u)(-du)\\
+&=\int_a^b f(u)\,du\\
+&=\int_a^b f(x)\,dx.
+\end{aligned}
+$$
+
+In the last line, the dummy variable $u$ has simply been renamed as $x$. This proves King's property.
+
+## Now let us see the graphical proof
+
+Focus on the transformation
+
+$$
+x\longmapsto a+b-x.
+$$
+
+It reflects every point across the midpoint $m=(a+b)/2$. Imagine a very narrow strip at $x=t$ under $y=f(x)$. Its approximate signed area is
+
+$$
+f(t)\,\Delta x.
+$$
+
+After reflection, its partner lies at $x=a+b-t$. The reflected curve has height
+
+$$
+f\bigl(a+b-(a+b-t)\bigr)=f(t).
+$$
+
+Reflection also preserves the width $\Delta x$. Therefore, the two strips have exactly the same signed area. Pairing every strip in this way shows that the two complete integrals must be equal.
+
+## Interactive area proof
+
+Now try the idea yourself. Drag directly across the graph, or use the slider. The blue strip is at $t$ under $f(x)$; the gold strip is at its reflected position $a+b-t$ under $f(a+b-x)$. Watch how the shaded regions accumulate equal signed areas.
+
+::: {.king-applet aria-label="Interactive graphical demonstration of King's property"}
+<div class="king-toolbar">
+  <label for="king-position">Reflection position <output id="king-t">t = 1.50</output></label>
+  <input id="king-position" type="range" min="0" max="6" value="1.5" step="0.01">
+</div>
+<div id="king-svg" role="img" aria-label="A function and its horizontal reflection with paired area strips"></div>
+<div class="king-readout" aria-live="polite">
+  <div><span class="king-dot king-blue"></span>Original strip: <strong id="king-x">x = 1.50</strong></div>
+  <div><span class="king-dot king-gold"></span>Reflected strip: <strong id="king-rx">x = 4.50</strong></div>
+  <div>Paired height: <strong id="king-height">—</strong></div>
+  <div>Accumulated areas: <strong id="king-areas">—</strong></div>
+</div>
+<p class="king-instruction">At the midpoint, the paired strips meet. Continue moving the slider to see them exchange sides while preserving their correspondence.</p>
+:::
+
+The applet uses $[a,b]=[0,6]$ and a deliberately asymmetric function. This makes it clear that the equality comes from reflection—not from the original graph already being symmetric.
+
+### See the applet code
+
+The complete code behind the interactive graph is included below. Expand the block to study, copy, or adapt it.
+
+::: {.callout-note collapse="true"}
+## Complete JavaScript source
+
+```{.javascript code-fold="false"}
+{{< include king-property.js >}}
+```
+:::
+
+## Verifying the picture with Python
+
+The same asymmetric function can be plotted and integrated numerically with Python. This gives an independent computational check of the graphical argument.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.style.use("dark_background")
+
+a, b = 0, 6
+x = np.linspace(a, b, 1000)
+
+def f(x):
+    return 1.35 + 0.42 * np.sin(1.55 * x) + 0.16 * x
+
+y_original = f(x)
+y_reflected = f(a + b - x)
+
+area_original = np.trapezoid(y_original, x)
+area_reflected = np.trapezoid(y_reflected, x)
+
+print(f"Area under f(x):       {area_original:.8f}")
+print(f"Area after reflection: {area_reflected:.8f}")
+
+fig, ax = plt.subplots(figsize=(9, 5), facecolor="#0c1521")
+ax.set_facecolor("#0c1521")
+plt.plot(x, y_original, label=r"$f(x)$", linewidth=2.5)
+plt.plot(x, y_reflected, label=r"$f(a+b-x)$", linewidth=2.5)
+plt.fill_between(x, y_original, alpha=0.18)
+plt.axvline((a + b) / 2, color="gray", linestyle="--", label="midpoint")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("A function and its reflection")
+plt.legend()
+plt.grid(alpha=0.2)
+plt.tight_layout()
+plt.show()
+```
+
+The two printed values agree up to numerical rounding. Python confirms what the substitution already proved exactly.
+
+## Why the averaged form is powerful
+
+Let
+
+$$
+I=\int_a^b f(x)\,dx.
+$$
+
+King's property gives another expression for the same number:
+
+$$
+I=\int_a^b f(a+b-x)\,dx.
+$$
+
+Adding and dividing by $2$ gives
+
+$$
+I=\frac12\int_a^b\left[f(x)+f(a+b-x)\right]dx.
+$$
+
+This is most useful when the sum inside the brackets simplifies.
+
+## Let me work through an example
+
+Evaluate
+
+$$
+I=\int_0^{\pi/2}\frac{\sin x}{\sin x+\cos x}\,dx.
+$$
+
+Here $a+b=\pi/2$. King's property gives
+
+$$
+I=\int_0^{\pi/2}
+\frac{\cos x}{\cos x+\sin x}\,dx.
+$$
+
+Adding the two equations,
+
+$$
+2I=\int_0^{\pi/2}1\,dx=\frac{\pi}{2}.
+$$
+
+Hence
+
+$$
+\boxed{I=\frac{\pi}{4}}.
+$$
+
+## A more powerful JEE-style example
+
+Evaluate
+
+$$
+J=\int_0^\pi \frac{x}{1+\sin x}\,dx.
+$$
+
+The factor $x$ makes direct integration look unpleasant. Reflecting $x$ across $[0,\pi]$ replaces it by $\pi-x$, while $\sin(\pi-x)=\sin x$. Thus
+
+$$
+J=\int_0^\pi \frac{\pi-x}{1+\sin x}\,dx.
+$$
+
+Adding this to the original form gives
+
+$$
+2J=\pi\int_0^\pi\frac{dx}{1+\sin x}.
+$$
+
+Now rationalise the denominator:
+
+$$
+\frac{1}{1+\sin x}
+=\frac{1-\sin x}{\cos^2x}
+=\sec^2x-\sec x\tan x.
+$$
+
+Although the two terms are individually improper at $x=\pi/2$, their difference has a finite continuous limit there. An antiderivative on each side is $\tan x-\sec x$, and the combined definite integral equals $2$. Therefore
+
+$$
+2J=2\pi
+\qquad\Longrightarrow\qquad
+\boxed{J=\pi}.
+$$
+
+The important move was not the final integration. King's property first removed the troublesome factor $x$.
+
+## Takeaway
+
+King's property tells us that a definite integral is unchanged when its interval is reflected. Algebraically, reversing the limits cancels the minus sign in $du=-dx$. Geometrically, every signed-area strip has an equal reflected partner. The slider makes these two descriptions visible as the same idea.

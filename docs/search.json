@@ -257,5 +257,131 @@
     "title": "Longest Collatz Sequence",
     "section": "References",
     "text": "References\n\nProject Euler, Problem 14: Longest Collatz Sequence\nJeffrey C. Lagarias, The \\(3x+1\\) Problem: An Overview\nTerence Tao, Almost All Orbits of the Collatz Map Attain Almost Bounded Values\nTerence Tao, expository discussion of the result\nStuart A. Kurtz and Janos Simon, The Undecidability of the Generalized Collatz Problem"
+  },
+  {
+    "objectID": "posts/kings-rule/index.html",
+    "href": "posts/kings-rule/index.html",
+    "title": "King’s Rule for Definite Integrals",
+    "section": "",
+    "text": "Let \\(f\\) be integrable on \\([a,b]\\). King’s rule says\n\\[\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\\]\nIt says that reflecting a graph horizontally across the midpoint \\(x=(a+b)/2\\) does not change its signed area over the interval.\nAdding the two equal forms gives the particularly useful identity\n\\[\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr]\\,dx.}\n\\]\n\nImportant: the rule preserves signed area. It therefore remains valid even when parts of the graph lie below the \\(x\\)-axis."
+  },
+  {
+    "objectID": "posts/kings-rule/index.html#the-rule",
+    "href": "posts/kings-rule/index.html#the-rule",
+    "title": "King’s Rule for Definite Integrals",
+    "section": "",
+    "text": "Let \\(f\\) be integrable on \\([a,b]\\). King’s rule says\n\\[\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\\]\nIt says that reflecting a graph horizontally across the midpoint \\(x=(a+b)/2\\) does not change its signed area over the interval.\nAdding the two equal forms gives the particularly useful identity\n\\[\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr]\\,dx.}\n\\]\n\nImportant: the rule preserves signed area. It therefore remains valid even when parts of the graph lie below the \\(x\\)-axis."
+  },
+  {
+    "objectID": "posts/kings-rule/index.html#mathematical-proof",
+    "href": "posts/kings-rule/index.html#mathematical-proof",
+    "title": "King’s Rule for Definite Integrals",
+    "section": "Mathematical proof",
+    "text": "Mathematical proof\nBegin with the reflected integral\n\\[\nI=\\int_a^b f(a+b-x)\\,dx.\n\\]\nUse the substitution\n\\[\nu=a+b-x,\\qquad du=-dx.\n\\]\nThe limits reverse:\n\\[\nx=a\\Longrightarrow u=b,\n\\qquad\nx=b\\Longrightarrow u=a.\n\\]\nTherefore\n\\[\n\\begin{aligned}\nI\n&=\\int_b^a f(u)(-du)\\\\\n&=\\int_a^b f(u)\\,du\\\\\n&=\\int_a^b f(x)\\,dx.\n\\end{aligned}\n\\]\nThe final change from \\(u\\) to \\(x\\) changes only the name of the dummy variable. This proves the rule."
+  },
+  {
+    "objectID": "posts/kings-rule/index.html#graphical-proof-pair-the-strips",
+    "href": "posts/kings-rule/index.html#graphical-proof-pair-the-strips",
+    "title": "King’s Rule for Definite Integrals",
+    "section": "Graphical proof: pair the strips",
+    "text": "Graphical proof: pair the strips\nThe transformation\n\\[\nx\\longmapsto a+b-x\n\\]\nreflects every point across the midpoint \\(m=(a+b)/2\\). A narrow strip at \\(x=t\\) under \\(y=f(x)\\) has approximate signed area\n\\[\nf(t)\\,\\Delta x.\n\\]\nAfter reflection, its partner lies at \\(x=a+b-t\\). The reflected curve has height\n\\[\nf\\bigl(a+b-(a+b-t)\\bigr)=f(t),\n\\]\nand reflection preserves the strip width \\(\\Delta x\\). Thus the partner strip has the same signed area. Pairing all such strips from left to right proves that the two integrals are equal."
+  },
+  {
+    "objectID": "posts/kings-rule/index.html#interactive-area-proof",
+    "href": "posts/kings-rule/index.html#interactive-area-proof",
+    "title": "King’s Rule for Definite Integrals",
+    "section": "Interactive area proof",
+    "text": "Interactive area proof\nDrag directly across the graph, or use the slider. The blue strip is at \\(t\\) under \\(f(x)\\); the gold strip is at its reflected position \\(a+b-t\\) under \\(f(a+b-x)\\). The shaded regions accumulate equal signed areas.\n\n\nReflection position\n\nt = 1.50\n\n \n\n\n\n\n\nOriginal strip: x = 1.50\n\n\nReflected strip: x = 4.50\n\n\nPaired height: —\n\n\nAccumulated areas: —\n\n\n\nMove the handle slowly. At the midpoint the paired strips meet; beyond it they exchange sides.\n\n\nThe applet uses \\([a,b]=[0,6]\\). Its function is deliberately asymmetric: the equality is caused by reflection, not by choosing a symmetric graph."
+  },
+  {
+    "objectID": "posts/kings-rule/index.html#why-the-averaged-form-is-powerful",
+    "href": "posts/kings-rule/index.html#why-the-averaged-form-is-powerful",
+    "title": "King’s Rule for Definite Integrals",
+    "section": "Why the averaged form is powerful",
+    "text": "Why the averaged form is powerful\nLet\n\\[\nI=\\int_a^b f(x)\\,dx.\n\\]\nKing’s rule gives another expression for the same number:\n\\[\nI=\\int_a^b f(a+b-x)\\,dx.\n\\]\nAdding and dividing by \\(2\\) yields\n\\[\nI=\\frac12\\int_a^b\\left[f(x)+f(a+b-x)\\right]dx.\n\\]\nThis is most useful when the sum inside the brackets simplifies."
+  },
+  {
+    "objectID": "posts/kings-rule/index.html#example",
+    "href": "posts/kings-rule/index.html#example",
+    "title": "King’s Rule for Definite Integrals",
+    "section": "Example",
+    "text": "Example\nEvaluate\n\\[\nI=\\int_0^{\\pi/2}\\frac{\\sin x}{\\sin x+\\cos x}\\,dx.\n\\]\nHere \\(a+b=\\pi/2\\). King’s rule gives\n\\[\nI=\\int_0^{\\pi/2}\n\\frac{\\cos x}{\\cos x+\\sin x}\\,dx.\n\\]\nAdd the two equations:\n\\[\n2I=\\int_0^{\\pi/2}1\\,dx=\\frac{\\pi}{2}.\n\\]\nHence\n\\[\n\\boxed{I=\\frac{\\pi}{4}}.\n\\]"
+  },
+  {
+    "objectID": "posts/kings-rule/index.html#takeaway",
+    "href": "posts/kings-rule/index.html#takeaway",
+    "title": "King’s Rule for Definite Integrals",
+    "section": "Takeaway",
+    "text": "Takeaway\nKing’s rule is simply invariance of a definite integral under reflection of its interval. Algebraically, reversing the limits cancels the minus sign in \\(du=-dx\\). Geometrically, every signed-area strip has an equal reflected partner."
+  },
+  {
+    "objectID": "posts/kings-property/index.html",
+    "href": "posts/kings-property/index.html",
+    "title": "King’s Property for Definite Integrals",
+    "section": "",
+    "text": "Let us explore one of the most useful symmetry ideas in definite integration. If \\(f\\) is integrable on \\([a,b]\\), King’s property says\n\\[\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\\]\nIn simple language: reflecting the graph horizontally across the midpoint \\(x=(a+b)/2\\) does not change its signed area over the interval.\nAdding the two equal forms gives the useful identity\n\\[\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr],dx.}\n\\]\n\nImportant: the property preserves signed area, so it remains valid even when parts of the graph lie below the \\(x\\)-axis."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#the-property",
+    "href": "posts/kings-property/index.html#the-property",
+    "title": "King’s Property for Definite Integrals",
+    "section": "",
+    "text": "Let us explore one of the most useful symmetry ideas in definite integration. If \\(f\\) is integrable on \\([a,b]\\), King’s property says\n\\[\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\\]\nIn simple language: reflecting the graph horizontally across the midpoint \\(x=(a+b)/2\\) does not change its signed area over the interval.\nAdding the two equal forms gives the useful identity\n\\[\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr],dx.}\n\\]\n\nImportant: the property preserves signed area, so it remains valid even when parts of the graph lie below the \\(x\\)-axis."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#let-me-prove-it-mathematically",
+    "href": "posts/kings-property/index.html#let-me-prove-it-mathematically",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Let me prove it mathematically",
+    "text": "Let me prove it mathematically\nBegin with the reflected integral\n\\[\nI=\\int_a^b f(a+b-x)\\,dx.\n\\]\nNow use the substitution\n\\[\nu=a+b-x,\\qquad du=-dx.\n\\]\nThe limits reverse:\n\\[\nx=a\\Longrightarrow u=b,\n\\qquad\nx=b\\Longrightarrow u=a.\n\\]\nTherefore\n\\[\n\\begin{aligned}\nI\n&=\\int_b^a f(u)(-du)\\\\\n&=\\int_a^b f(u)\\,du\\\\\n&=\\int_a^b f(x)\\,dx.\n\\end{aligned}\n\\]\nIn the last line, the dummy variable \\(u\\) has simply been renamed as \\(x\\). This proves King’s property."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#now-let-us-see-the-graphical-proof",
+    "href": "posts/kings-property/index.html#now-let-us-see-the-graphical-proof",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Now let us see the graphical proof",
+    "text": "Now let us see the graphical proof\nFocus on the transformation\n\\[\nx\\longmapsto a+b-x.\n\\]\nIt reflects every point across the midpoint \\(m=(a+b)/2\\). Imagine a very narrow strip at \\(x=t\\) under \\(y=f(x)\\). Its approximate signed area is\n\\[\nf(t)\\,\\Delta x.\n\\]\nAfter reflection, its partner lies at \\(x=a+b-t\\). The reflected curve has height\n\\[\nf\\bigl(a+b-(a+b-t)\\bigr)=f(t).\n\\]\nReflection also preserves the width \\(\\Delta x\\). Therefore, the two strips have exactly the same signed area. Pairing every strip in this way shows that the two complete integrals must be equal."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#interactive-area-proof",
+    "href": "posts/kings-property/index.html#interactive-area-proof",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Interactive area proof",
+    "text": "Interactive area proof\nNow try the idea yourself. Drag directly across the graph, or use the slider. The blue strip is at \\(t\\) under \\(f(x)\\); the gold strip is at its reflected position \\(a+b-t\\) under \\(f(a+b-x)\\). Watch how the shaded regions accumulate equal signed areas.\n\n\nReflection position\n\nt = 1.50\n\n \n\n\n\n\n\n\nOriginal strip: x = 1.50\n\n\nReflected strip: x = 4.50\n\n\nPaired height: —\n\n\nAccumulated areas: —\n\n\n\nAt the midpoint, the paired strips meet. Continue moving the slider to see them exchange sides while preserving their correspondence.\n\n\nThe applet uses \\([a,b]=[0,6]\\) and a deliberately asymmetric function. This makes it clear that the equality comes from reflection—not from the original graph already being symmetric.\n\nSee the applet code\nThe complete code behind the interactive graph is included below. Expand the block to study, copy, or adapt it.\n\n\n\n\n\n\nNoteComplete JavaScript source\n\n\n\n\n\n(() =&gt; {\n  const host = document.getElementById(\"king-svg\");\n  const slider = document.getElementById(\"king-position\");\n  if (!host || !slider) return;\n\n  const NS = \"http://www.w3.org/2000/svg\";\n  const a = 0, b = 6, W = 900, H = 470;\n  const pad = { left: 58, right: 24, top: 28, bottom: 48 };\n  const plotW = W - pad.left - pad.right;\n  const plotH = H - pad.top - pad.bottom;\n  const yMax = 3.15;\n  const f = x =&gt; 1.35 + 0.42 * Math.sin(1.55 * x) + 0.16 * x;\n  const reflected = x =&gt; f(a + b - x);\n  const X = x =&gt; pad.left + (x - a) / (b - a) * plotW;\n  const Y = y =&gt; pad.top + (yMax - y) / yMax * plotH;\n  const base = Y(0);\n  const els = {\n    t: document.getElementById(\"king-t\"),\n    x: document.getElementById(\"king-x\"),\n    rx: document.getElementById(\"king-rx\"),\n    height: document.getElementById(\"king-height\"),\n    areas: document.getElementById(\"king-areas\")\n  };\n\n  const svg = document.createElementNS(NS, \"svg\");\n  svg.setAttribute(\"viewBox\", `0 0 ${W} ${H}`);\n  svg.setAttribute(\"preserveAspectRatio\", \"xMidYMid meet\");\n  svg.setAttribute(\"aria-hidden\", \"true\");\n  host.appendChild(svg);\n\n  const node = (name, attrs = {}, parent = svg) =&gt; {\n    const el = document.createElementNS(NS, name);\n    Object.entries(attrs).forEach(([key, value]) =&gt; el.setAttribute(key, value));\n    parent.appendChild(el);\n    return el;\n  };\n  const text = (value, x, y, attrs = {}) =&gt; {\n    const el = node(\"text\", { x, y, ...attrs });\n    el.textContent = value;\n    return el;\n  };\n  const points = (fn, lo = a, hi = b, count = 320) =&gt; {\n    let d = \"\";\n    for (let i = 0; i &lt;= count; i++) {\n      const x = lo + (hi - lo) * i / count;\n      d += `${i ? \"L\" : \"M\"}${X(x).toFixed(2)},${Y(fn(x)).toFixed(2)} `;\n    }\n    return d;\n  };\n  const areaPath = (fn, lo, hi) =&gt; {\n    const curve = points(fn, lo, hi, 150).replace(/^M/, \"L\");\n    return `M${X(lo)},${base} ${curve}L${X(hi)},${base} L${X(lo)},${base} Z`;\n  };\n  const integral = (fn, lo, hi, n = 600) =&gt; {\n    if (hi &lt; lo) return -integral(fn, hi, lo, n);\n    const h = (hi - lo) / n;\n    let sum = 0.5 * (fn(lo) + fn(hi));\n    for (let i = 1; i &lt; n; i++) sum += fn(lo + i * h);\n    return sum * h;\n  };\n\n  const grid = node(\"g\", { stroke: \"#aebdcb\", \"stroke-opacity\": \".18\" });\n  for (let i = 0; i &lt;= 6; i++) {\n    node(\"line\", { x1: X(i), y1: pad.top, x2: X(i), y2: base }, grid);\n    text(String(i), X(i), base + 27, { fill: \"#cbd8e4\", \"text-anchor\": \"middle\" });\n  }\n  for (let y = 0; y &lt;= 3; y++)\n    node(\"line\", { x1: pad.left, y1: Y(y), x2: W - pad.right, y2: Y(y) }, grid);\n\n  node(\"line\", { x1: pad.left, y1: base, x2: W-pad.right, y2: base, stroke: \"#aebdcb\" });\n  node(\"line\", { x1: X(3), y1: pad.top, x2: X(3), y2: base,\n    stroke: \"#ffffff\", \"stroke-opacity\": \".35\", \"stroke-dasharray\": \"7 7\" });\n  text(\"midpoint\", X(3), pad.top + 14, { fill: \"#cbd8e4\", \"text-anchor\": \"middle\" });\n  text(\"f(x)\", pad.left + 10, pad.top + 20, { fill: \"#7be1eb\", \"font-weight\": \"700\" });\n  text(\"f(a+b−x)\", pad.left + 10, pad.top + 42, { fill: \"#ffd27a\", \"font-weight\": \"700\" });\n\n  const blueArea = node(\"path\", { fill: \"#57b9c5\", \"fill-opacity\": \".22\" });\n  const goldArea = node(\"path\", { fill: \"#f3c56b\", \"fill-opacity\": \".22\" });\n  node(\"path\", { d: points(f), fill: \"none\", stroke: \"#57b9c5\", \"stroke-width\": \"4\" });\n  node(\"path\", { d: points(reflected), fill: \"none\", stroke: \"#f3c56b\", \"stroke-width\": \"4\" });\n  const blueStrip = node(\"rect\", { fill: \"#7be1eb\" });\n  const goldStrip = node(\"rect\", { fill: \"#ffd27a\" });\n  const bluePoint = node(\"circle\", { r: 7, fill: \"#7be1eb\" });\n  const goldPoint = node(\"circle\", { r: 7, fill: \"#ffd27a\" });\n\n  function draw() {\n    const t = Number(slider.value);\n    const rt = a + b - t;\n    const left = Math.min(t, rt), right = Math.max(t, rt);\n    blueArea.setAttribute(\"d\", areaPath(f, a, left));\n    goldArea.setAttribute(\"d\", areaPath(reflected, right, b));\n\n    const setStrip = (rect, point, x, fn) =&gt; {\n      const width = 10;\n      rect.setAttribute(\"x\", X(x) - width / 2);\n      rect.setAttribute(\"y\", Y(fn(x)));\n      rect.setAttribute(\"width\", width);\n      rect.setAttribute(\"height\", base - Y(fn(x)));\n      point.setAttribute(\"cx\", X(x));\n      point.setAttribute(\"cy\", Y(fn(x)));\n    };\n    setStrip(blueStrip, bluePoint, t, f);\n    setStrip(goldStrip, goldPoint, rt, reflected);\n\n    els.t.textContent = `t = ${t.toFixed(2)}`;\n    els.x.textContent = `x = ${t.toFixed(2)}`;\n    els.rx.textContent = `x = ${rt.toFixed(2)}`;\n    els.height.textContent = `${f(t).toFixed(3)} = ${reflected(rt).toFixed(3)}`;\n    els.areas.textContent =\n      `${integral(f, a, left).toFixed(3)} ≈ ${integral(reflected, right, b).toFixed(3)}`;\n  }\n\n  function setFromPointer(event) {\n    const rect = svg.getBoundingClientRect();\n    const viewX = (event.clientX - rect.left) / rect.width * W;\n    const ratio = Math.max(0, Math.min(1, (viewX - pad.left) / plotW));\n    slider.value = String(a + ratio * (b-a));\n    draw();\n  }\n\n  let dragging = false;\n  svg.addEventListener(\"pointerdown\", event =&gt; {\n    dragging = true;\n    svg.setPointerCapture(event.pointerId);\n    setFromPointer(event);\n  });\n  svg.addEventListener(\"pointermove\", event =&gt; dragging && setFromPointer(event));\n  svg.addEventListener(\"pointerup\", () =&gt; dragging = false);\n  svg.addEventListener(\"pointercancel\", () =&gt; dragging = false);\n  slider.addEventListener(\"input\", draw);\n  draw();\n})();"
+  },
+  {
+    "objectID": "posts/kings-property/index.html#verifying-the-picture-with-python",
+    "href": "posts/kings-property/index.html#verifying-the-picture-with-python",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Verifying the picture with Python",
+    "text": "Verifying the picture with Python\nThe same asymmetric function can be plotted and integrated numerically with Python. This gives an independent computational check of the graphical argument.\n\n\nShow the Python code\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nplt.style.use(\"dark_background\")\n\na, b = 0, 6\nx = np.linspace(a, b, 1000)\n\ndef f(x):\n    return 1.35 + 0.42 * np.sin(1.55 * x) + 0.16 * x\n\ny_original = f(x)\ny_reflected = f(a + b - x)\n\narea_original = np.trapezoid(y_original, x)\narea_reflected = np.trapezoid(y_reflected, x)\n\nprint(f\"Area under f(x):       {area_original:.8f}\")\nprint(f\"Area after reflection: {area_reflected:.8f}\")\n\nfig, ax = plt.subplots(figsize=(9, 5), facecolor=\"#0c1521\")\nax.set_facecolor(\"#0c1521\")\nplt.plot(x, y_original, label=r\"$f(x)$\", linewidth=2.5)\nplt.plot(x, y_reflected, label=r\"$f(a+b-x)$\", linewidth=2.5)\nplt.fill_between(x, y_original, alpha=0.18)\nplt.axvline((a + b) / 2, color=\"gray\", linestyle=\"--\", label=\"midpoint\")\nplt.xlabel(\"x\")\nplt.ylabel(\"y\")\nplt.title(\"A function and its reflection\")\nplt.legend()\nplt.grid(alpha=0.2)\nplt.tight_layout()\nplt.show()\n\n\nArea under f(x):       11.51982490\nArea after reflection: 11.51982490\n\n\n\n\n\n\n\n\n\nThe two printed values agree up to numerical rounding. Python confirms what the substitution already proved exactly."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#why-the-averaged-form-is-powerful",
+    "href": "posts/kings-property/index.html#why-the-averaged-form-is-powerful",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Why the averaged form is powerful",
+    "text": "Why the averaged form is powerful\nLet\n\\[\nI=\\int_a^b f(x)\\,dx.\n\\]\nKing’s property gives another expression for the same number:\n\\[\nI=\\int_a^b f(a+b-x)\\,dx.\n\\]\nAdding and dividing by \\(2\\) gives\n\\[\nI=\\frac12\\int_a^b\\left[f(x)+f(a+b-x)\\right]dx.\n\\]\nThis is most useful when the sum inside the brackets simplifies."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#let-me-work-through-an-example",
+    "href": "posts/kings-property/index.html#let-me-work-through-an-example",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Let me work through an example",
+    "text": "Let me work through an example\nEvaluate\n\\[\nI=\\int_0^{\\pi/2}\\frac{\\sin x}{\\sin x+\\cos x}\\,dx.\n\\]\nHere \\(a+b=\\pi/2\\). King’s property gives\n\\[\nI=\\int_0^{\\pi/2}\n\\frac{\\cos x}{\\cos x+\\sin x}\\,dx.\n\\]\nAdding the two equations,\n\\[\n2I=\\int_0^{\\pi/2}1\\,dx=\\frac{\\pi}{2}.\n\\]\nHence\n\\[\n\\boxed{I=\\frac{\\pi}{4}}.\n\\]"
+  },
+  {
+    "objectID": "posts/kings-property/index.html#takeaway",
+    "href": "posts/kings-property/index.html#takeaway",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Takeaway",
+    "text": "Takeaway\nKing’s property tells us that a definite integral is unchanged when its interval is reflected. Algebraically, reversing the limits cancels the minus sign in \\(du=-dx\\). Geometrically, every signed-area strip has an equal reflected partner. The slider makes these two descriptions visible as the same idea."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#a-more-powerful-jee-style-example",
+    "href": "posts/kings-property/index.html#a-more-powerful-jee-style-example",
+    "title": "King’s Property for Definite Integrals",
+    "section": "A more powerful JEE-style example",
+    "text": "A more powerful JEE-style example\nEvaluate\n\\[\nJ=\\int_0^\\pi \\frac{x}{1+\\sin x}\\,dx.\n\\]\nThe factor \\(x\\) makes direct integration look unpleasant. Reflecting \\(x\\) across \\([0,\\pi]\\) replaces it by \\(\\pi-x\\), while \\(\\sin(\\pi-x)=\\sin x\\). Thus\n\\[\nJ=\\int_0^\\pi \\frac{\\pi-x}{1+\\sin x}\\,dx.\n\\]\nAdding this to the original form gives\n\\[\n2J=\\pi\\int_0^\\pi\\frac{dx}{1+\\sin x}.\n\\]\nNow rationalise the denominator:\n\\[\n\\frac{1}{1+\\sin x}\n=\\frac{1-\\sin x}{\\cos^2x}\n=\\sec^2x-\\sec x\\tan x.\n\\]\nAlthough the two terms are individually improper at \\(x=\\pi/2\\), their difference has a finite continuous limit there. An antiderivative on each side is \\(\\tan x-\\sec x\\), and the combined definite integral equals \\(2\\). Therefore\n\\[\n2J=2\\pi\n\\qquad\\Longrightarrow\\qquad\n\\boxed{J=\\pi}.\n\\]\nThe important move was not the final integration. King’s property first removed the troublesome factor \\(x\\)."
   }
 ]

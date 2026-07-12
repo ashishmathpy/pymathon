@@ -3,7 +3,8 @@
     "listing": "/index.html",
     "items": [
       "/posts/longest-collatz-sequence/index.html",
-      "/posts/positive-integer-solutions/index.html"
+      "/posts/positive-integer-solutions/index.html",
+      "/posts/kings-property/index.html"
     ]
   }
 ]

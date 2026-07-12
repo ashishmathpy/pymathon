@@ -207,6 +207,32 @@ li {
   color: #f3c56b;
 }
 
+.king-applet {
+  margin: 1.5rem 0 2rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background: linear-gradient(145deg, #13273b, #0d1a29);
+  border: 1px solid #3d6079;
+  border-radius: 0.8rem;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 22%);
+}
+
+.king-toolbar label { display: flex; justify-content: space-between; gap: 1rem; color: #dce8f1; }
+.king-toolbar output { color: #f3c56b; font-variant-numeric: tabular-nums; }
+.king-toolbar input { width: 100%; margin: 0.8rem 0 1rem; accent-color: #57b9c5; touch-action: pan-y; }
+#king-svg { display: block; width: 100%; border: 1px solid #2c4055; border-radius: 0.5rem; background: #0b1521; cursor: ew-resize; touch-action: none; overflow: hidden; }
+#king-svg svg { display: block; width: 100%; height: auto; min-height: 310px; font-family: system-ui, sans-serif; }
+.cell-output-display img[src$=".svg"] { display: block; width: 100%; height: auto; background: #0c1521; border: 1px solid var(--pymathon-border); }
+.king-readout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.45rem 1.2rem; margin-top: 1rem; color: #cbd8e4; font-size: 0.94rem; }
+.king-readout strong { color: #f5f8fb; font-variant-numeric: tabular-nums; }
+.king-dot { display: inline-block; width: 0.7rem; height: 0.7rem; margin-right: 0.35rem; border-radius: 50%; }
+.king-blue { background: #7be1eb; } .king-gold { background: #ffd27a; }
+.king-instruction { margin: 0.8rem 0 0; color: #9eb2c3; font-size: 0.88rem; }
+
+@media (max-width: 600px) {
+  .king-readout { grid-template-columns: 1fr; }
+  .king-toolbar label { align-items: baseline; font-size: 0.92rem; }
+}
+
 .about-hero {
   display: grid;
   grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);

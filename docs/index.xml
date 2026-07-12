@@ -1516,5 +1516,2620 @@ Total number of solutions: 12</code></pre>
   <guid>https://ashishmathpy.github.io/pymathon/posts/positive-integer-solutions/</guid>
   <pubDate>Sat, 04 Jul 2026 18:30:00 GMT</pubDate>
 </item>
+<item>
+  <title>King’s Property for Definite Integrals</title>
+  <dc:creator>Ashish K. Srivastava</dc:creator>
+  <link>https://ashishmathpy.github.io/pymathon/posts/kings-property/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="the-property" class="level2">
+<h2 class="anchored" data-anchor-id="the-property">The property</h2>
+<p>Let us explore one of the most useful symmetry ideas in definite integration. If <img src="https://latex.codecogs.com/png.latex?f"> is integrable on <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D">, <strong>King’s property</strong> says</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B%5Cint_a%5Eb%20f(x)%5C,dx=%5Cint_a%5Eb%20f(a+b-x)%5C,dx.%7D%0A"></p>
+<p>In simple language: reflecting the graph horizontally across the midpoint <img src="https://latex.codecogs.com/png.latex?x=(a+b)/2"> does not change its signed area over the interval.</p>
+<p>Adding the two equal forms gives the useful identity</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B%5Cint_a%5Eb%20f(x)%5C,dx%0A=%5Cfrac12%5Cint_a%5Eb%5Cbigl%5Bf(x)+f(a+b-x)%5Cbigr%5D,dx.%7D%0A"></p>
+<div class="article-info">
+<p><strong>Important:</strong> the property preserves <strong>signed area</strong>, so it remains valid even when parts of the graph lie below the <img src="https://latex.codecogs.com/png.latex?x">-axis.</p>
+</div>
+</section>
+<section id="let-me-prove-it-mathematically" class="level2">
+<h2 class="anchored" data-anchor-id="let-me-prove-it-mathematically">Let me prove it mathematically</h2>
+<p>Begin with the reflected integral</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AI=%5Cint_a%5Eb%20f(a+b-x)%5C,dx.%0A"></p>
+<p>Now use the substitution</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Au=a+b-x,%5Cqquad%20du=-dx.%0A"></p>
+<p>The limits reverse:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax=a%5CLongrightarrow%20u=b,%0A%5Cqquad%0Ax=b%5CLongrightarrow%20u=a.%0A"></p>
+<p>Therefore</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0AI%0A&amp;=%5Cint_b%5Ea%20f(u)(-du)%5C%5C%0A&amp;=%5Cint_a%5Eb%20f(u)%5C,du%5C%5C%0A&amp;=%5Cint_a%5Eb%20f(x)%5C,dx.%0A%5Cend%7Baligned%7D%0A"></p>
+<p>In the last line, the dummy variable <img src="https://latex.codecogs.com/png.latex?u"> has simply been renamed as <img src="https://latex.codecogs.com/png.latex?x">. This proves King’s property.</p>
+</section>
+<section id="now-let-us-see-the-graphical-proof" class="level2">
+<h2 class="anchored" data-anchor-id="now-let-us-see-the-graphical-proof">Now let us see the graphical proof</h2>
+<p>Focus on the transformation</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax%5Clongmapsto%20a+b-x.%0A"></p>
+<p>It reflects every point across the midpoint <img src="https://latex.codecogs.com/png.latex?m=(a+b)/2">. Imagine a very narrow strip at <img src="https://latex.codecogs.com/png.latex?x=t"> under <img src="https://latex.codecogs.com/png.latex?y=f(x)">. Its approximate signed area is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af(t)%5C,%5CDelta%20x.%0A"></p>
+<p>After reflection, its partner lies at <img src="https://latex.codecogs.com/png.latex?x=a+b-t">. The reflected curve has height</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af%5Cbigl(a+b-(a+b-t)%5Cbigr)=f(t).%0A"></p>
+<p>Reflection also preserves the width <img src="https://latex.codecogs.com/png.latex?%5CDelta%20x">. Therefore, the two strips have exactly the same signed area. Pairing every strip in this way shows that the two complete integrals must be equal.</p>
+</section>
+<section id="interactive-area-proof" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-area-proof">Interactive area proof</h2>
+<p>Now try the idea yourself. Drag directly across the graph, or use the slider. The blue strip is at <img src="https://latex.codecogs.com/png.latex?t"> under <img src="https://latex.codecogs.com/png.latex?f(x)">; the gold strip is at its reflected position <img src="https://latex.codecogs.com/png.latex?a+b-t"> under <img src="https://latex.codecogs.com/png.latex?f(a+b-x)">. Watch how the shaded regions accumulate equal signed areas.</p>
+<div class="king-applet" aria-label="Interactive graphical demonstration of King's property">
+<div class="king-toolbar">
+<label for="king-position">Reflection position
+<output id="king-t">
+t = 1.50
+</output>
+<p> <input id="king-position" type="range" min="0" max="6" value="1.5" step="0.01"></p>
+</label></div>
+<div id="king-svg" aria-label="A function and its horizontal reflection with paired area strips">
+
+</div>
+<div class="king-readout" aria-live="polite">
+<div>
+<span class="king-dot king-blue"></span>Original strip: <strong id="king-x">x = 1.50</strong>
+</div>
+<div>
+<span class="king-dot king-gold"></span>Reflected strip: <strong id="king-rx">x = 4.50</strong>
+</div>
+<div>
+Paired height: <strong id="king-height">—</strong>
+</div>
+<div>
+Accumulated areas: <strong id="king-areas">—</strong>
+</div>
+</div>
+<p class="king-instruction">
+At the midpoint, the paired strips meet. Continue moving the slider to see them exchange sides while preserving their correspondence.
+</p>
+</div>
+<p>The applet uses <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D=%5B0,6%5D"> and a deliberately asymmetric function. This makes it clear that the equality comes from reflection—not from the original graph already being symmetric.</p>
+<section id="see-the-applet-code" class="level3">
+<h3 class="anchored" data-anchor-id="see-the-applet-code">See the applet code</h3>
+<p>The complete code behind the interactive graph is included below. Expand the block to study, copy, or adapt it.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Complete JavaScript source
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-fold="false" style="background: #f1f3f5;"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb1-1">(() <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb1-2">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> host <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getElementById</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"king-svg"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-3">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> slider <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getElementById</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"king-position"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-4">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span>host <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">||</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span>slider) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-5"></span>
+<span id="cb1-6">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> NS <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"http://www.w3.org/2000/svg"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-7">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">900</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> H <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">470</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-8">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> pad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">left</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">58</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">right</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">top</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">bottom</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">48</span> }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-9">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> plotW <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">right</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-10">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> plotH <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> H <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">top</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">bottom</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-11">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> yMax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.15</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-12">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> f <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.35</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.42</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Math</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.55</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.16</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-13">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> reflected <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f</span>(a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-14">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> a) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> a) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> plotW<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-15">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> Y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">top</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (yMax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> yMax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> plotH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-16">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> base <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Y</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-17">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> els <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb1-18">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">t</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getElementById</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"king-t"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-19">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getElementById</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"king-x"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-20">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">rx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getElementById</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"king-rx"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-21">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">height</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getElementById</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"king-height"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-22">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">areas</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getElementById</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"king-areas"</span>)</span>
+<span id="cb1-23">  }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-24"></span>
+<span id="cb1-25">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> svg <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">createElementNS</span>(NS<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"svg"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-26">  svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"viewBox"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`0 0 </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>W<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>H<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-27">  svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"preserveAspectRatio"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"xMidYMid meet"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-28">  svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aria-hidden"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"true"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-29">  host<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">appendChild</span>(svg)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-30"></span>
+<span id="cb1-31">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> node <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> attrs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> parent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> svg) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb1-32">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> el <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">createElementNS</span>(NS<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> name)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-33">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Object</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">entries</span>(attrs)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">forEach</span>(([key<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> value]) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> el<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(key<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> value))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-34">    parent<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">appendChild</span>(el)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-35">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> el<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-36">  }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-37">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> attrs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb1-38">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> el <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>attrs })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-39">    el<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">textContent</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-40">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> el<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-41">  }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-42">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> points <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (fn<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> lo <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> hi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> count <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">320</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb1-43">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">let</span> d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-44">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> (<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">let</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> count<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++</span>) {</span>
+<span id="cb1-45">      <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> lo <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (hi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> lo) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> count<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-46">      d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">?</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"L"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"M"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(x)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">,</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Y</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fn</span>(x))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> `</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-47">    }</span>
+<span id="cb1-48">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-49">  }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-50">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> areaPath <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (fn<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> lo<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> hi) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb1-51">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> curve <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">points</span>(fn<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> lo<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> hi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">replace</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">M/</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"L"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-52">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`M</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(lo)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">,</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>base<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>curve<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">L</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(hi)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">,</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>base<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> L</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(lo)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">,</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>base<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> Z`</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-53">  }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-54">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> integral <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (fn<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> lo<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> hi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">600</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb1-55">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (hi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> lo) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integral</span>(fn<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> hi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> lo<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> n)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-56">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> h <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (hi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> lo) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> n<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-57">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">let</span> sum <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fn</span>(lo) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fn</span>(hi))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-58">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> (<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">let</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> n<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++</span>) sum <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fn</span>(lo <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> h)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-59">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> sum <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> h<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-60">  }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-61"></span>
+<span id="cb1-62">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> grid <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"g"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">stroke</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#aebdcb"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"stroke-opacity"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">".18"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-63">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> (<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">let</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++</span>) {</span>
+<span id="cb1-64">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"line"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(i)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">top</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(i)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> base }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> grid)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-65">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">text</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">String</span>(i)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(i)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> base <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">27</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#cbd8e4"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text-anchor"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"middle"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-66">  }</span>
+<span id="cb1-67">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> (<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">let</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++</span>)</span>
+<span id="cb1-68">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"line"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Y</span>(y)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">right</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Y</span>(y) }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> grid)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-69"></span>
+<span id="cb1-70">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"line"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> base<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> W<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">right</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> base<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">stroke</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#aebdcb"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-71">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"line"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">top</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> base<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-72">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">stroke</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#ffffff"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"stroke-opacity"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">".35"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"stroke-dasharray"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"7 7"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-73">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">text</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"midpoint"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">top</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#cbd8e4"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text-anchor"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"middle"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-74">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">text</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"f(x)"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">top</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#7be1eb"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"font-weight"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"700"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-75">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">text</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"f(a+b−x)"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">top</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#ffd27a"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"font-weight"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"700"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-76"></span>
+<span id="cb1-77">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> blueArea <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"path"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#57b9c5"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fill-opacity"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">".22"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-78">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> goldArea <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"path"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#f3c56b"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fill-opacity"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">".22"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-79">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"path"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">d</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">points</span>(f)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">stroke</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#57b9c5"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"stroke-width"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"4"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-80">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"path"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">d</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">points</span>(reflected)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">stroke</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#f3c56b"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"stroke-width"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"4"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-81">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> blueStrip <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#7be1eb"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-82">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> goldStrip <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#ffd27a"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-83">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> bluePoint <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"circle"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">r</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#7be1eb"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-84">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> goldPoint <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">node</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"circle"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> { <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">r</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#ffd27a"</span> })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-85"></span>
+<span id="cb1-86">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">draw</span>() {</span>
+<span id="cb1-87">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Number</span>(slider<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">value</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-88">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> rt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> t<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-89">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> left <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Math</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">min</span>(t<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> rt)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> right <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Math</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">max</span>(t<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> rt)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-90">    blueArea<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"d"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">areaPath</span>(f<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> left))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-91">    goldArea<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"d"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">areaPath</span>(reflected<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> b))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-92"></span>
+<span id="cb1-93">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> setStrip <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (rect<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> point<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> fn) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb1-94">      <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-95">      rect<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(x) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-96">      rect<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Y</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fn</span>(x)))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-97">      rect<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"width"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> width)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-98">      rect<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"height"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> base <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Y</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fn</span>(x)))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-99">      point<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cx"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">X</span>(x))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-100">      point<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cy"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Y</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fn</span>(x)))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-101">    }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-102">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setStrip</span>(blueStrip<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> bluePoint<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> t<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> f)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-103">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setStrip</span>(goldStrip<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> goldPoint<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> rt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> reflected)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-104"></span>
+<span id="cb1-105">    els<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">t</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">textContent</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`t = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>t<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-106">    els<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">textContent</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`x = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>t<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-107">    els<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">rx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">textContent</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`x = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>rt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-108">    els<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">height</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">textContent</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f</span>(t)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reflected</span>(rt)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-109">    els<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">areas</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">textContent</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-110">      <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integral</span>(f<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> left)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> ≈ </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integral</span>(reflected<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> b)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-111">  }</span>
+<span id="cb1-112"></span>
+<span id="cb1-113">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setFromPointer</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">event</span>) {</span>
+<span id="cb1-114">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> rect <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getBoundingClientRect</span>()<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-115">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> viewX <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">event</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">clientX</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> rect<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> rect<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> W<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-116">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> ratio <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Math</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">max</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Math</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">min</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> (viewX <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> plotW))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-117">    slider<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">value</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">String</span>(a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> ratio <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (b<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>a))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-118">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">draw</span>()<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-119">  }</span>
+<span id="cb1-120"></span>
+<span id="cb1-121">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">let</span> dragging <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">false</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-122">  svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">addEventListener</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pointerdown"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">event</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb1-123">    dragging <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">true</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-124">    svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setPointerCapture</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">event</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pointerId</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-125">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setFromPointer</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">event</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-126">  })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-127">  svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">addEventListener</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pointermove"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">event</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> dragging <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;&amp;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setFromPointer</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">event</span>))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-128">  svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">addEventListener</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pointerup"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> () <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> dragging <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">false</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-129">  svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">addEventListener</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pointercancel"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> () <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> dragging <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">false</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-130">  slider<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">addEventListener</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"input"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> draw)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-131">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">draw</span>()<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-132">})()<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span></code></pre></div></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="verifying-the-picture-with-python" class="level2">
+<h2 class="anchored" data-anchor-id="verifying-the-picture-with-python">Verifying the picture with Python</h2>
+<p>The same asymmetric function can be plotted and integrated numerically with Python. This gives an independent computational check of the graphical argument.</p>
+<div id="0333b567" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb2-3"></span>
+<span id="cb2-4">plt.style.use(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dark_background"</span>)</span>
+<span id="cb2-5"></span>
+<span id="cb2-6">a, b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span></span>
+<span id="cb2-7">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(a, b, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>)</span>
+<span id="cb2-8"></span>
+<span id="cb2-9"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> f(x):</span>
+<span id="cb2-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.35</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.42</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.sin(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.55</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.16</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x</span>
+<span id="cb2-11"></span>
+<span id="cb2-12">y_original <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> f(x)</span>
+<span id="cb2-13">y_reflected <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> f(a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x)</span>
+<span id="cb2-14"></span>
+<span id="cb2-15">area_original <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.trapezoid(y_original, x)</span>
+<span id="cb2-16">area_reflected <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.trapezoid(y_reflected, x)</span>
+<span id="cb2-17"></span>
+<span id="cb2-18"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Area under f(x):       </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_original<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.8f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-19"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Area after reflection: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_reflected<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.8f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-20"></span>
+<span id="cb2-21">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#0c1521"</span>)</span>
+<span id="cb2-22">ax.set_facecolor(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#0c1521"</span>)</span>
+<span id="cb2-23">plt.plot(x, y_original, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r"</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">$</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">(</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">x</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">)</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">$</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>)</span>
+<span id="cb2-24">plt.plot(x, y_reflected, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r"</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">$</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">(</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">a</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">b-x</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">)</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">$</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>)</span>
+<span id="cb2-25">plt.fill_between(x, y_original, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.18</span>)</span>
+<span id="cb2-26">plt.axvline((a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gray"</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"midpoint"</span>)</span>
+<span id="cb2-27">plt.xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>)</span>
+<span id="cb2-28">plt.ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>)</span>
+<span id="cb2-29">plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A function and its reflection"</span>)</span>
+<span id="cb2-30">plt.legend()</span>
+<span id="cb2-31">plt.grid(alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>)</span>
+<span id="cb2-32">plt.tight_layout()</span>
+<span id="cb2-33">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Area under f(x):       11.51982490
+Area after reflection: 11.51982490</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://ashishmathpy.github.io/pymathon/posts/kings-property/index_files/figure-html/cell-2-output-2.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The two printed values agree up to numerical rounding. Python confirms what the substitution already proved exactly.</p>
+</section>
+<section id="why-the-averaged-form-is-powerful" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-averaged-form-is-powerful">Why the averaged form is powerful</h2>
+<p>Let</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AI=%5Cint_a%5Eb%20f(x)%5C,dx.%0A"></p>
+<p>King’s property gives another expression for the same number:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AI=%5Cint_a%5Eb%20f(a+b-x)%5C,dx.%0A"></p>
+<p>Adding and dividing by <img src="https://latex.codecogs.com/png.latex?2"> gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AI=%5Cfrac12%5Cint_a%5Eb%5Cleft%5Bf(x)+f(a+b-x)%5Cright%5Ddx.%0A"></p>
+<p>This is most useful when the sum inside the brackets simplifies.</p>
+</section>
+<section id="let-me-work-through-an-example" class="level2">
+<h2 class="anchored" data-anchor-id="let-me-work-through-an-example">Let me work through an example</h2>
+<p>Evaluate</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AI=%5Cint_0%5E%7B%5Cpi/2%7D%5Cfrac%7B%5Csin%20x%7D%7B%5Csin%20x+%5Ccos%20x%7D%5C,dx.%0A"></p>
+<p>Here <img src="https://latex.codecogs.com/png.latex?a+b=%5Cpi/2">. King’s property gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AI=%5Cint_0%5E%7B%5Cpi/2%7D%0A%5Cfrac%7B%5Ccos%20x%7D%7B%5Ccos%20x+%5Csin%20x%7D%5C,dx.%0A"></p>
+<p>Adding the two equations,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A2I=%5Cint_0%5E%7B%5Cpi/2%7D1%5C,dx=%5Cfrac%7B%5Cpi%7D%7B2%7D.%0A"></p>
+<p>Hence</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7BI=%5Cfrac%7B%5Cpi%7D%7B4%7D%7D.%0A"></p>
+</section>
+<section id="a-more-powerful-jee-style-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-more-powerful-jee-style-example">A more powerful JEE-style example</h2>
+<p>Evaluate</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AJ=%5Cint_0%5E%5Cpi%20%5Cfrac%7Bx%7D%7B1+%5Csin%20x%7D%5C,dx.%0A"></p>
+<p>The factor <img src="https://latex.codecogs.com/png.latex?x"> makes direct integration look unpleasant. Reflecting <img src="https://latex.codecogs.com/png.latex?x"> across <img src="https://latex.codecogs.com/png.latex?%5B0,%5Cpi%5D"> replaces it by <img src="https://latex.codecogs.com/png.latex?%5Cpi-x">, while <img src="https://latex.codecogs.com/png.latex?%5Csin(%5Cpi-x)=%5Csin%20x">. Thus</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AJ=%5Cint_0%5E%5Cpi%20%5Cfrac%7B%5Cpi-x%7D%7B1+%5Csin%20x%7D%5C,dx.%0A"></p>
+<p>Adding this to the original form gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A2J=%5Cpi%5Cint_0%5E%5Cpi%5Cfrac%7Bdx%7D%7B1+%5Csin%20x%7D.%0A"></p>
+<p>Now rationalise the denominator:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7B1%7D%7B1+%5Csin%20x%7D%0A=%5Cfrac%7B1-%5Csin%20x%7D%7B%5Ccos%5E2x%7D%0A=%5Csec%5E2x-%5Csec%20x%5Ctan%20x.%0A"></p>
+<p>Although the two terms are individually improper at <img src="https://latex.codecogs.com/png.latex?x=%5Cpi/2">, their difference has a finite continuous limit there. An antiderivative on each side is <img src="https://latex.codecogs.com/png.latex?%5Ctan%20x-%5Csec%20x">, and the combined definite integral equals <img src="https://latex.codecogs.com/png.latex?2">. Therefore</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A2J=2%5Cpi%0A%5Cqquad%5CLongrightarrow%5Cqquad%0A%5Cboxed%7BJ=%5Cpi%7D.%0A"></p>
+<p>The important move was not the final integration. King’s property first removed the troublesome factor <img src="https://latex.codecogs.com/png.latex?x">.</p>
+</section>
+<section id="takeaway" class="level2">
+<h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
+<p>King’s property tells us that a definite integral is unchanged when its interval is reflected. Algebraically, reversing the limits cancels the minus sign in <img src="https://latex.codecogs.com/png.latex?du=-dx">. Geometrically, every signed-area strip has an equal reflected partner. The slider makes these two descriptions visible as the same idea.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>JEE Mathematics</category>
+  <category>Calculus</category>
+  <category>Interactive Visualisation</category>
+  <guid>https://ashishmathpy.github.io/pymathon/posts/kings-property/</guid>
+  <pubDate>Sat, 20 Jun 2026 18:30:00 GMT</pubDate>
+</item>
 </channel>
 </rss>

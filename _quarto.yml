@@ -5,6 +5,7 @@ project:
     - index.qmd
     - about.qmd
     - posts/positive-integer-solutions/index.qmd
+    - posts/kings-property/index.qmd
     - posts/longest-collatz-sequence/index.ipynb
     - source-notebooks/positive-integer-solutions.ipynb
   resources:
