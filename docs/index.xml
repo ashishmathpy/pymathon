@@ -10,7 +10,1105 @@
 <atom:link href="https://ashishmathpy.github.io/pymathon/index.xml" rel="self" type="application/rss+xml"/>
 <description>PyMathon explores mathematics through rigorous reasoning, multiple solution methods, Python verification, and visualisation.</description>
 <generator>quarto-1.9.38</generator>
-<lastBuildDate>Thu, 09 Jul 2026 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 12 Jul 2026 06:34:32 GMT</lastBuildDate>
+<item>
+  <title>Longest Collatz Sequence</title>
+  <dc:creator>Ashish Kumar</dc:creator>
+  <link>https://ashishmathpy.github.io/pymathon/posts/longest-collatz-sequence/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>The Collatz rule is easy to state, but its long-term behaviour is still not understood. We begin with the rule itself, then use it to solve the finite search problem posed in Project Euler Problem 14.</p>
+<section id="the-collatz-process" class="level2">
+<h2 class="anchored" data-anchor-id="the-collatz-process">The Collatz Process</h2>
+<p>For a positive integer, apply one of two operations: halve an even number, and replace an odd number by three times the number plus one. Repeating this instruction produces a Collatz sequence, also called an orbit.</p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BN%7D=%5C%7B1,2,3,%5Cldots%5C%7D">. The Collatz map is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AT(n)=%0A%5Cbegin%7Bcases%7D%0A%5Cdfrac%7Bn%7D%7B2%7D,%20&amp;%20%5Ctext%7Bif%20%7D%20n%20%5Ctext%7B%20is%20even%7D,%5C%5C%5B6pt%5D%0A3n+1,%20&amp;%20%5Ctext%7Bif%20%7D%20n%20%5Ctext%7B%20is%20odd%7D.%0A%5Cend%7Bcases%7D%0A"></p>
+<p>Starting at <img src="https://latex.codecogs.com/png.latex?n">, the successive values are <img src="https://latex.codecogs.com/png.latex?n,T(n),T%5E2(n),%5Cldots">. Here <img src="https://latex.codecogs.com/png.latex?T%5Ek(n)"> means that the map has been applied <img src="https://latex.codecogs.com/png.latex?k"> times.</p>
+</section>
+<section id="the-collatz-conjecture" class="level2">
+<h2 class="anchored" data-anchor-id="the-collatz-conjecture">The Collatz Conjecture</h2>
+<p>The conjecture states that every positive starting value eventually reaches <img src="https://latex.codecogs.com/png.latex?1">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cforall%20n%5Cin%5Cmathbb%7BN%7D,%5Cquad%0A%5Cexists%20k%5Cgeq%200%0A%5Ctext%7B%20such%20that%20%7D%0AT%5Ek(n)=1.%0A"></p>
+<p>Once the value <img src="https://latex.codecogs.com/png.latex?1"> is reached, iteration continues around the familiar cycle</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A1%5Crightarrow4%5Crightarrow2%5Crightarrow1.%0A"></p>
+<p>For chain lengths, we stop at the first occurrence of <img src="https://latex.codecogs.com/png.latex?1">.</p>
+<section id="why-this-is-still-a-conjecture" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-is-still-a-conjecture">Why this is still a conjecture</h3>
+<p>Computers have checked the rule for extraordinarily many starting values. That is convincing evidence, but it is not a proof. A finite computation can only check finitely many integers; the statement concerns every positive integer.</p>
+<p>A proof would have to rule out both an orbit that grows without bound and a non-trivial cycle other than <img src="https://latex.codecogs.com/png.latex?1%5Cto4%5Cto2%5Cto1">. Neither has been ruled out for all positive integers. The original Collatz conjecture therefore remains a conjecture, not a theorem.</p>
+</section>
+<section id="a-first-example-n13" class="level3">
+<h3 class="anchored" data-anchor-id="a-first-example-n13">A first example: <img src="https://latex.codecogs.com/png.latex?n=13"></h3>
+<p>Applying the rule carefully gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A13%5Crightarrow40%5Crightarrow20%5Crightarrow10%5Crightarrow5%0A%5Crightarrow16%5Crightarrow8%5Crightarrow4%5Crightarrow2%5Crightarrow1.%0A"></p>
+<p>This sequence contains</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A10%5Ctext%7B%20terms%7D%0A"></p>
+<p>and takes</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A9%5Ctext%7B%20steps%7D.%0A"></p>
+<p>The distinction matters throughout this article:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7Bnumber%20of%20steps%7D%0A=%0A%5Ctext%7Bnumber%20of%20terms%7D-1.%0A"></p>
+</section>
+</section>
+<section id="generating-collatz-sequences-with-python" class="level2">
+<h2 class="anchored" data-anchor-id="generating-collatz-sequences-with-python">Generating Collatz Sequences with Python</h2>
+<p>Before writing a search program, we should be able to generate one orbit correctly. The function below checks that its input is a positive integer and returns the sequence up to the first <img src="https://latex.codecogs.com/png.latex?1">.</p>
+<div id="5d3ba664" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.396416Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.396313Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.401273Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.401046Z&quot;}}" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> collatz_sequence(n):</span>
+<span id="cb1-2">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Return the Collatz sequence from positive integer n to its first 1."""</span></span>
+<span id="cb1-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(n, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(n, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">bool</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:</span>
+<span id="cb1-4">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"n must be a positive integer"</span>)</span>
+<span id="cb1-5"></span>
+<span id="cb1-6">    sequence <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [n]</span>
+<span id="cb1-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:</span>
+<span id="cb1-8">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb1-9">            n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb1-10">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb1-11">            n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb1-12">        sequence.append(n)</span>
+<span id="cb1-13">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> sequence</span>
+<span id="cb1-14"></span>
+<span id="cb1-15"></span>
+<span id="cb1-16">sequence_13 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> collatz_sequence(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>)</span>
+<span id="cb1-17"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(sequence_13)</span>
+<span id="cb1-18"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Terms: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sequence_13)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-19"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Steps: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sequence_13) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[13, 40, 20, 10, 5, 16, 8, 4, 2, 1]
+Terms: 10
+Steps: 9</code></pre>
+</div>
+</div>
+<p>The output agrees with the hand calculation: <img src="https://latex.codecogs.com/png.latex?13"> has ten terms and nine steps.</p>
+<p>For a few selected values, it is useful to record the chain length and the largest value reached. This is experimental verification of particular cases, not a proof of the conjecture.</p>
+<div id="85b42dd4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.402378Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.402303Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.404421Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.404192Z&quot;}}" data-execution_count="2">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> collatz_summary(n):</span>
+<span id="cb3-2">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Return basic information about the Collatz sequence starting at n."""</span></span>
+<span id="cb3-3">    sequence <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> collatz_sequence(n)</span>
+<span id="cb3-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> {</span>
+<span id="cb3-5">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"start"</span>: n,</span>
+<span id="cb3-6">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"terms"</span>: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sequence),</span>
+<span id="cb3-7">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steps"</span>: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sequence) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb3-8">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"maximum"</span>: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(sequence),</span>
+<span id="cb3-9">    }</span>
+<span id="cb3-10"></span>
+<span id="cb3-11"></span>
+<span id="cb3-12">test_values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">19</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">27</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">97</span>]</span>
+<span id="cb3-13">summaries <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [collatz_summary(n) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> test_values]</span>
+<span id="cb3-14"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> summary <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> summaries:</span>
+<span id="cb3-15">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(summary)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'start': 6, 'terms': 9, 'steps': 8, 'maximum': 16}
+{'start': 10, 'terms': 7, 'steps': 6, 'maximum': 16}
+{'start': 13, 'terms': 10, 'steps': 9, 'maximum': 40}
+{'start': 19, 'terms': 21, 'steps': 20, 'maximum': 88}
+{'start': 27, 'terms': 112, 'steps': 111, 'maximum': 9232}
+{'start': 97, 'terms': 119, 'steps': 118, 'maximum': 9232}</code></pre>
+</div>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Start</th>
+<th style="text-align: right;">Terms</th>
+<th style="text-align: right;">Steps</th>
+<th style="text-align: right;">Maximum value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">9232</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">9232</td>
+</tr>
+</tbody>
+</table>
+<p>The chain beginning at <img src="https://latex.codecogs.com/png.latex?27"> is worth noticing. It starts small, rises as high as <img src="https://latex.codecogs.com/png.latex?9232">, and only then returns to <img src="https://latex.codecogs.com/png.latex?1">. This is a useful reminder that the rule does not produce a steadily decreasing sequence.</p>
+<div id="601c5dd9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.405505Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.405427Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.407189Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.406966Z&quot;}}" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">sequence_27 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> collatz_sequence(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">27</span>)</span>
+<span id="cb5-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Terms: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sequence_27)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb5-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Steps: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sequence_27) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb5-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Maximum value: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(sequence_27)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Terms: 112
+Steps: 111
+Maximum value: 9232</code></pre>
+</div>
+</div>
+<section id="trajectory-for-n27" class="level3">
+<h3 class="anchored" data-anchor-id="trajectory-for-n27">Trajectory for <img src="https://latex.codecogs.com/png.latex?n=27"></h3>
+<p>A plot makes the rise and fall of this orbit easier to see.</p>
+<div id="ca913a71" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.408325Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.408255Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.938188Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.937909Z&quot;}}" data-execution_count="4">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span>config InlineBackend.figure_format <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'svg'</span></span>
+<span id="cb7-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb7-3"></span>
+<span id="cb7-4">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb7-5">fig.patch.set_facecolor(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#0c1521"</span>)</span>
+<span id="cb7-6">ax.set_facecolor(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#101d2d"</span>)</span>
+<span id="cb7-7">ax.plot(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sequence_27)), sequence_27, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#a9ecf4"</span>)</span>
+<span id="cb7-8">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Step number"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#e7edf4"</span>)</span>
+<span id="cb7-9">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Term value"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#e7edf4"</span>)</span>
+<span id="cb7-10">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Collatz trajectory for n = 27"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#f1f6fb"</span>)</span>
+<span id="cb7-11">ax.tick_params(colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#d5e1eb"</span>)</span>
+<span id="cb7-12"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> spine <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ax.spines.values():</span>
+<span id="cb7-13">    spine.set_color(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#5d7590"</span>)</span>
+<span id="cb7-14">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#7890a8"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span>)</span>
+<span id="cb7-15">fig.tight_layout()</span>
+<span id="cb7-16">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://ashishmathpy.github.io/pymathon/posts/longest-collatz-sequence/index_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="project-euler-problem-14" class="level2">
+<h2 class="anchored" data-anchor-id="project-euler-problem-14">Project Euler Problem 14</h2>
+<p>The Project Euler question is finite. It asks:</p>
+<blockquote class="blockquote">
+<p>Among all starting integers satisfying</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A1%5Cleq%20n%3C1%7B,%7D000%7B,%7D000,%0A"></p>
+<p>find the starting value that produces the longest Collatz chain before reaching <img src="https://latex.codecogs.com/png.latex?1">.</p>
+</blockquote>
+<p>Only the starting number must be below one million. Terms later in the chain may be much larger. This is important: the eventual winner rises to more than two billion.</p>
+</section>
+<section id="the-mathematical-structure-of-the-search" class="level2">
+<h2 class="anchored" data-anchor-id="the-mathematical-structure-of-the-search">The Mathematical Structure of the Search</h2>
+<p>Define</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(n)=%5Ctext%7Bnumber%20of%20terms%20from%20%7Dn%5Ctext%7B%20to%20the%20first%20occurrence%20of%20%7D1.%0A"></p>
+<p>Then</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(1)=1%0A"></p>
+<p>and, for <img src="https://latex.codecogs.com/png.latex?n%3E1">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(n)=1+L(T(n)).%0A"></p>
+<p>Equivalently,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(n)=%0A%5Cbegin%7Bcases%7D%0A1+L%5Cleft(%5Cdfrac%7Bn%7D%7B2%7D%5Cright),%0A&amp;%20n%5Ctext%7B%20even%7D,%5C%5C%5B8pt%5D%0A1+L(3n+1),%0A&amp;%20n%5Ctext%7B%20odd%7D.%0A%5Cend%7Bcases%7D%0A"></p>
+<p>Thus the required value is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0An_%7B%5Cmax%7D%0A=%0A%5Coperatorname*%7Barg%5C,max%7D_%7B1%5Cleq%20n%3C1%7B,%7D000%7B,%7D000%7DL(n).%0A"></p>
+<p>The key observation is that chains share tails. Once a chain reaches a previously studied value, the remaining work is already known. For example, if <img src="https://latex.codecogs.com/png.latex?L(10)"> is known, then</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(20)=1+L(10),%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(40)=1+L(20),%0A"></p>
+<p>and</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(13)=1+L(40).%0A"></p>
+<p>This recurrence is the mathematical reason that memoization works. Before we write the efficient program, it is useful to see the direct method.</p>
+</section>
+<section id="a-direct-python-solution" class="level2">
+<h2 class="anchored" data-anchor-id="a-direct-python-solution">A Direct Python Solution</h2>
+<p>The direct method constructs a complete chain for every possible starting value. It is correct, but it repeatedly computes common tails such as <img src="https://latex.codecogs.com/png.latex?40%5Cto20%5Cto10%5Cto%5Ccdots%5Cto1">.</p>
+<div id="0f81ac89" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.939551Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.939444Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.946015Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.945757Z&quot;}}" data-execution_count="5">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> longest_collatz_naive(limit):</span>
+<span id="cb8-2">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Return the start and term count of the longest chain below limit."""</span></span>
+<span id="cb8-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(limit, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(limit, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">bool</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> limit <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:</span>
+<span id="cb8-4">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"limit must be an integer greater than 1"</span>)</span>
+<span id="cb8-5"></span>
+<span id="cb8-6">    best_start, best_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb8-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, limit):</span>
+<span id="cb8-8">        current_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(collatz_sequence(n))</span>
+<span id="cb8-9">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> current_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> best_length:</span>
+<span id="cb8-10">            best_start, best_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> n, current_length</span>
+<span id="cb8-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> best_start, best_length</span>
+<span id="cb8-12"></span>
+<span id="cb8-13"></span>
+<span id="cb8-14"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(longest_collatz_naive(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1_000</span>))</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(871, 179)</code></pre>
+</div>
+</div>
+<p>For a small limit this is perfectly adequate. At one million starts, however, the repeated tails become expensive. The recurrence for <img src="https://latex.codecogs.com/png.latex?L(n)"> tells us exactly what to store.</p>
+</section>
+<section id="memoization" class="level2">
+<h2 class="anchored" data-anchor-id="memoization">Memoization</h2>
+<p>Start with the known value <img src="https://latex.codecogs.com/png.latex?L(1)=1">. When a new path reaches a value already stored in a cache, work backwards through the new part of the path. Each predecessor has a chain one term longer than its successor.</p>
+<div id="babbfa1b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.947247Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.947167Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.949607Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.949393Z&quot;}}" data-execution_count="6">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> collatz_length(n, cache):</span>
+<span id="cb10-2">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Return the term count for n, extending cache along a new tail."""</span></span>
+<span id="cb10-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(n, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(n, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">bool</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:</span>
+<span id="cb10-4">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"n must be a positive integer"</span>)</span>
+<span id="cb10-5"></span>
+<span id="cb10-6">    original_n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> n</span>
+<span id="cb10-7">    path <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb10-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> cache:</span>
+<span id="cb10-9">        path.append(n)</span>
+<span id="cb10-10">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb10-11">            n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb10-12">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb10-13">            n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb10-14"></span>
+<span id="cb10-15">    known_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cache[n]</span>
+<span id="cb10-16">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> value <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">reversed</span>(path):</span>
+<span id="cb10-17">        known_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb10-18">        cache[value] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> known_length</span>
+<span id="cb10-19">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> cache[original_n]</span>
+<span id="cb10-20"></span>
+<span id="cb10-21"></span>
+<span id="cb10-22"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> longest_collatz(limit):</span>
+<span id="cb10-23">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Return the start, term count, and cache for chains below limit."""</span></span>
+<span id="cb10-24">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(limit, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(limit, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">bool</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> limit <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:</span>
+<span id="cb10-25">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"limit must be an integer greater than 1"</span>)</span>
+<span id="cb10-26"></span>
+<span id="cb10-27">    cache <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>}</span>
+<span id="cb10-28">    best_start, best_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb10-29">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, limit):</span>
+<span id="cb10-30">        current_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> collatz_length(n, cache)</span>
+<span id="cb10-31">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> current_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> best_length:</span>
+<span id="cb10-32">            best_start, best_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> n, current_length</span>
+<span id="cb10-33">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> best_start, best_length, cache</span></code></pre></div></div>
+</details>
+</div>
+<p>Now we can translate the recurrence into Python. The following finite computation solves the Project Euler search; it does not claim to prove the Collatz conjecture.</p>
+<div id="88e91c29" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.950625Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.950550Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.609217Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.608877Z&quot;}}" data-execution_count="7">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">best_start, best_length, length_cache <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> longest_collatz(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1_000_000</span>)</span>
+<span id="cb11-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Starting number: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>best_start<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb11-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Number of terms: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>best_length<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb11-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Number of steps: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>best_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Starting number: 837799
+Number of terms: 525
+Number of steps: 524</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Final result
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B837799%7D%0A"></p>
+<p>is the starting value below one million with the longest Collatz chain. The chain contains</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B525%5Ctext%7B%20terms%7D%7D%0A"></p>
+<p>and requires</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B524%5Ctext%7B%20steps%7D%7D.%0A"></p>
+</div>
+</div>
+</section>
+<section id="inspecting-the-winning-sequence" class="level2">
+<h2 class="anchored" data-anchor-id="inspecting-the-winning-sequence">Inspecting the Winning Sequence</h2>
+<p>The winning chain begins with large oscillations but ends in the familiar tail through <img src="https://latex.codecogs.com/png.latex?40,20,10,5,%5Cldots,1">.</p>
+<div id="8243cb04" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:45.611649Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:45.611490Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.613767Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.613520Z&quot;}}" data-execution_count="8">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">winning_sequence <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> collatz_sequence(best_start)</span>
+<span id="cb13-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"First 15 terms:"</span>)</span>
+<span id="cb13-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(winning_sequence[:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>])</span>
+<span id="cb13-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Last 15 terms:"</span>)</span>
+<span id="cb13-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(winning_sequence[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>:])</span>
+<span id="cb13-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Maximum value reached: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(winning_sequence)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:,}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>First 15 terms:
+[837799, 2513398, 1256699, 3770098, 1885049, 5655148, 2827574, 1413787, 4241362, 2120681, 6362044, 3181022, 1590511, 4771534, 2385767]
+
+Last 15 terms:
+[70, 35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1]
+
+Maximum value reached: 2,974,984,576</code></pre>
+</div>
+</div>
+<div id="2b8efa12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:45.614902Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:45.614801Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.739017Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.738707Z&quot;}}" data-execution_count="9">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span>config InlineBackend.figure_format <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'svg'</span></span>
+<span id="cb15-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb15-3"></span>
+<span id="cb15-4">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb15-5">fig.patch.set_facecolor(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#0c1521"</span>)</span>
+<span id="cb15-6">ax.set_facecolor(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#101d2d"</span>)</span>
+<span id="cb15-7">ax.plot(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(winning_sequence)), winning_sequence, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.35</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#ffe09a"</span>)</span>
+<span id="cb15-8">ax.set_yscale(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"log"</span>)</span>
+<span id="cb15-9">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Step number"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#e7edf4"</span>)</span>
+<span id="cb15-10">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Term value (logarithmic scale)"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#e7edf4"</span>)</span>
+<span id="cb15-11">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Collatz trajectory for n = 837,799"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#f1f6fb"</span>)</span>
+<span id="cb15-12">ax.tick_params(colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#d5e1eb"</span>)</span>
+<span id="cb15-13"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> spine <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ax.spines.values():</span>
+<span id="cb15-14">    spine.set_color(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#5d7590"</span>)</span>
+<span id="cb15-15">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#7890a8"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span>)</span>
+<span id="cb15-16">fig.tight_layout()</span>
+<span id="cb15-17">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://ashishmathpy.github.io/pymathon/posts/longest-collatz-sequence/index_files/figure-html/cell-10-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The logarithmic vertical scale is necessary here: the chain reaches <img src="https://latex.codecogs.com/png.latex?2%7B,%7D974%7B,%7D984%7B,%7D576">, far above its starting value.</p>
+</section>
+<section id="mathematical-ideas-connected-with-the-collatz-conjecture" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-ideas-connected-with-the-collatz-conjecture">Mathematical Ideas Connected with the Collatz Conjecture</h2>
+<p>The Collatz map is a discrete dynamical system: it studies the long-term behaviour of repeatedly applying a function on the positive integers. Questions about iteration include whether an orbit reaches a cycle, whether it escapes, and how long it takes to fall below its starting value.</p>
+<p>The <strong>total stopping time</strong> is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Csigma_%5Cinfty(n)=%5Cmin%5C%7Bk%5Cgeq0:T%5Ek(n)=1%5C%7D.%0A"></p>
+<p>When the orbit reaches <img src="https://latex.codecogs.com/png.latex?1">, <img src="https://latex.codecogs.com/png.latex?L(n)=%5Csigma_%5Cinfty(n)+1">. A related stopping time is the first <img src="https://latex.codecogs.com/png.latex?k%5Cgeq1"> for which <img src="https://latex.codecogs.com/png.latex?T%5Ek(n)%3Cn">. Proving that every starting value eventually falls below itself would give a route to the conjecture by strong induction, but that statement is also unproved.</p>
+<p>For odd <img src="https://latex.codecogs.com/png.latex?n">, the accelerated Collatz map, often called the Syracuse map, divides all powers of two out of <img src="https://latex.codecogs.com/png.latex?3n+1"> at once:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AS(n)=%5Cfrac%7B3n+1%7D%7B2%5E%7B%5Cnu_2(3n+1)%7D%7D.%0A"></p>
+<p>Here <img src="https://latex.codecogs.com/png.latex?%5Cnu_2(m)"> is the exponent of <img src="https://latex.codecogs.com/png.latex?2"> in <img src="https://latex.codecogs.com/png.latex?m">. The map sends odd integers directly to odd integers. Parity sequences, or parity vectors, record the even and odd decisions along an orbit. Once a finite parity pattern is fixed, the iterate has an affine form involving powers of <img src="https://latex.codecogs.com/png.latex?3"> and <img src="https://latex.codecogs.com/png.latex?2">; the difficulty is that the pattern depends on the orbit itself.</p>
+<p>The directed Collatz graph has an arrow <img src="https://latex.codecogs.com/png.latex?n%5Clongrightarrow%20T(n)"> from every positive integer. Reversing the arrows produces inverse Collatz trees, which make shared tails visible. Probabilistic heuristics model the powers of two dividing <img src="https://latex.codecogs.com/png.latex?3n+1"> as if they were random; they help explain the observed downward tendency, but they are not proofs because actual parity events are deterministic and dependent.</p>
+<p>There are important partial results. Terence Tao proved that, in a precise logarithmic-density sense, almost all orbits attain values below any function that tends to infinity. “Almost all” is not “all”, so this does not settle the original conjecture. Generalized Collatz problems can even be undecidable in some settings. That result concerns generalized systems; it does not show that the original Collatz conjecture is undecidable.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The Collatz conjecture remains open. Project Euler Problem 14 is nevertheless a finite problem, and the recurrence</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(n)=1+L(T(n))%0A"></p>
+<p>turns its repeated tails into a practical memoized computation. The longest chain below one million starts at <img src="https://latex.codecogs.com/png.latex?837799"> and has <img src="https://latex.codecogs.com/png.latex?525"> terms.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li><a href="https://projecteuler.net/problem=14">Project Euler, Problem 14: Longest Collatz Sequence</a></li>
+<li>Jeffrey C. Lagarias, <a href="https://arxiv.org/abs/2111.02635">The <img src="https://latex.codecogs.com/png.latex?3x+1"> Problem: An Overview</a></li>
+<li>Terence Tao, <a href="https://arxiv.org/abs/1909.03562">Almost All Orbits of the Collatz Map Attain Almost Bounded Values</a></li>
+<li>Terence Tao, <a href="https://terrytao.wordpress.com/2019/09/10/almost-all-collatz-orbits-attain-almost-bounded-values/">expository discussion of the result</a></li>
+<li>Stuart A. Kurtz and Janos Simon, <a href="https://link.springer.com/chapter/10.1007/978-3-540-72504-6_49">The Undecidability of the Generalized Collatz Problem</a></li>
+</ol>
+
+
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <category>Project Euler</category>
+  <category>Number Theory</category>
+  <guid>https://ashishmathpy.github.io/pymathon/posts/longest-collatz-sequence/</guid>
+  <pubDate>Sun, 12 Jul 2026 06:34:32 GMT</pubDate>
+</item>
 <item>
   <title>Four Ways to Count Positive Integer Solutions</title>
   <dc:creator>Ashish K. Srivastava</dc:creator>
@@ -158,7 +1256,9 @@
 <section id="python-verification" class="level2">
 <h2 class="anchored" data-anchor-id="python-verification">Python Verification</h2>
 <p>The following program uses the equation to compute <img src="https://latex.codecogs.com/png.latex?x"> after choosing positive <img src="https://latex.codecogs.com/png.latex?y"> and <img src="https://latex.codecogs.com/png.latex?z">. It prints the triples in the same order as the hand-counting method.</p>
-<div id="81fd65ef" class="cell" data-execution_count="1">
+<div id="ad1c620d" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">solutions <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> []</span>
@@ -229,6 +1329,7 @@ background-color: null;
 font-style: inherit;">"Total number of solutions:"</span>, <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(solutions))</span></code></pre></div></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(10, 1, 1)
 (8, 2, 1)

@@ -443,7 +443,9 @@ t^x\cdot t^{2y}\cdot t^{3z}=t^{x+2y+3z}.
 <section id="python-verification" class="level2">
 <h2 class="anchored" data-anchor-id="python-verification">Python Verification</h2>
 <p>The following program uses the equation to compute <span class="math inline">\(x\)</span> after choosing positive <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>. It prints the triples in the same order as the hand-counting method.</p>
-<div id="81fd65ef" class="cell" data-execution_count="1">
+<div id="ad1c620d" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>solutions <span class="op">=</span> []</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>):</span>
@@ -455,6 +457,7 @@ t^x\cdot t^{2y}\cdot t^{3z}=t^{x+2y+3z}.
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(solution)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Total number of solutions:"</span>, <span class="bu">len</span>(solutions))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(10, 1, 1)
 (8, 2, 1)

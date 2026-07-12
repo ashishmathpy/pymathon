@@ -6,6 +6,7 @@ project:
     - about.qmd
     - topics.qmd
     - posts/positive-integer-solutions/index.qmd
+    - posts/longest-collatz-sequence/index.ipynb
     - source-notebooks/positive-integer-solutions.ipynb
   resources:
     - share.js

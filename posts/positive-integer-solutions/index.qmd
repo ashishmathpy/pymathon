@@ -14,7 +14,8 @@ prerequisites: "Basic algebra, inequalities, and elementary counting"
 estimated-reading-time: "8 minutes"
 draft: false
 toc: true
-code-fold: false
+code-fold: show
+code-summary: "Hide code"
 execute:
   echo: true
   warning: false

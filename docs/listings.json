@@ -1,13 +1,15 @@
 [
   {
-    "listing": "/topics.html",
+    "listing": "/index.html",
     "items": [
+      "/posts/longest-collatz-sequence/index.html",
       "/posts/positive-integer-solutions/index.html"
     ]
   },
   {
-    "listing": "/index.html",
+    "listing": "/topics.html",
     "items": [
+      "/posts/longest-collatz-sequence/index.html",
       "/posts/positive-integer-solutions/index.html"
     ]
   }
