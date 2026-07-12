@@ -2,7 +2,7 @@
 title: "Four Ways to Count Positive Integer Solutions"
 subtitle: "Solving x + 2y + 3z = 15 using mathematics and Python"
 author: "Ashish K. Srivastava"
-date: "2026-07-10"
+date: "2026-07-05"
 description: "Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, generating functions, and Python verification."
 categories:
 - Mathematics

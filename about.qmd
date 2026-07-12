@@ -8,7 +8,7 @@ page-layout: article
 
 ::: {.about-hero}
 ::: {.about-photo}
-![PyMathon logo](image.png){.about-logo}
+<img src="Profilepic.jpg" class="about-portrait" alt="Profile photo">
 :::
 
 ::: {.about-intro}
