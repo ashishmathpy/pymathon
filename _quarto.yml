@@ -4,7 +4,6 @@ project:
   render:
     - index.qmd
     - about.qmd
-    - topics.qmd
     - posts/positive-integer-solutions/index.qmd
     - posts/longest-collatz-sequence/index.ipynb
     - source-notebooks/positive-integer-solutions.ipynb
@@ -30,8 +29,6 @@ website:
         href: index.qmd
       - text: Articles
         href: index.qmd#latest-articles
-      - text: Topics
-        href: topics.qmd
       - text: About
         href: about.qmd
 format:

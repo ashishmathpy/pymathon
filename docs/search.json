@@ -105,6 +105,34 @@
     "text": "Try It Yourself\n\nFind the number of positive integer solutions of \\(x+2y+3z=18\\).\nFind the number of non-negative integer solutions of \\(a+2b+3c=10\\).\nFind the number of positive integer solutions of \\(x+3y+4z=20\\).\n\n\n\n\n\n\n\nTipHint for Problem 1\n\n\n\n\n\nFix \\(z\\) first. For each allowed value of \\(z\\), count the positive values of \\(y\\) that keep \\(x=18-2y-3z\\) positive.\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 1\n\n\n\n\n\nThe possible values are \\(z=1,2,3,4,5\\). The row counts are \\(7,5,4,2,1\\), so the total is\n\\[\n7+5+4+2+1=\\boxed{19}.\n\\]\n\n\n\n\n\n\n\n\n\nTipHint for Problem 2\n\n\n\n\n\nFix \\(c=0,1,2,3\\). For each \\(c\\), solve \\(a+2b=10-3c\\) with \\(a,b\\geq0\\).\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 2\n\n\n\n\n\nThe row counts are \\(6,4,3,1\\), giving\n\\[\n6+4+3+1=\\boxed{14}.\n\\]\n\n\n\n\n\n\n\n\n\nTipHint for Problem 3\n\n\n\n\n\nUse \\(x=20-3y-4z\\) and count the positive values of \\(y\\) for each possible positive \\(z\\).\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 3\n\n\n\n\n\nFor \\(z=1,2,3,4\\), the possible values of \\(y\\) number \\(5,3,2,1\\) respectively. Hence the total is\n\\[\n5+3+2+1=\\boxed{11}.\n\\]"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PyMathon",
+    "section": "",
+    "text": "MATHEMATICS · PYTHON · VISUAL THINKING\n\n\n\nPyMathon brings Mathematics, Python, and Problem Solving together in one place.\nHere you will find concise explanations that move from a clear idea to a complete solution, with computation used to verify rather than replace reasoning.\nAbout Ashish K. Srivastava"
+  },
+  {
+    "objectID": "index.html#featured-article",
+    "href": "index.html#featured-article",
+    "title": "PyMathon",
+    "section": "Featured Article",
+    "text": "Featured Article\n\nFour Ways to Count Positive Integer Solutions\nLearn how direct counting, non-negative substitutions, floor functions, generating functions, and Python all lead to the same answer.\nRead the article"
+  },
+  {
+    "objectID": "index.html#what-you-will-find-here",
+    "href": "index.html#what-you-will-find-here",
+    "title": "PyMathon",
+    "section": "What You Will Find Here",
+    "text": "What You Will Find Here\n\nrigorous mathematical solutions;\nmultiple approaches to the same problem;\nPython verification;\nvisual explanations; and\npractice problems to extend each idea."
+  },
+  {
+    "objectID": "index.html#latest-articles",
+    "href": "index.html#latest-articles",
+    "title": "PyMathon",
+    "section": "Latest Articles",
+    "text": "Latest Articles"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
@@ -145,90 +173,6 @@
     "title": "About",
     "section": "Connect",
     "text": "Connect\n\nEmail: kumarashish3066@gmail.com"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "PyMathon",
-    "section": "",
-    "text": "MATHEMATICS · PYTHON · VISUAL THINKING\n\n\n\nPyMathon brings Mathematics, Python, and Problem Solving together in one place.\nHere you will find concise explanations that move from a clear idea to a complete solution, with computation used to verify rather than replace reasoning.\nAbout Ashish K. Srivastava"
-  },
-  {
-    "objectID": "index.html#featured-article",
-    "href": "index.html#featured-article",
-    "title": "PyMathon",
-    "section": "Featured Article",
-    "text": "Featured Article\n\nFour Ways to Count Positive Integer Solutions\nLearn how direct counting, non-negative substitutions, floor functions, generating functions, and Python all lead to the same answer.\nRead the article"
-  },
-  {
-    "objectID": "index.html#what-you-will-find-here",
-    "href": "index.html#what-you-will-find-here",
-    "title": "PyMathon",
-    "section": "What You Will Find Here",
-    "text": "What You Will Find Here\n\nrigorous mathematical solutions;\nmultiple approaches to the same problem;\nPython verification;\nvisual explanations; and\npractice problems to extend each idea."
-  },
-  {
-    "objectID": "index.html#latest-articles",
-    "href": "index.html#latest-articles",
-    "title": "PyMathon",
-    "section": "Latest Articles",
-    "text": "Latest Articles"
-  },
-  {
-    "objectID": "topics.html",
-    "href": "topics.html",
-    "title": "Topics",
-    "section": "",
-    "text": "Browse the ideas that PyMathon develops. The article filter below shows the categories available in published posts; this topic map will grow as new articles are added.\n\n\n\nEquations, identities, inequalities, and structural reasoning.\n\n\n\nLimits, derivatives, integrals, and their applications.\n\n\n\nLines, conics, loci, and geometric methods on the coordinate plane.\n\n\n\nCounting, arrangements, recurrences, and discrete structures.\n\n\n\nDivisibility, congruences, primes, and integer patterns.\n\n\n\nSmall programs that verify patterns, calculations, and examples.\n\n\n\nGraphs, diagrams, and dynamic ways to see an idea clearly."
-  },
-  {
-    "objectID": "topics.html#algebra",
-    "href": "topics.html#algebra",
-    "title": "Topics",
-    "section": "",
-    "text": "Equations, identities, inequalities, and structural reasoning."
-  },
-  {
-    "objectID": "topics.html#calculus",
-    "href": "topics.html#calculus",
-    "title": "Topics",
-    "section": "",
-    "text": "Limits, derivatives, integrals, and their applications."
-  },
-  {
-    "objectID": "topics.html#coordinate-geometry",
-    "href": "topics.html#coordinate-geometry",
-    "title": "Topics",
-    "section": "",
-    "text": "Lines, conics, loci, and geometric methods on the coordinate plane."
-  },
-  {
-    "objectID": "topics.html#combinatorics",
-    "href": "topics.html#combinatorics",
-    "title": "Topics",
-    "section": "",
-    "text": "Counting, arrangements, recurrences, and discrete structures."
-  },
-  {
-    "objectID": "topics.html#number-theory",
-    "href": "topics.html#number-theory",
-    "title": "Topics",
-    "section": "",
-    "text": "Divisibility, congruences, primes, and integer patterns."
-  },
-  {
-    "objectID": "topics.html#python-for-mathematics",
-    "href": "topics.html#python-for-mathematics",
-    "title": "Topics",
-    "section": "",
-    "text": "Small programs that verify patterns, calculations, and examples."
-  },
-  {
-    "objectID": "topics.html#mathematical-visualisation",
-    "href": "topics.html#mathematical-visualisation",
-    "title": "Topics",
-    "section": "",
-    "text": "Graphs, diagrams, and dynamic ways to see an idea clearly."
   },
   {
     "objectID": "posts/longest-collatz-sequence/index.html",
