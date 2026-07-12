@@ -10,10 +10,10 @@
 <atom:link href="https://ashishmathpy.github.io/pymathon/index.xml" rel="self" type="application/rss+xml"/>
 <description>PyMathon explores mathematics through rigorous reasoning, multiple solution methods, Python verification, and visualisation.</description>
 <generator>quarto-1.9.38</generator>
-<lastBuildDate>Sun, 12 Jul 2026 06:34:32 GMT</lastBuildDate>
+<lastBuildDate>Sun, 12 Jul 2026 08:13:35 GMT</lastBuildDate>
 <item>
   <title>Longest Collatz Sequence</title>
-  <dc:creator>Ashish Kumar</dc:creator>
+  <dc:creator>Ashish K. Srivastava</dc:creator>
   <link>https://ashishmathpy.github.io/pymathon/posts/longest-collatz-sequence/</link>
   <description><![CDATA[ 
 
@@ -1107,7 +1107,7 @@ font-style: inherit;">0.25</span>)</span>
   <category>Project Euler</category>
   <category>Number Theory</category>
   <guid>https://ashishmathpy.github.io/pymathon/posts/longest-collatz-sequence/</guid>
-  <pubDate>Sun, 12 Jul 2026 06:34:32 GMT</pubDate>
+  <pubDate>Sun, 12 Jul 2026 08:13:35 GMT</pubDate>
 </item>
 <item>
   <title>Four Ways to Count Positive Integer Solutions</title>
