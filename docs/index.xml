@@ -394,7 +394,7 @@ a_1,a_2,\ldots,a_{18}=5,9,13,\ldots,73.
 <p>The mathematics proves the result for every valid set. Python is useful for experimenting with examples, seeing collisions, and checking conjectures.</p>
 <section id="a-basic-sumset-tool" class="level3">
 <h3 class="anchored" data-anchor-id="a-basic-sumset-tool">A basic sumset tool</h3>
-<div id="d3df14bc" class="cell" data-execution_count="1">
+<div id="cb12b7d6" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
@@ -429,7 +429,10 @@ font-weight: bold;
 font-style: inherit;">else</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">set</span>(B)</span>
-<span id="cb1-5">    <span class="cf" style="color: #003B4F;
+<span id="cb1-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># A set comprehension keeps each numerical sum only once.</span></span>
+<span id="cb1-6">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> <span class="bu" style="color: null;
@@ -449,7 +452,6 @@ font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> B})</span>
-<span id="cb1-6"></span>
 <span id="cb1-7"></span>
 <span id="cb1-8">A <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -469,25 +471,24 @@ background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">8</span>}</span>
-<span id="cb1-10"></span>
-<span id="cb1-11"><span class="bu" style="color: null;
+<span id="cb1-10"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"A + A ="</span>, sumset(A))</span>
-<span id="cb1-12"><span class="bu" style="color: null;
+<span id="cb1-11"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"|A + A| ="</span>, <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(sumset(A)))</span>
-<span id="cb1-13"><span class="bu" style="color: null;
+<span id="cb1-12"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"B + B ="</span>, sumset(B))</span>
-<span id="cb1-14"><span class="bu" style="color: null;
+<span id="cb1-13"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -506,7 +507,7 @@ B + B = [2, 4, 6, 9, 11, 16]
 </section>
 <section id="find-which-pairs-collide" class="level3">
 <h3 class="anchored" data-anchor-id="find-which-pairs-collide">Find which pairs collide</h3>
-<div id="46b97b83" class="cell" data-execution_count="2">
+<div id="07bca23a" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
@@ -515,28 +516,29 @@ font-style: inherit;">from</span> collections <span class="im" style="color: #00
 background-color: null;
 font-style: inherit;">import</span> defaultdict</span>
 <span id="cb3-2"></span>
-<span id="cb3-3"></span>
-<span id="cb3-4"><span class="kw" style="color: #003B4F;
+<span id="cb3-3"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> sum_representations(A):</span>
-<span id="cb3-5">    <span class="co" style="color: #5E5E5E;
+<span id="cb3-4">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"""Map each sum to unordered pairs that produce it."""</span></span>
-<span id="cb3-6">    values <span class="op" style="color: #5E5E5E;
+<span id="cb3-5">    values <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">sorted</span>(<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">set</span>(A))</span>
-<span id="cb3-7">    representations <span class="op" style="color: #5E5E5E;
+<span id="cb3-6">    representations <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> defaultdict(<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">list</span>)</span>
-<span id="cb3-8"></span>
-<span id="cb3-9">    <span class="cf" style="color: #003B4F;
+<span id="cb3-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Starting at i avoids counting both (x, y) and (y, x).</span></span>
+<span id="cb3-8">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> i, x <span class="kw" style="color: #003B4F;
@@ -545,18 +547,17 @@ font-weight: bold;
 font-style: inherit;">in</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">enumerate</span>(values):</span>
-<span id="cb3-10">        <span class="cf" style="color: #003B4F;
+<span id="cb3-9">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> y <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> values[i:]:</span>
-<span id="cb3-11">            representations[x <span class="op" style="color: #5E5E5E;
+<span id="cb3-10">            representations[x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> y].append((x, y))</span>
-<span id="cb3-12"></span>
-<span id="cb3-13">    <span class="cf" style="color: #003B4F;
+<span id="cb3-11">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> <span class="bu" style="color: null;
@@ -564,9 +565,8 @@ background-color: null;
 font-style: inherit;">dict</span>(<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">sorted</span>(representations.items()))</span>
-<span id="cb3-14"></span>
-<span id="cb3-15"></span>
-<span id="cb3-16"><span class="cf" style="color: #003B4F;
+<span id="cb3-12"></span>
+<span id="cb3-13"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> total, pairs <span class="kw" style="color: #003B4F;
@@ -579,7 +579,7 @@ background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span>}).items():</span>
-<span id="cb3-17">    <span class="bu" style="color: null;
+<span id="cb3-14">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -611,7 +611,7 @@ font-style: inherit;">"</span>)</span></code></pre></div></div>
 </section>
 <section id="test-the-theorem-on-examples" class="level3">
 <h3 class="anchored" data-anchor-id="test-the-theorem-on-examples">Test the theorem on examples</h3>
-<div id="55a35bed" class="cell" data-execution_count="3">
+<div id="e0b9136b" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
@@ -641,7 +641,9 @@ font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">True</span></span>
-<span id="cb6-5"></span>
+<span id="cb6-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Every consecutive gap must equal the first gap.</span></span>
 <span id="cb6-6">    d <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> values[<span class="dv" style="color: #AD0000;
@@ -683,34 +685,33 @@ background-color: null;
 font-style: inherit;">1</span>)</span>
 <span id="cb6-10">    )</span>
 <span id="cb6-11"></span>
-<span id="cb6-12"></span>
-<span id="cb6-13"><span class="kw" style="color: #003B4F;
+<span id="cb6-12"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> report(A):</span>
-<span id="cb6-14">    values <span class="op" style="color: #5E5E5E;
+<span id="cb6-13">    values <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">sorted</span>(<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">set</span>(A))</span>
-<span id="cb6-15">    n <span class="op" style="color: #5E5E5E;
+<span id="cb6-14">    n <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(values)</span>
-<span id="cb6-16">    size <span class="op" style="color: #5E5E5E;
+<span id="cb6-15">    size <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(sumset(values))</span>
-<span id="cb6-17">    <span class="bu" style="color: null;
+<span id="cb6-16">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"A ="</span>, values)</span>
-<span id="cb6-18">    <span class="bu" style="color: null;
+<span id="cb6-17">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -741,14 +742,13 @@ background-color: null;
 font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb6-19">    <span class="bu" style="color: null;
+<span id="cb6-18">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Arithmetic progression?"</span>, is_arithmetic_progression(values))</span>
-<span id="cb6-20"></span>
-<span id="cb6-21"></span>
-<span id="cb6-22">report({<span class="dv" style="color: #AD0000;
+<span id="cb6-19"></span>
+<span id="cb6-20">report({<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -757,10 +757,10 @@ background-color: null;
 font-style: inherit;">9</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">13</span>})</span>
-<span id="cb6-23"><span class="bu" style="color: null;
+<span id="cb6-21"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>()</span>
-<span id="cb6-24">report({<span class="dv" style="color: #AD0000;
+<span id="cb6-22">report({<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -785,7 +785,7 @@ Arithmetic progression? False</code></pre>
 <section id="search-all-small-sets" class="level3">
 <h3 class="anchored" data-anchor-id="search-all-small-sets">Search all small sets</h3>
 <p>The next experiment lists every four-element subset of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>8</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{0,1,\ldots,8\}</annotation></semantics></math> whose sumset has the minimum size <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7</mn><annotation encoding="application/x-tex">7</annotation></semantics></math>.</p>
-<div id="c5c0f402" class="cell" data-execution_count="4">
+<div id="0fb69a40" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
@@ -814,7 +814,10 @@ font-style: inherit;">1</span></span>
 background-color: null;
 font-style: inherit;">=</span> []</span>
 <span id="cb8-6"></span>
-<span id="cb8-7"><span class="cf" style="color: #003B4F;
+<span id="cb8-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check every four-element subset of {0, 1, ..., 8}.</span></span>
+<span id="cb8-8"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> candidate <span class="kw" style="color: #003B4F;
@@ -825,7 +828,7 @@ background-color: null;
 font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">9</span>), n):</span>
-<span id="cb8-8">    <span class="cf" style="color: #003B4F;
+<span id="cb8-9">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
@@ -833,31 +836,31 @@ background-color: null;
 font-style: inherit;">len</span>(sumset(candidate)) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> minimum:</span>
-<span id="cb8-9">        minimal_sets.append(candidate)</span>
-<span id="cb8-10"></span>
-<span id="cb8-11"><span class="bu" style="color: null;
+<span id="cb8-10">        minimal_sets.append(candidate)</span>
+<span id="cb8-11"></span>
+<span id="cb8-12"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Sets with a minimum-size sumset:"</span>)</span>
-<span id="cb8-12"><span class="cf" style="color: #003B4F;
+<span id="cb8-13"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> candidate <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> minimal_sets:</span>
-<span id="cb8-13">    <span class="bu" style="color: null;
+<span id="cb8-14">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(candidate)</span>
-<span id="cb8-14"></span>
-<span id="cb8-15"><span class="bu" style="color: null;
+<span id="cb8-15"></span>
+<span id="cb8-16"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(</span>
-<span id="cb8-16">    <span class="st" style="color: #20794D;
+<span id="cb8-17">    <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Every result is an AP:"</span>,</span>
-<span id="cb8-17">    <span class="bu" style="color: null;
+<span id="cb8-18">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">all</span>(is_arithmetic_progression(A) <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -866,7 +869,7 @@ font-style: inherit;">for</span> A <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> minimal_sets),</span>
-<span id="cb8-18">)</span></code></pre></div></div>
+<span id="cb8-19">)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sets with a minimum-size sumset:
@@ -886,7 +889,7 @@ Every result is an AP: True</code></pre>
 </section>
 <section id="verify-the-contest-problem-directly" class="level3">
 <h3 class="anchored" data-anchor-id="verify-the-contest-problem-directly">Verify the contest problem directly</h3>
-<div id="33753298" class="cell" data-execution_count="5">
+<div id="ad7aff07" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1">A <span class="op" style="color: #5E5E5E;
@@ -906,31 +909,34 @@ font-style: inherit;">4</span>))</span>
 background-color: null;
 font-style: inherit;">=</span> sumset(A)</span>
 <span id="cb10-3"></span>
-<span id="cb10-4"><span class="bu" style="color: null;
+<span id="cb10-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The interior terms are all entries except the two fixed endpoints.</span></span>
+<span id="cb10-5"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"A ="</span>, A)</span>
-<span id="cb10-5"><span class="bu" style="color: null;
+<span id="cb10-6"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"|A| ="</span>, <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(A))</span>
-<span id="cb10-6"><span class="bu" style="color: null;
+<span id="cb10-7"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"A+A ="</span>, AA)</span>
-<span id="cb10-7"><span class="bu" style="color: null;
+<span id="cb10-8"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"|A+A| ="</span>, <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(AA))</span>
-<span id="cb10-8"><span class="bu" style="color: null;
+<span id="cb10-9"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -1185,7 +1191,10 @@ font-style: inherit;">"n must be a positive integer"</span>)</span>
 <span id="cb1-6">    sequence <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [n]</span>
-<span id="cb1-7">    <span class="cf" style="color: #003B4F;
+<span id="cb1-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Apply one Collatz step, then record the new term.</span></span>
+<span id="cb1-8">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">while</span> n <span class="op" style="color: #5E5E5E;
@@ -1193,7 +1202,7 @@ background-color: null;
 font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>:</span>
-<span id="cb1-8">        <span class="cf" style="color: #003B4F;
+<span id="cb1-9">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> n <span class="op" style="color: #5E5E5E;
@@ -1205,16 +1214,16 @@ background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>:</span>
-<span id="cb1-9">            n <span class="op" style="color: #5E5E5E;
+<span id="cb1-10">            n <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">//=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span></span>
-<span id="cb1-10">        <span class="cf" style="color: #003B4F;
+<span id="cb1-11">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">else</span>:</span>
-<span id="cb1-11">            n <span class="op" style="color: #5E5E5E;
+<span id="cb1-12">            n <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1225,12 +1234,11 @@ background-color: null;
 font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span></span>
-<span id="cb1-12">        sequence.append(n)</span>
-<span id="cb1-13">    <span class="cf" style="color: #003B4F;
+<span id="cb1-13">        sequence.append(n)</span>
+<span id="cb1-14">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> sequence</span>
-<span id="cb1-14"></span>
 <span id="cb1-15"></span>
 <span id="cb1-16">sequence_13 <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -1320,7 +1328,9 @@ background-color: null;
 font-style: inherit;">max</span>(sequence),</span>
 <span id="cb3-9">    }</span>
 <span id="cb3-10"></span>
-<span id="cb3-11"></span>
+<span id="cb3-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compare a few short and long trajectories.</span></span>
 <span id="cb3-12">test_values <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [<span class="dv" style="color: #AD0000;
@@ -1417,12 +1427,15 @@ font-style: inherit;">print</span>(summary)</span></code></pre></div></div>
 <div id="601c5dd9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.405505Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.405427Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.407189Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.406966Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1">sequence_27 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Record the size and peak of the n = 27 trajectory.</span></span>
+<span id="cb5-2">sequence_27 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> collatz_sequence(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">27</span>)</span>
-<span id="cb5-2"><span class="bu" style="color: null;
+<span id="cb5-3"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -1435,7 +1448,7 @@ background-color: null;
 font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb5-3"><span class="bu" style="color: null;
+<span id="cb5-4"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -1452,7 +1465,7 @@ background-color: null;
 font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb5-4"><span class="bu" style="color: null;
+<span id="cb5-5"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -1491,7 +1504,10 @@ font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="co
 background-color: null;
 font-style: inherit;">as</span> plt</span>
 <span id="cb7-3"></span>
-<span id="cb7-4">fig, ax <span class="op" style="color: #5E5E5E;
+<span id="cb7-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot term value against the number of completed steps.</span></span>
+<span id="cb7-5">fig, ax <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -1500,13 +1516,13 @@ background-color: null;
 font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span>))</span>
-<span id="cb7-5">fig.patch.set_facecolor(<span class="st" style="color: #20794D;
+<span id="cb7-6">fig.patch.set_facecolor(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#0c1521"</span>)</span>
-<span id="cb7-6">ax.set_facecolor(<span class="st" style="color: #20794D;
+<span id="cb7-7">ax.set_facecolor(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#101d2d"</span>)</span>
-<span id="cb7-7">ax.plot(<span class="bu" style="color: null;
+<span id="cb7-8">ax.plot(<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">range</span>(<span class="bu" style="color: null;
 background-color: null;
@@ -1519,43 +1535,43 @@ background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#a9ecf4"</span>)</span>
-<span id="cb7-8">ax.set_xlabel(<span class="st" style="color: #20794D;
+<span id="cb7-9">ax.set_xlabel(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Step number"</span>, color<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#e7edf4"</span>)</span>
-<span id="cb7-9">ax.set_ylabel(<span class="st" style="color: #20794D;
+<span id="cb7-10">ax.set_ylabel(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Term value"</span>, color<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#e7edf4"</span>)</span>
-<span id="cb7-10">ax.set_title(<span class="st" style="color: #20794D;
+<span id="cb7-11">ax.set_title(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Collatz trajectory for n = 27"</span>, color<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#f1f6fb"</span>)</span>
-<span id="cb7-11">ax.tick_params(colors<span class="op" style="color: #5E5E5E;
+<span id="cb7-12">ax.tick_params(colors<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#d5e1eb"</span>)</span>
-<span id="cb7-12"><span class="cf" style="color: #003B4F;
+<span id="cb7-13"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> spine <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> ax.spines.values():</span>
-<span id="cb7-13">    spine.set_color(<span class="st" style="color: #20794D;
+<span id="cb7-14">    spine.set_color(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#5d7590"</span>)</span>
-<span id="cb7-14">ax.grid(<span class="va" style="color: #111111;
+<span id="cb7-15">ax.grid(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">True</span>, color<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -1566,8 +1582,8 @@ background-color: null;
 font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.25</span>)</span>
-<span id="cb7-15">fig.tight_layout()</span>
-<span id="cb7-16">plt.show()</span></code></pre></div></div>
+<span id="cb7-16">fig.tight_layout()</span>
+<span id="cb7-17">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1688,7 +1704,10 @@ background-color: null;
 font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span></span>
-<span id="cb8-7">    <span class="cf" style="color: #003B4F;
+<span id="cb8-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># This version recomputes every chain from its starting value.</span></span>
+<span id="cb8-8">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> n <span class="kw" style="color: #003B4F;
@@ -1699,25 +1718,24 @@ background-color: null;
 font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, limit):</span>
-<span id="cb8-8">        current_length <span class="op" style="color: #5E5E5E;
+<span id="cb8-9">        current_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(collatz_sequence(n))</span>
-<span id="cb8-9">        <span class="cf" style="color: #003B4F;
+<span id="cb8-10">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> current_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span> best_length:</span>
-<span id="cb8-10">            best_start, best_length <span class="op" style="color: #5E5E5E;
+<span id="cb8-11">            best_start, best_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> n, current_length</span>
-<span id="cb8-11">    <span class="cf" style="color: #003B4F;
+<span id="cb8-12">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> best_start, best_length</span>
-<span id="cb8-12"></span>
 <span id="cb8-13"></span>
 <span id="cb8-14"><span class="bu" style="color: null;
 background-color: null;
@@ -1784,7 +1802,10 @@ font-style: inherit;">=</span> n</span>
 <span id="cb10-7">    path <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> []</span>
-<span id="cb10-8">    <span class="cf" style="color: #003B4F;
+<span id="cb10-8">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Stop as soon as the new path reaches a cached tail.</span></span>
+<span id="cb10-9">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">while</span> n <span class="kw" style="color: #003B4F;
@@ -1794,8 +1815,8 @@ font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> cache:</span>
-<span id="cb10-9">        path.append(n)</span>
-<span id="cb10-10">        <span class="cf" style="color: #003B4F;
+<span id="cb10-10">        path.append(n)</span>
+<span id="cb10-11">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> n <span class="op" style="color: #5E5E5E;
@@ -1807,16 +1828,16 @@ background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>:</span>
-<span id="cb10-11">            n <span class="op" style="color: #5E5E5E;
+<span id="cb10-12">            n <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">//=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span></span>
-<span id="cb10-12">        <span class="cf" style="color: #003B4F;
+<span id="cb10-13">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">else</span>:</span>
-<span id="cb10-13">            n <span class="op" style="color: #5E5E5E;
+<span id="cb10-14">            n <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1827,11 +1848,14 @@ background-color: null;
 font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span></span>
-<span id="cb10-14"></span>
-<span id="cb10-15">    known_length <span class="op" style="color: #5E5E5E;
+<span id="cb10-15"></span>
+<span id="cb10-16">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Work backwards so each cached length uses its successor.</span></span>
+<span id="cb10-17">    known_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> cache[n]</span>
-<span id="cb10-16">    <span class="cf" style="color: #003B4F;
+<span id="cb10-18">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> value <span class="kw" style="color: #003B4F;
@@ -1840,28 +1864,27 @@ font-weight: bold;
 font-style: inherit;">in</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">reversed</span>(path):</span>
-<span id="cb10-17">        known_length <span class="op" style="color: #5E5E5E;
+<span id="cb10-19">        known_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span></span>
-<span id="cb10-18">        cache[value] <span class="op" style="color: #5E5E5E;
+<span id="cb10-20">        cache[value] <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> known_length</span>
-<span id="cb10-19">    <span class="cf" style="color: #003B4F;
+<span id="cb10-21">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> cache[original_n]</span>
-<span id="cb10-20"></span>
-<span id="cb10-21"></span>
-<span id="cb10-22"><span class="kw" style="color: #003B4F;
+<span id="cb10-22"></span>
+<span id="cb10-23"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> longest_collatz(limit):</span>
-<span id="cb10-23">    <span class="co" style="color: #5E5E5E;
+<span id="cb10-24">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"""Return the start, term count, and cache for chains below limit."""</span></span>
-<span id="cb10-24">    <span class="cf" style="color: #003B4F;
+<span id="cb10-25">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
@@ -1886,7 +1909,7 @@ background-color: null;
 font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>:</span>
-<span id="cb10-25">        <span class="cf" style="color: #003B4F;
+<span id="cb10-26">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
@@ -1894,22 +1917,25 @@ background-color: null;
 font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"limit must be an integer greater than 1"</span>)</span>
-<span id="cb10-26"></span>
-<span id="cb10-27">    cache <span class="op" style="color: #5E5E5E;
+<span id="cb10-27"></span>
+<span id="cb10-28">    cache <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>: <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>}</span>
-<span id="cb10-28">    best_start, best_length <span class="op" style="color: #5E5E5E;
+<span id="cb10-29">    best_start, best_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span></span>
-<span id="cb10-29">    <span class="cf" style="color: #003B4F;
+<span id="cb10-30">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Reuse every chain length learned during earlier searches.</span></span>
+<span id="cb10-31">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> n <span class="kw" style="color: #003B4F;
@@ -1920,19 +1946,19 @@ background-color: null;
 font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, limit):</span>
-<span id="cb10-30">        current_length <span class="op" style="color: #5E5E5E;
+<span id="cb10-32">        current_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> collatz_length(n, cache)</span>
-<span id="cb10-31">        <span class="cf" style="color: #003B4F;
+<span id="cb10-33">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> current_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span> best_length:</span>
-<span id="cb10-32">            best_start, best_length <span class="op" style="color: #5E5E5E;
+<span id="cb10-34">            best_start, best_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> n, current_length</span>
-<span id="cb10-33">    <span class="cf" style="color: #003B4F;
+<span id="cb10-35">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> best_start, best_length, cache</span></code></pre></div></div>
@@ -1942,12 +1968,15 @@ font-style: inherit;">return</span> best_start, best_length, cache</span></code>
 <div id="88e91c29" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.950625Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.950550Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.609217Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.608877Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1">best_start, best_length, length_cache <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Search all permitted starting values: 1 &lt;= n &lt; 1,000,000.</span></span>
+<span id="cb11-2">best_start, best_length, length_cache <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> longest_collatz(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1_000_000</span>)</span>
-<span id="cb11-2"><span class="bu" style="color: null;
+<span id="cb11-3"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -1958,7 +1987,7 @@ background-color: null;
 font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb11-3"><span class="bu" style="color: null;
+<span id="cb11-4"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -1969,7 +1998,7 @@ background-color: null;
 font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb11-4"><span class="bu" style="color: null;
+<span id="cb11-5"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -2021,20 +2050,23 @@ Number of steps: 524</code></pre>
 <div id="8243cb04" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:45.611649Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:45.611490Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.613767Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.613520Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1">winning_sequence <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Inspect both ends of the winning chain without printing 525 terms.</span></span>
+<span id="cb13-2">winning_sequence <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> collatz_sequence(best_start)</span>
-<span id="cb13-2"><span class="bu" style="color: null;
+<span id="cb13-3"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"First 15 terms:"</span>)</span>
-<span id="cb13-3"><span class="bu" style="color: null;
+<span id="cb13-4"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(winning_sequence[:<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">15</span>])</span>
-<span id="cb13-4"><span class="bu" style="color: null;
+<span id="cb13-5"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -2043,14 +2075,14 @@ background-color: null;
 font-style: inherit;">\n</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">Last 15 terms:"</span>)</span>
-<span id="cb13-5"><span class="bu" style="color: null;
+<span id="cb13-6"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(winning_sequence[<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">15</span>:])</span>
-<span id="cb13-6"><span class="bu" style="color: null;
+<span id="cb13-7"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -2094,7 +2126,10 @@ font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="co
 background-color: null;
 font-style: inherit;">as</span> plt</span>
 <span id="cb15-3"></span>
-<span id="cb15-4">fig, ax <span class="op" style="color: #5E5E5E;
+<span id="cb15-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># A logarithmic scale keeps the large peak and small tail visible together.</span></span>
+<span id="cb15-5">fig, ax <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2103,13 +2138,13 @@ background-color: null;
 font-style: inherit;">11</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span>))</span>
-<span id="cb15-5">fig.patch.set_facecolor(<span class="st" style="color: #20794D;
+<span id="cb15-6">fig.patch.set_facecolor(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#0c1521"</span>)</span>
-<span id="cb15-6">ax.set_facecolor(<span class="st" style="color: #20794D;
+<span id="cb15-7">ax.set_facecolor(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#101d2d"</span>)</span>
-<span id="cb15-7">ax.plot(<span class="bu" style="color: null;
+<span id="cb15-8">ax.plot(<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">range</span>(<span class="bu" style="color: null;
 background-color: null;
@@ -2122,46 +2157,46 @@ background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#ffe09a"</span>)</span>
-<span id="cb15-8">ax.set_yscale(<span class="st" style="color: #20794D;
+<span id="cb15-9">ax.set_yscale(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"log"</span>)</span>
-<span id="cb15-9">ax.set_xlabel(<span class="st" style="color: #20794D;
+<span id="cb15-10">ax.set_xlabel(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Step number"</span>, color<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#e7edf4"</span>)</span>
-<span id="cb15-10">ax.set_ylabel(<span class="st" style="color: #20794D;
+<span id="cb15-11">ax.set_ylabel(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Term value (logarithmic scale)"</span>, color<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#e7edf4"</span>)</span>
-<span id="cb15-11">ax.set_title(<span class="st" style="color: #20794D;
+<span id="cb15-12">ax.set_title(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Collatz trajectory for n = 837,799"</span>, color<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#f1f6fb"</span>)</span>
-<span id="cb15-12">ax.tick_params(colors<span class="op" style="color: #5E5E5E;
+<span id="cb15-13">ax.tick_params(colors<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#d5e1eb"</span>)</span>
-<span id="cb15-13"><span class="cf" style="color: #003B4F;
+<span id="cb15-14"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> spine <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> ax.spines.values():</span>
-<span id="cb15-14">    spine.set_color(<span class="st" style="color: #20794D;
+<span id="cb15-15">    spine.set_color(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"#5d7590"</span>)</span>
-<span id="cb15-15">ax.grid(<span class="va" style="color: #111111;
+<span id="cb15-16">ax.grid(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">True</span>, color<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2172,8 +2207,8 @@ background-color: null;
 font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.25</span>)</span>
-<span id="cb15-16">fig.tight_layout()</span>
-<span id="cb15-17">plt.show()</span></code></pre></div></div>
+<span id="cb15-17">fig.tight_layout()</span>
+<span id="cb15-18">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -2427,14 +2462,17 @@ t^x\cdot t^{2y}\cdot t^{3z}=t^{x+2y+3z}.
 <section id="computational-exploration" class="level2">
 <h2 class="anchored" data-anchor-id="computational-exploration">Computational Exploration</h2>
 <p>The following program uses the equation to compute <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math> after choosing positive <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>. It prints the triples in the same order as the hand-counting method.</p>
-<div id="ff9bfed8" class="cell" data-execution_count="1">
+<div id="a3c6027b" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1">solutions <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> []</span>
 <span id="cb1-2"></span>
-<span id="cb1-3"><span class="cf" style="color: #003B4F;
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Once y and z are fixed, x is determined.</span></span>
+<span id="cb1-4"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> z <span class="kw" style="color: #003B4F;
@@ -2447,7 +2485,7 @@ background-color: null;
 font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span>):</span>
-<span id="cb1-4">    <span class="cf" style="color: #003B4F;
+<span id="cb1-5">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> y <span class="kw" style="color: #003B4F;
@@ -2460,7 +2498,7 @@ background-color: null;
 font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">16</span>):</span>
-<span id="cb1-5">        x <span class="op" style="color: #5E5E5E;
+<span id="cb1-6">        x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -2477,7 +2515,7 @@ background-color: null;
 font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> z</span>
-<span id="cb1-6">        <span class="cf" style="color: #003B4F;
+<span id="cb1-7">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> x <span class="op" style="color: #5E5E5E;
@@ -2485,15 +2523,22 @@ background-color: null;
 font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>:</span>
-<span id="cb1-7">            solution <span class="op" style="color: #5E5E5E;
+<span id="cb1-8">            solutions.append((x, y, z))</span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> (x, y, z)</span>
-<span id="cb1-8">            solutions.append(solution)</span>
-<span id="cb1-9">            <span class="bu" style="color: null;
+font-style: inherit;"># Display the complete list before counting it.</span></span>
+<span id="cb1-11"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> solution <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> solutions:</span>
+<span id="cb1-12">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(solution)</span>
-<span id="cb1-10"></span>
-<span id="cb1-11"><span class="bu" style="color: null;
+<span id="cb1-13"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -5068,7 +5113,7 @@ font-style: inherit;">;</span></span></code></pre></div></div>
 <section id="computational-exploration" class="level2">
 <h2 class="anchored" data-anchor-id="computational-exploration">Computational Exploration</h2>
 <p>The same asymmetric function can be plotted and integrated numerically with Python. This gives an independent computational check of the graphical argument.</p>
-<div id="e2d3d116" class="cell" data-execution_count="1">
+<div id="b632c375" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the Python code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
@@ -5085,24 +5130,26 @@ font-style: inherit;">as</span> plt</span>
 <span id="cb2-4">plt.style.use(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"dark_background"</span>)</span>
-<span id="cb2-5"></span>
-<span id="cb2-6">a, b <span class="op" style="color: #5E5E5E;
+<span id="cb2-5">a, b <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">6</span></span>
-<span id="cb2-7">x <span class="op" style="color: #5E5E5E;
+<span id="cb2-6">x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.linspace(a, b, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1000</span>)</span>
-<span id="cb2-8"></span>
-<span id="cb2-9"><span class="kw" style="color: #003B4F;
+<span id="cb2-7"></span>
+<span id="cb2-8"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> f(x):</span>
+<span id="cb2-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># An asymmetric example makes the reflection easy to distinguish.</span></span>
 <span id="cb2-10">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -5126,25 +5173,26 @@ font-style: inherit;">0.16</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> x</span>
 <span id="cb2-11"></span>
-<span id="cb2-12">y_original <span class="op" style="color: #5E5E5E;
+<span id="cb2-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Reflect every input x across the midpoint of [a, b].</span></span>
+<span id="cb2-13">y_original <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> f(x)</span>
-<span id="cb2-13">y_reflected <span class="op" style="color: #5E5E5E;
+<span id="cb2-14">y_reflected <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> f(a <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> b <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> x)</span>
-<span id="cb2-14"></span>
 <span id="cb2-15">area_original <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.trapezoid(y_original, x)</span>
 <span id="cb2-16">area_reflected <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.trapezoid(y_reflected, x)</span>
-<span id="cb2-17"></span>
-<span id="cb2-18"><span class="bu" style="color: null;
+<span id="cb2-17"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -5155,7 +5203,7 @@ background-color: null;
 font-style: inherit;">:.8f}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb2-19"><span class="bu" style="color: null;
+<span id="cb2-18"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -5166,7 +5214,10 @@ background-color: null;
 font-style: inherit;">:.8f}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb2-20"></span>
+<span id="cb2-19"></span>
+<span id="cb2-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot both functions on the same interval.</span></span>
 <span id="cb2-21">fig, ax <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;

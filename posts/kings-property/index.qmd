@@ -147,22 +147,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 plt.style.use("dark_background")
-
 a, b = 0, 6
 x = np.linspace(a, b, 1000)
 
 def f(x):
+    # An asymmetric example makes the reflection easy to distinguish.
     return 1.35 + 0.42 * np.sin(1.55 * x) + 0.16 * x
 
+# Reflect every input x across the midpoint of [a, b].
 y_original = f(x)
 y_reflected = f(a + b - x)
-
 area_original = np.trapezoid(y_original, x)
 area_reflected = np.trapezoid(y_reflected, x)
-
 print(f"Area under f(x):       {area_original:.8f}")
 print(f"Area after reflection: {area_reflected:.8f}")
 
+# Plot both functions on the same interval.
 fig, ax = plt.subplots(figsize=(9, 5), facecolor="#0c1521")
 ax.set_facecolor("#0c1521")
 plt.plot(x, y_original, label=r"$f(x)$", linewidth=2.5)

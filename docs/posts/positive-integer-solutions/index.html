@@ -431,20 +431,22 @@ t^x\cdot t^{2y}\cdot t^{3z}=t^{x+2y+3z}.
 <section id="computational-exploration" class="level2">
 <h2 class="anchored" data-anchor-id="computational-exploration">Computational Exploration</h2>
 <p>The following program uses the equation to compute <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math> after choosing positive <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>. It prints the triples in the same order as the hand-counting method.</p>
-<div id="ff9bfed8" class="cell" data-execution_count="1">
+<div id="a3c6027b" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>solutions <span class="op">=</span> []</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>):</span>
-<span id="cb1-4"><a href="#cb1-4"></a>    <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">16</span>):</span>
-<span id="cb1-5"><a href="#cb1-5"></a>        x <span class="op">=</span> <span class="dv">15</span> <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> y <span class="op">-</span> <span class="dv">3</span> <span class="op">*</span> z</span>
-<span id="cb1-6"><a href="#cb1-6"></a>        <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb1-7"><a href="#cb1-7"></a>            solution <span class="op">=</span> (x, y, z)</span>
-<span id="cb1-8"><a href="#cb1-8"></a>            solutions.append(solution)</span>
-<span id="cb1-9"><a href="#cb1-9"></a>            <span class="bu">print</span>(solution)</span>
-<span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="bu">print</span>(<span class="st">"Total number of solutions:"</span>, <span class="bu">len</span>(solutions))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># Once y and z are fixed, x is determined.</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>):</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">16</span>):</span>
+<span id="cb1-6"><a href="#cb1-6"></a>        x <span class="op">=</span> <span class="dv">15</span> <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> y <span class="op">-</span> <span class="dv">3</span> <span class="op">*</span> z</span>
+<span id="cb1-7"><a href="#cb1-7"></a>        <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb1-8"><a href="#cb1-8"></a>            solutions.append((x, y, z))</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co"># Display the complete list before counting it.</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="cf">for</span> solution <span class="kw">in</span> solutions:</span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="bu">print</span>(solution)</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="bu">print</span>(<span class="st">"Total number of solutions:"</span>, <span class="bu">len</span>(solutions))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(10, 1, 1)

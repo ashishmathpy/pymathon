@@ -1242,9 +1242,13 @@ pre code,
 
 .code-editor div.sourceCode.cell-code pre.sourceCode {
   margin: 0;
-  padding: 1rem 0;
+  padding: 0.8rem 0;
   background: #0b1016 !important;
   border: 0;
+}
+
+.code-editor pre code {
+  line-height: 1.48;
 }
 
 pre.numberSource {

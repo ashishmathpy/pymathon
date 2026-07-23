@@ -466,12 +466,11 @@ def sumset(A, B=None):
     """Return the sorted sumset A+B; use B=A when B is omitted."""
     A = set(A)
     B = A if B is None else set(B)
+    # A set comprehension keeps each numerical sum only once.
     return sorted({a + b for a in A for b in B})
-
 
 A = {1, 3, 5}
 B = {1, 3, 8}
-
 print("A + A =", sumset(A))
 print("|A + A| =", len(sumset(A)))
 print("B + B =", sumset(B))
@@ -486,18 +485,15 @@ it must still be counted only once.
 ```{python}
 from collections import defaultdict
 
-
 def sum_representations(A):
     """Map each sum to unordered pairs that produce it."""
     values = sorted(set(A))
     representations = defaultdict(list)
-
+    # Starting at i avoids counting both (x, y) and (y, x).
     for i, x in enumerate(values):
         for y in values[i:]:
             representations[x + y].append((x, y))
-
     return dict(sorted(representations.items()))
-
 
 for total, pairs in sum_representations({1, 3, 5}).items():
     print(f"{total:2} can be made by {pairs}")
@@ -519,13 +515,12 @@ def is_arithmetic_progression(A):
     values = sorted(set(A))
     if len(values) < 3:
         return True
-
+    # Every consecutive gap must equal the first gap.
     d = values[1] - values[0]
     return all(
         values[i + 1] - values[i] == d
         for i in range(len(values) - 1)
     )
-
 
 def report(A):
     values = sorted(set(A))
@@ -534,7 +529,6 @@ def report(A):
     print("A =", values)
     print(f"|A| = {n}, |A+A| = {size}, lower bound = {2*n - 1}")
     print("Arithmetic progression?", is_arithmetic_progression(values))
-
 
 report({1, 5, 9, 13})
 print()
@@ -556,6 +550,7 @@ n = 4
 minimum = 2 * n - 1
 minimal_sets = []
 
+# Check every four-element subset of {0, 1, ..., 8}.
 for candidate in combinations(range(9), n):
     if len(sumset(candidate)) == minimum:
         minimal_sets.append(candidate)
@@ -580,6 +575,7 @@ sets of real numbers.
 A = list(range(1, 78, 4))
 AA = sumset(A)
 
+# The interior terms are all entries except the two fixed endpoints.
 print("A =", A)
 print("|A| =", len(A))
 print("A+A =", AA)

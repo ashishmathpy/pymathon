@@ -193,14 +193,16 @@ The following program uses the equation to compute $x$ after choosing positive $
 ```{python}
 solutions = []
 
+# Once y and z are fixed, x is determined.
 for z in range(1, 5):
     for y in range(1, 16):
         x = 15 - 2 * y - 3 * z
         if x > 0:
-            solution = (x, y, z)
-            solutions.append(solution)
-            print(solution)
+            solutions.append((x, y, z))
 
+# Display the complete list before counting it.
+for solution in solutions:
+    print(solution)
 print("Total number of solutions:", len(solutions))
 ```
 
