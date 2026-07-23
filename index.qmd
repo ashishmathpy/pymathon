@@ -41,7 +41,7 @@ $$
 $$
 \int_a^b f(x)\,dx
 =
-\frac12\int_a^b\!\left[f(x)+f(a+b-x)\right]dx
+\frac12\int_a^b\!\left[f(x)+f(a+b-x)\right]\,dx
 $$
 :::
 

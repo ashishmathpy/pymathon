@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ashishmathpy.github.io/pymathon/index.html</loc>
-    <lastmod>2026-07-23T18:33:39.397Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ashishmathpy.github.io/pymathon/posts/positive-integer-solutions/index.html</loc>
-    <lastmod>2026-07-23T18:22:45.129Z</lastmod>
+    <loc>https://ashishmathpy.github.io/pymathon/posts/longest-collatz-sequence/index.html</loc>
+    <lastmod>2026-07-23T19:09:16.194Z</lastmod>
   </url>
   <url>
     <loc>https://ashishmathpy.github.io/pymathon/posts/kings-property/index.html</loc>
-    <lastmod>2026-07-23T18:22:45.255Z</lastmod>
+    <lastmod>2026-07-23T19:08:34.710Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ashishmathpy.github.io/pymathon/about.html</loc>
+    <lastmod>2026-07-23T19:05:40.074Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ashishmathpy.github.io/pymathon/index.html</loc>
+    <lastmod>2026-07-23T19:06:24.413Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ashishmathpy.github.io/pymathon/posts/positive-integer-solutions/index.html</loc>
+    <lastmod>2026-07-23T19:08:34.836Z</lastmod>
   </url>
   <url>
     <loc>https://ashishmathpy.github.io/pymathon/posts/sumsets-and-arithmetic-progressions/index.html</loc>
-    <lastmod>2026-07-23T18:26:06.734Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ashishmathpy.github.io/pymathon/source-notebooks/positive-integer-solutions.html</loc>
-    <lastmod>2026-07-10T18:06:52.066Z</lastmod>
+    <lastmod>2026-07-23T19:05:39.950Z</lastmod>
   </url>
 </urlset>

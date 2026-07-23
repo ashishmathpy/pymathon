@@ -55,13 +55,9 @@ This question appeared in **JEE (Main) 2022, 28 June, Morning Shift
 [View the original-question listing](https://questions.examside.com/past-years/jee/question/plet-a--1-asub1sub-asub2sub--asub18-jee-main-mathematics-trigonometric-functions-and-equations-gvl4fwlruku9lx4c)
 :::
 
-At first, the information seems insufficient. We know only the first and last
-elements of $A$, not the eighteen integers in between. The number $39$ is the
-clue: it is the smallest possible size of $A+A$. A set whose sumset is this
-small must have a very special structure.
-
-By the end of the article, we will prove that structure rather than guess it.
-The final answer will be
+Only the endpoints of $A$ are known, but the number $39$ determines the
+missing structure: it is the smallest possible size of $A+A$. We will prove
+that equality forces $A$ to be an arithmetic progression. The requested sum is
 
 $$
 \boxed{702}.
@@ -470,7 +466,7 @@ def sumset(A, B=None):
     """Return the sorted sumset A+B; use B=A when B is omitted."""
     A = set(A)
     B = A if B is None else set(B)
-    return sorted(a + b for a in A for b in B)
+    return sorted({a + b for a in A for b in B})
 
 
 A = {1, 3, 5}
@@ -594,7 +590,7 @@ print("Sum of the 18 interior terms =", sum(A[1:-1]))
 The program produces $20$ elements in $A$, $39$ elements in $A+A$, and an
 interior sum of $702$.
 
-## 7. A broader viewpoint
+## 7. Connection to additive combinatorics
 
 This problem is a first glimpse of **additive combinatorics**, the study of how
 the arithmetic structure of a set is reflected in sets such as $A+A$ and

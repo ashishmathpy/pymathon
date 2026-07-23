@@ -176,7 +176,15 @@ $$
 =[t^9]\frac{1}{(1-t)(1-t^2)(1-t^3)}.
 $$
 
-That coefficient is $12$, in agreement with the direct counts.
+Expanding only as far as the required term,
+
+$$
+\frac{1}{(1-t)(1-t^2)(1-t^3)}
+=1+t+2t^2+3t^3+4t^4+5t^5+7t^6
++8t^7+10t^8+12t^9+O(t^{10}).
+$$
+
+Hence the coefficient of $t^9$ is $12$, in agreement with the direct counts.
 
 ## Computational Exploration
 
@@ -224,7 +232,7 @@ Every listed triple satisfies $x+2y+3z=15$, and the list contains $5+4+2+1=12$ t
 
 ## Conclusion
 
-The four methods illuminate the same result from different angles: direct counting is concrete, shifting variables connects the problem to non-negative solutions, floor functions compress the count, and generating functions give a powerful general framework. Python verifies the final list.
+The four methods describe the same count from different angles: direct counting lists the cases, shifting variables converts the problem to non-negative solutions, floor functions compress the count, and generating functions provide a systematic method. The Python calculation is a final check, not part of the proof.
 
 $$
 \boxed{12\text{ positive integer solutions}}.

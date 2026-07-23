@@ -8,7 +8,6 @@ project:
     - posts/kings-property/index.qmd
     - posts/sumsets-and-arithmetic-progressions/index.qmd
     - posts/longest-collatz-sequence/index.ipynb
-    - source-notebooks/positive-integer-solutions.ipynb
   resources:
     - share.js
     - fonts/**

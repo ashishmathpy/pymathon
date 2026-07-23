@@ -249,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#search-all-small-sets" id="toc-search-all-small-sets" class="nav-link" data-scroll-target="#search-all-small-sets">Search all small sets</a></li>
   <li><a href="#verify-the-contest-problem-directly" id="toc-verify-the-contest-problem-directly" class="nav-link" data-scroll-target="#verify-the-contest-problem-directly">Verify the contest problem directly</a></li>
   </ul></li>
-  <li><a href="#a-broader-viewpoint" id="toc-a-broader-viewpoint" class="nav-link" data-scroll-target="#a-broader-viewpoint">7. A broader viewpoint</a></li>
+  <li><a href="#connection-to-additive-combinatorics" id="toc-connection-to-additive-combinatorics" class="nav-link" data-scroll-target="#connection-to-additive-combinatorics">7. Connection to additive combinatorics</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">8. Common mistakes</a>
   <ul class="collapse">
   <li><a href="#counting-pairs-instead-of-distinct-sums" id="toc-counting-pairs-instead-of-distinct-sums" class="nav-link" data-scroll-target="#counting-pairs-instead-of-distinct-sums">Counting pairs instead of distinct sums</a></li>
@@ -301,8 +301,7 @@ a_1+a_2+\cdots+a_{18}.
 <a href="https://questions.examside.com/past-years/jee/question/plet-a--1-asub1sub-asub2sub--asub18-jee-main-mathematics-trigonometric-functions-and-equations-gvl4fwlruku9lx4c">View the original-question listing</a></p>
 </div>
 </div>
-<p>At first, the information seems insufficient. We know only the first and last elements of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>, not the eighteen integers in between. The number <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>39</mn><annotation encoding="application/x-tex">39</annotation></semantics></math> is the clue: it is the smallest possible size of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math>. A set whose sumset is this small must have a very special structure.</p>
-<p>By the end of the article, we will prove that structure rather than guess it. The final answer will be</p>
+<p>Only the endpoints of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> are known, but the number <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>39</mn><annotation encoding="application/x-tex">39</annotation></semantics></math> determines the missing structure: it is the smallest possible size of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math>. We will prove that equality forces <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> to be an arithmetic progression. The requested sum is</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><menclose notation="box"><mn>702</mn></menclose><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \boxed{702}.
 </annotation></semantics></math></p>
@@ -643,55 +642,55 @@ a_1,a_2,\ldots,a_{18}=5,9,13,\ldots,73.
 <p>The mathematics proves the result for every valid set. Python is useful for experimenting with examples, seeing collisions, and checking conjectures.</p>
 <section id="a-basic-sumset-tool" class="level3">
 <h3 class="anchored" data-anchor-id="a-basic-sumset-tool">A basic sumset tool</h3>
-<div id="a837445c" class="cell" data-execution_count="1">
+<div id="d3df14bc" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sumset(A, B<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the sorted sumset A+B; use B=A when B is omitted."""</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> <span class="bu">set</span>(A)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> A <span class="cf">if</span> B <span class="kw">is</span> <span class="va">None</span> <span class="cf">else</span> <span class="bu">set</span>(B)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sorted</span>(a <span class="op">+</span> b <span class="cf">for</span> a <span class="kw">in</span> A <span class="cf">for</span> b <span class="kw">in</span> B)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">8</span>}</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"A + A ="</span>, sumset(A))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"|A + A| ="</span>, <span class="bu">len</span>(sumset(A)))</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"B + B ="</span>, sumset(B))</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"|B + B| ="</span>, <span class="bu">len</span>(sumset(B)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> sumset(A, B<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="co">"""Return the sorted sumset A+B; use B=A when B is omitted."""</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    A <span class="op">=</span> <span class="bu">set</span>(A)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    B <span class="op">=</span> A <span class="cf">if</span> B <span class="kw">is</span> <span class="va">None</span> <span class="cf">else</span> <span class="bu">set</span>(B)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="cf">return</span> <span class="bu">sorted</span>({a <span class="op">+</span> b <span class="cf">for</span> a <span class="kw">in</span> A <span class="cf">for</span> b <span class="kw">in</span> B})</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a>A <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>}</span>
+<span id="cb1-9"><a href="#cb1-9"></a>B <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">8</span>}</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="bu">print</span>(<span class="st">"A + A ="</span>, sumset(A))</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="bu">print</span>(<span class="st">"|A + A| ="</span>, <span class="bu">len</span>(sumset(A)))</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="bu">print</span>(<span class="st">"B + B ="</span>, sumset(B))</span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="bu">print</span>(<span class="st">"|B + B| ="</span>, <span class="bu">len</span>(sumset(B)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>A + A = [2, 4, 4, 6, 6, 6, 8, 8, 10]
-|A + A| = 9
-B + B = [2, 4, 4, 6, 9, 9, 11, 11, 16]
-|B + B| = 9</code></pre>
+<pre><code>A + A = [2, 4, 6, 8, 10]
+|A + A| = 5
+B + B = [2, 4, 6, 9, 11, 16]
+|B + B| = 6</code></pre>
 </div>
 </div>
 <p>Using a Python <code>set</code> is essential: if the same sum arises from several pairs, it must still be counted only once.</p>
 </section>
 <section id="find-which-pairs-collide" class="level3">
 <h3 class="anchored" data-anchor-id="find-which-pairs-collide">Find which pairs collide</h3>
-<div id="1a62b0b8" class="cell" data-execution_count="2">
+<div id="46b97b83" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sum_representations(A):</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Map each sum to unordered pairs that produce it."""</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(A))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    representations <span class="op">=</span> defaultdict(<span class="bu">list</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, x <span class="kw">in</span> <span class="bu">enumerate</span>(values):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> y <span class="kw">in</span> values[i:]:</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            representations[x <span class="op">+</span> y].append((x, y))</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">dict</span>(<span class="bu">sorted</span>(representations.items()))</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> total, pairs <span class="kw">in</span> sum_representations({<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>}).items():</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>total<span class="sc">:2}</span><span class="ss"> can be made by </span><span class="sc">{</span>pairs<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw">def</span> sum_representations(A):</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="co">"""Map each sum to unordered pairs that produce it."""</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>    values <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(A))</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    representations <span class="op">=</span> defaultdict(<span class="bu">list</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>    <span class="cf">for</span> i, x <span class="kw">in</span> <span class="bu">enumerate</span>(values):</span>
+<span id="cb3-10"><a href="#cb3-10"></a>        <span class="cf">for</span> y <span class="kw">in</span> values[i:]:</span>
+<span id="cb3-11"><a href="#cb3-11"></a>            representations[x <span class="op">+</span> y].append((x, y))</span>
+<span id="cb3-12"><a href="#cb3-12"></a></span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="cf">return</span> <span class="bu">dict</span>(<span class="bu">sorted</span>(representations.items()))</span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="cf">for</span> total, pairs <span class="kw">in</span> sum_representations({<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>}).items():</span>
+<span id="cb3-17"><a href="#cb3-17"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>total<span class="sc">:2}</span><span class="ss"> can be made by </span><span class="sc">{</span>pairs<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code> 2 can be made by [(1, 1)]
@@ -702,46 +701,46 @@ B + B = [2, 4, 4, 6, 9, 9, 11, 11, 16]
 </div>
 </div>
 <p>This prints, among other lines,</p>
-<pre class="text"><code> 6 can be made by [(1, 5), (3, 3)]</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a> 6 can be made by [(1, 5), (3, 3)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The ordered pair <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>5</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(5,1)</annotation></semantics></math> is not printed separately because addition is commutative.</p>
 </section>
 <section id="test-the-theorem-on-examples" class="level3">
 <h3 class="anchored" data-anchor-id="test-the-theorem-on-examples">Test the theorem on examples</h3>
-<div id="06a260d7" class="cell" data-execution_count="3">
+<div id="55a35bed" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_arithmetic_progression(A):</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(A))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(values) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">True</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> values[<span class="dv">1</span>] <span class="op">-</span> values[<span class="dv">0</span>]</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">all</span>(</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        values[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">-</span> values[i] <span class="op">==</span> d</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(values) <span class="op">-</span> <span class="dv">1</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> report(A):</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(A))</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(values)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    size <span class="op">=</span> <span class="bu">len</span>(sumset(values))</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"A ="</span>, values)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"|A| = </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">, |A+A| = </span><span class="sc">{</span>size<span class="sc">}</span><span class="ss">, lower bound = </span><span class="sc">{</span><span class="dv">2</span><span class="op">*</span>n <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Arithmetic progression?"</span>, is_arithmetic_progression(values))</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>report({<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">13</span>})</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>report({<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">14</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> is_arithmetic_progression(A):</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    values <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(A))</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="cf">if</span> <span class="bu">len</span>(values) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb6-4"><a href="#cb6-4"></a>        <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>    d <span class="op">=</span> values[<span class="dv">1</span>] <span class="op">-</span> values[<span class="dv">0</span>]</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="cf">return</span> <span class="bu">all</span>(</span>
+<span id="cb6-8"><a href="#cb6-8"></a>        values[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">-</span> values[i] <span class="op">==</span> d</span>
+<span id="cb6-9"><a href="#cb6-9"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(values) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb6-10"><a href="#cb6-10"></a>    )</span>
+<span id="cb6-11"><a href="#cb6-11"></a></span>
+<span id="cb6-12"><a href="#cb6-12"></a></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="kw">def</span> report(A):</span>
+<span id="cb6-14"><a href="#cb6-14"></a>    values <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(A))</span>
+<span id="cb6-15"><a href="#cb6-15"></a>    n <span class="op">=</span> <span class="bu">len</span>(values)</span>
+<span id="cb6-16"><a href="#cb6-16"></a>    size <span class="op">=</span> <span class="bu">len</span>(sumset(values))</span>
+<span id="cb6-17"><a href="#cb6-17"></a>    <span class="bu">print</span>(<span class="st">"A ="</span>, values)</span>
+<span id="cb6-18"><a href="#cb6-18"></a>    <span class="bu">print</span>(<span class="ss">f"|A| = </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">, |A+A| = </span><span class="sc">{</span>size<span class="sc">}</span><span class="ss">, lower bound = </span><span class="sc">{</span><span class="dv">2</span><span class="op">*</span>n <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="bu">print</span>(<span class="st">"Arithmetic progression?"</span>, is_arithmetic_progression(values))</span>
+<span id="cb6-20"><a href="#cb6-20"></a></span>
+<span id="cb6-21"><a href="#cb6-21"></a></span>
+<span id="cb6-22"><a href="#cb6-22"></a>report({<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">13</span>})</span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="bu">print</span>()</span>
+<span id="cb6-24"><a href="#cb6-24"></a>report({<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">14</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>A = [1, 5, 9, 13]
-|A| = 4, |A+A| = 16, lower bound = 7
+|A| = 4, |A+A| = 7, lower bound = 7
 Arithmetic progression? True
 
 A = [1, 5, 9, 14]
-|A| = 4, |A+A| = 16, lower bound = 7
+|A| = 4, |A+A| = 9, lower bound = 7
 Arithmetic progression? False</code></pre>
 </div>
 </div>
@@ -750,30 +749,39 @@ Arithmetic progression? False</code></pre>
 <section id="search-all-small-sets" class="level3">
 <h3 class="anchored" data-anchor-id="search-all-small-sets">Search all small sets</h3>
 <p>The next experiment lists every four-element subset of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>8</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{0,1,\ldots,8\}</annotation></semantics></math> whose sumset has the minimum size <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7</mn><annotation encoding="application/x-tex">7</annotation></semantics></math>.</p>
-<div id="e78e61e7" class="cell" data-execution_count="4">
+<div id="c5c0f402" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>minimum <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> n <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>minimal_sets <span class="op">=</span> []</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> candidate <span class="kw">in</span> combinations(<span class="bu">range</span>(<span class="dv">9</span>), n):</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(sumset(candidate)) <span class="op">==</span> minimum:</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        minimal_sets.append(candidate)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sets with a minimum-size sumset:"</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> candidate <span class="kw">in</span> minimal_sets:</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(candidate)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Every result is an AP:"</span>,</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">all</span>(is_arithmetic_progression(A) <span class="cf">for</span> A <span class="kw">in</span> minimal_sets),</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>n <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>minimum <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> n <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>minimal_sets <span class="op">=</span> []</span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="cf">for</span> candidate <span class="kw">in</span> combinations(<span class="bu">range</span>(<span class="dv">9</span>), n):</span>
+<span id="cb8-8"><a href="#cb8-8"></a>    <span class="cf">if</span> <span class="bu">len</span>(sumset(candidate)) <span class="op">==</span> minimum:</span>
+<span id="cb8-9"><a href="#cb8-9"></a>        minimal_sets.append(candidate)</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="bu">print</span>(<span class="st">"Sets with a minimum-size sumset:"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="cf">for</span> candidate <span class="kw">in</span> minimal_sets:</span>
+<span id="cb8-13"><a href="#cb8-13"></a>    <span class="bu">print</span>(candidate)</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="bu">print</span>(</span>
+<span id="cb8-16"><a href="#cb8-16"></a>    <span class="st">"Every result is an AP:"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17"></a>    <span class="bu">all</span>(is_arithmetic_progression(A) <span class="cf">for</span> A <span class="kw">in</span> minimal_sets),</span>
+<span id="cb8-18"><a href="#cb8-18"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sets with a minimum-size sumset:
+(0, 1, 2, 3)
+(0, 2, 4, 6)
+(1, 2, 3, 4)
+(1, 3, 5, 7)
+(2, 3, 4, 5)
+(2, 4, 6, 8)
+(3, 4, 5, 6)
+(4, 5, 6, 7)
+(5, 6, 7, 8)
 Every result is an AP: True</code></pre>
 </div>
 </div>
@@ -781,31 +789,31 @@ Every result is an AP: True</code></pre>
 </section>
 <section id="verify-the-contest-problem-directly" class="level3">
 <h3 class="anchored" data-anchor-id="verify-the-contest-problem-directly">Verify the contest problem directly</h3>
-<div id="2d444765" class="cell" data-execution_count="5">
+<div id="33753298" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">78</span>, <span class="dv">4</span>))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>AA <span class="op">=</span> sumset(A)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"A ="</span>, A)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"|A| ="</span>, <span class="bu">len</span>(A))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"A+A ="</span>, AA)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"|A+A| ="</span>, <span class="bu">len</span>(AA))</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sum of the 18 interior terms ="</span>, <span class="bu">sum</span>(A[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>A <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">78</span>, <span class="dv">4</span>))</span>
+<span id="cb10-2"><a href="#cb10-2"></a>AA <span class="op">=</span> sumset(A)</span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="bu">print</span>(<span class="st">"A ="</span>, A)</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="bu">print</span>(<span class="st">"|A| ="</span>, <span class="bu">len</span>(A))</span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="bu">print</span>(<span class="st">"A+A ="</span>, AA)</span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="bu">print</span>(<span class="st">"|A+A| ="</span>, <span class="bu">len</span>(AA))</span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="bu">print</span>(<span class="st">"Sum of the 18 interior terms ="</span>, <span class="bu">sum</span>(A[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>A = [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77]
 |A| = 20
-A+A = [2, 6, 6, 10, 10, 10, 14, 14, 14, 14, 18, 18, 18, 18, 18, 22, 22, 22, 22, 22, 22, 26, 26, 26, 26, 26, 26, 26, 30, 30, 30, 30, 30, 30, 30, 30, 34, 34, 34, 34, 34, 34, 34, 34, 34, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 118, 118, 118, 118, 118, 118, 118, 118, 118, 118, 122, 122, 122, 122, 122, 122, 122, 122, 122, 126, 126, 126, 126, 126, 126, 126, 126, 130, 130, 130, 130, 130, 130, 130, 134, 134, 134, 134, 134, 134, 138, 138, 138, 138, 138, 142, 142, 142, 142, 146, 146, 146, 150, 150, 154]
-|A+A| = 400
+A+A = [2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94, 98, 102, 106, 110, 114, 118, 122, 126, 130, 134, 138, 142, 146, 150, 154]
+|A+A| = 39
 Sum of the 18 interior terms = 702</code></pre>
 </div>
 </div>
 <p>The program produces <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>20</mn><annotation encoding="application/x-tex">20</annotation></semantics></math> elements in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>39</mn><annotation encoding="application/x-tex">39</annotation></semantics></math> elements in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math>, and an interior sum of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>702</mn><annotation encoding="application/x-tex">702</annotation></semantics></math>.</p>
 </section>
 </section>
-<section id="a-broader-viewpoint" class="level2">
-<h2 class="anchored" data-anchor-id="a-broader-viewpoint">7. A broader viewpoint</h2>
+<section id="connection-to-additive-combinatorics" class="level2">
+<h2 class="anchored" data-anchor-id="connection-to-additive-combinatorics">7. Connection to additive combinatorics</h2>
 <p>This problem is a first glimpse of <strong>additive combinatorics</strong>, the study of how the arithmetic structure of a set is reflected in sets such as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>−</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A-A</annotation></semantics></math>.</p>
 <p>The quantity</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo></mrow><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo></mrow></mfrac><annotation encoding="application/x-tex">

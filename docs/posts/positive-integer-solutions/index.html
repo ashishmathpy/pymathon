@@ -420,25 +420,31 @@ t^x\cdot t^{2y}\cdot t^{3z}=t^{x+2y+3z}.
 [t^{15}]G(t)
 =[t^9]\frac{1}{(1-t)(1-t^2)(1-t^3)}.
 </annotation></semantics></math></p>
-<p>That coefficient is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>12</mn><annotation encoding="application/x-tex">12</annotation></semantics></math>, in agreement with the direct counts.</p>
+<p>Expanding only as far as the required term,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>t</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>t</mi><mn>3</mn></msup><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mo>=</mo><mn>1</mn><mo>+</mo><mi>t</mi><mo>+</mo><mn>2</mn><msup><mi>t</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><msup><mi>t</mi><mn>3</mn></msup><mo>+</mo><mn>4</mn><msup><mi>t</mi><mn>4</mn></msup><mo>+</mo><mn>5</mn><msup><mi>t</mi><mn>5</mn></msup><mo>+</mo><mn>7</mn><msup><mi>t</mi><mn>6</mn></msup><mo>+</mo><mn>8</mn><msup><mi>t</mi><mn>7</mn></msup><mo>+</mo><mn>10</mn><msup><mi>t</mi><mn>8</mn></msup><mo>+</mo><mn>12</mn><msup><mi>t</mi><mn>9</mn></msup><mo>+</mo><mi>O</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>t</mi><mn>10</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\frac{1}{(1-t)(1-t^2)(1-t^3)}
+=1+t+2t^2+3t^3+4t^4+5t^5+7t^6
++8t^7+10t^8+12t^9+O(t^{10}).
+</annotation></semantics></math></p>
+<p>Hence the coefficient of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>t</mi><mn>9</mn></msup><annotation encoding="application/x-tex">t^9</annotation></semantics></math> is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>12</mn><annotation encoding="application/x-tex">12</annotation></semantics></math>, in agreement with the direct counts.</p>
 </section>
 <section id="computational-exploration" class="level2">
 <h2 class="anchored" data-anchor-id="computational-exploration">Computational Exploration</h2>
 <p>The following program uses the equation to compute <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math> after choosing positive <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>. It prints the triples in the same order as the hand-counting method.</p>
-<div id="707d6c2e" class="cell" data-execution_count="1">
+<div id="ff9bfed8" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>solutions <span class="op">=</span> []</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>):</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">16</span>):</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="dv">15</span> <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> y <span class="op">-</span> <span class="dv">3</span> <span class="op">*</span> z</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            solution <span class="op">=</span> (x, y, z)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            solutions.append(solution)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(solution)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Total number of solutions:"</span>, <span class="bu">len</span>(solutions))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>solutions <span class="op">=</span> []</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="cf">for</span> z <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>):</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">16</span>):</span>
+<span id="cb1-5"><a href="#cb1-5"></a>        x <span class="op">=</span> <span class="dv">15</span> <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> y <span class="op">-</span> <span class="dv">3</span> <span class="op">*</span> z</span>
+<span id="cb1-6"><a href="#cb1-6"></a>        <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb1-7"><a href="#cb1-7"></a>            solution <span class="op">=</span> (x, y, z)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>            solutions.append(solution)</span>
+<span id="cb1-9"><a href="#cb1-9"></a>            <span class="bu">print</span>(solution)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="bu">print</span>(<span class="st">"Total number of solutions:"</span>, <span class="bu">len</span>(solutions))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(10, 1, 1)
@@ -512,7 +518,7 @@ z=4:&amp;\quad (1,1,4).
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The four methods illuminate the same result from different angles: direct counting is concrete, shifting variables connects the problem to non-negative solutions, floor functions compress the count, and generating functions give a powerful general framework. Python verifies the final list.</p>
+<p>The four methods describe the same count from different angles: direct counting lists the cases, shifting variables converts the problem to non-negative solutions, floor functions compress the count, and generating functions provide a systematic method. The Python calculation is a final check, not part of the proof.</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><menclose notation="box"><mrow><mn>12</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> positive integer solutions</mtext></mrow></mrow></menclose><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \boxed{12\text{ positive integer solutions}}.
 </annotation></semantics></math></p>

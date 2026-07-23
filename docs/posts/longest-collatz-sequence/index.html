@@ -8,7 +8,7 @@
 
 <meta name="author" content="Ashish K. Srivastava">
 <meta name="dcterms.date" content="2026-07-12">
-<meta name="description" content="An introduction to the Collatz conjecture, its mathematical structure, experimental verification with Python, and an efficient solution to Project Euler Problem 14.">
+<meta name="description" content="The Collatz recurrence, stopping-time conventions, memoization, and a verified solution to Project Euler Problem 14.">
 
 <title>Longest Collatz Sequence – PyMathon</title>
 <style>
@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Longest Collatz Sequence – PyMathon">
-<meta property="og:description" content="An introduction to the Collatz conjecture, its mathematical structure, experimental verification with Python, and an efficient solution to Project Euler Problem 14.">
+<meta property="og:description" content="The Collatz recurrence, stopping-time conventions, memoization, and a verified solution to Project Euler Problem 14.">
 <meta property="og:image" content="https://ashishmathpy.github.io/pymathon/posts/longest-collatz-sequence/index_files/figure-html/cell-5-output-1.svg">
 <meta property="og:site_name" content="PyMathon">
 <link rel="canonical" href="https://ashishmathpy.github.io/pymathon/posts/longest-collatz-sequence/">
@@ -182,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <p class="subtitle lead">Project Euler Problem 14</p>
                   <div>
         <div class="description">
-          An introduction to the Collatz conjecture, its mathematical structure, experimental verification with Python, and an efficient solution to Project Euler Problem 14.
+          The Collatz recurrence, stopping-time conventions, memoization, and a verified solution to Project Euler Problem 14.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -279,7 +279,7 @@ T^k(n)=1.
 <p>For chain lengths, we stop at the first occurrence of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.</p>
 <section id="why-this-is-still-a-conjecture" class="level3">
 <h3 class="anchored" data-anchor-id="why-this-is-still-a-conjecture">Why this is still a conjecture</h3>
-<p>Computers have checked the rule for extraordinarily many starting values. That is convincing evidence, but it is not a proof. A finite computation can only check finitely many integers; the statement concerns every positive integer.</p>
+<p>Large finite ranges have been checked computationally, but a finite computation can verify only finitely many starting values. The conjecture concerns every positive integer.</p>
 <p>A proof would have to rule out both an orbit that grows without bound and a non-trivial cycle other than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>→</mo><mn>4</mn><mo>→</mo><mn>2</mn><mo>→</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\to4\to2\to1</annotation></semantics></math>. Neither has been ruled out for all positive integers. The original Collatz conjecture therefore remains a conjecture, not a theorem.</p>
 </section>
 <section id="a-first-example-n13" class="level3">
@@ -415,7 +415,7 @@ Steps: 9</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The chain beginning at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>27</mn><annotation encoding="application/x-tex">27</annotation></semantics></math> is worth noticing. It starts small, rises as high as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>9232</mn><annotation encoding="application/x-tex">9232</annotation></semantics></math>, and only then returns to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>. This is a useful reminder that the rule does not produce a steadily decreasing sequence.</p>
+<p>The chain beginning at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>27</mn><annotation encoding="application/x-tex">27</annotation></semantics></math> rises as high as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>9232</mn><annotation encoding="application/x-tex">9232</annotation></semantics></math> before returning to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>; Collatz sequences need not decrease at every step.</p>
 <div id="601c5dd9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.405505Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.405427Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.407189Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.406966Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
@@ -516,7 +516,7 @@ L(40)=1+L(20),
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>13</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>+</mo><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>40</mn><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 L(13)=1+L(40).
 </annotation></semantics></math></p>
-<p>This recurrence is the mathematical reason that memoization works. Before we write the efficient program, it is useful to see the direct method.</p>
+<p>This recurrence is the reason memoization works. First consider the direct method.</p>
 </section>
 <section id="a-direct-python-solution" class="level2">
 <h2 class="anchored" data-anchor-id="a-direct-python-solution">A Direct Python Solution</h2>
@@ -543,7 +543,7 @@ L(13)=1+L(40).
 <pre><code>(871, 179)</code></pre>
 </div>
 </div>
-<p>For a small limit this is perfectly adequate. At one million starts, however, the repeated tails become expensive. The recurrence for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">L(n)</annotation></semantics></math> tells us exactly what to store.</p>
+<p>For a small limit this method is adequate. Near one million, the repeated tails become expensive. The recurrence for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">L(n)</annotation></semantics></math> tells us what to store.</p>
 </section>
 <section id="memoization" class="level2">
 <h2 class="anchored" data-anchor-id="memoization">Memoization</h2>
@@ -586,7 +586,7 @@ L(13)=1+L(40).
 <span id="cb10-33"><a href="#cb10-33"></a>    <span class="cf">return</span> best_start, best_length, cache</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Now we can translate the recurrence into Python. The following finite computation solves the Project Euler search; it does not claim to prove the Collatz conjecture.</p>
+<p>The following finite computation solves the Project Euler search. It does not claim to prove the Collatz conjecture.</p>
 <div id="88e91c29" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.950625Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.950550Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.609217Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.608877Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
@@ -627,7 +627,7 @@ Number of steps: 524</code></pre>
 </section>
 <section id="inspecting-the-winning-sequence" class="level2">
 <h2 class="anchored" data-anchor-id="inspecting-the-winning-sequence">Inspecting the Winning Sequence</h2>
-<p>The winning chain begins with large oscillations but ends in the familiar tail through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40</mn><mo>,</mo><mn>20</mn><mo>,</mo><mn>10</mn><mo>,</mo><mn>5</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">40,20,10,5,\ldots,1</annotation></semantics></math>.</p>
+<p>The winning chain eventually enters the familiar tail <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40</mn><mo>,</mo><mn>20</mn><mo>,</mo><mn>10</mn><mo>,</mo><mn>5</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">40,20,10,5,\ldots,1</annotation></semantics></math>.</p>
 <div id="8243cb04" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:45.611649Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:45.611490Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.613767Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.613520Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
@@ -693,7 +693,7 @@ S(n)=\frac{3n+1}{2^{\nu_2(3n+1)}}.
 </annotation></semantics></math></p>
 <p>Here <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ν</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\nu_2(m)</annotation></semantics></math> is the exponent of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math> in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>. The map sends odd integers directly to odd integers. Parity sequences, or parity vectors, record the even and odd decisions along an orbit. Once a finite parity pattern is fixed, the iterate has an affine form involving powers of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math>; the difficulty is that the pattern depends on the orbit itself.</p>
 <p>The directed Collatz graph has an arrow <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>→</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">n\longrightarrow T(n)</annotation></semantics></math> from every positive integer. Reversing the arrows produces inverse Collatz trees, which make shared tails visible. Probabilistic heuristics model the powers of two dividing <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">3n+1</annotation></semantics></math> as if they were random; they help explain the observed downward tendency, but they are not proofs because actual parity events are deterministic and dependent.</p>
-<p>There are important partial results. Terence Tao proved that, in a precise logarithmic-density sense, almost all orbits attain values below any function that tends to infinity. “Almost all” is not “all”, so this does not settle the original conjecture. Generalized Collatz problems can even be undecidable in some settings. That result concerns generalized systems; it does not show that the original Collatz conjecture is undecidable.</p>
+<p>Terence Tao proved that for every function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false" form="prefix">(</mo><mi>N</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">f(N)</annotation></semantics></math> tending to infinity, the minimum value in the orbit of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> is at most <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false" form="prefix">(</mo><mi>N</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">f(N)</annotation></semantics></math> for almost all <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> in the sense of logarithmic density. This does not establish the claim for every starting value. Kurtz and Simon proved an undecidability result for a generalized class of Collatz maps; their theorem does not say that the original Collatz conjecture is undecidable.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>

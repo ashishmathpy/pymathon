@@ -14,9 +14,9 @@ page-layout: article
 ::: {.about-intro}
 ## Ashish K. Srivastava
 
-I am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.
-
-Through PyMathon, I write about mathematics through definitions, proofs, examples, and carefully structured problem solving. Computational tools are used only when they offer a useful experiment, numerical check, or visualisation.
+I write mathematical notes centred on definitions, proofs, examples, and
+problem solving. When computation adds genuine insight, I use it for
+experiments, numerical checks, or visualisation.
 :::
 :::
 
@@ -34,11 +34,11 @@ Through PyMathon, I write about mathematics through definitions, proofs, example
 
 ## Why I Created PyMathon
 
-I created PyMathon as a place for serious but accessible mathematical exposition. Here, I want to:
+I created PyMathon as a place for serious but accessible mathematical
+exposition. Its articles aim to:
 
 - use computation selectively to explore mathematical ideas;
 - present multiple approaches to a problem;
-- verify results computationally;
 - produce clear visual explanations; and
 - help students and teachers explore concepts more deeply.
 

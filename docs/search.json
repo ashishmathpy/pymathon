@@ -1,17 +1,206 @@
 [
   {
+    "objectID": "posts/longest-collatz-sequence/index.html",
+    "href": "posts/longest-collatz-sequence/index.html",
+    "title": "Longest Collatz Sequence",
+    "section": "",
+    "text": "The Collatz rule is easy to state, but its long-term behaviour is still not understood. We begin with the rule itself, then use it to solve the finite search problem posed in Project Euler Problem 14."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#the-collatz-process",
+    "href": "posts/longest-collatz-sequence/index.html#the-collatz-process",
+    "title": "Longest Collatz Sequence",
+    "section": "The Collatz Process",
+    "text": "The Collatz Process\nFor a positive integer, apply one of two operations: halve an even number, and replace an odd number by three times the number plus one. Repeating this instruction produces a Collatz sequence, also called an orbit.\nLet ℕ={1,2,3,…}\\mathbb{N}=\\{1,2,3,\\ldots\\}. The Collatz map is\nT(n)={n2,if n is even,3n+1,if n is odd.\nT(n)=\n\\begin{cases}\n\\dfrac{n}{2}, & \\text{if } n \\text{ is even},\\\\[6pt]\n3n+1, & \\text{if } n \\text{ is odd}.\n\\end{cases}\n\nStarting at nn, the successive values are n,T(n),T2(n),…n,T(n),T^2(n),\\ldots. Here Tk(n)T^k(n) means that the map has been applied kk times."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#the-collatz-conjecture",
+    "href": "posts/longest-collatz-sequence/index.html#the-collatz-conjecture",
+    "title": "Longest Collatz Sequence",
+    "section": "The Collatz Conjecture",
+    "text": "The Collatz Conjecture\nThe conjecture states that every positive starting value eventually reaches 11:\n∀n∈ℕ,∃k≥0 such that Tk(n)=1.\n\\forall n\\in\\mathbb{N},\\quad\n\\exists k\\geq 0\n\\text{ such that }\nT^k(n)=1.\n\nOnce the value 11 is reached, iteration continues around the familiar cycle\n1→4→2→1.\n1\\rightarrow4\\rightarrow2\\rightarrow1.\n\nFor chain lengths, we stop at the first occurrence of 11.\n\nWhy this is still a conjecture\nLarge finite ranges have been checked computationally, but a finite computation can verify only finitely many starting values. The conjecture concerns every positive integer.\nA proof would have to rule out both an orbit that grows without bound and a non-trivial cycle other than 1→4→2→11\\to4\\to2\\to1. Neither has been ruled out for all positive integers. The original Collatz conjecture therefore remains a conjecture, not a theorem.\n\n\nA first example: n=13n=13\nApplying the rule carefully gives\n13→40→20→10→5→16→8→4→2→1.\n13\\rightarrow40\\rightarrow20\\rightarrow10\\rightarrow5\n\\rightarrow16\\rightarrow8\\rightarrow4\\rightarrow2\\rightarrow1.\n\nThis sequence contains\n10 terms\n10\\text{ terms}\n\nand takes\n9 steps.\n9\\text{ steps}.\n\nThe distinction matters throughout this article:\nnumber of steps=number of terms−1.\n\\text{number of steps}\n=\n\\text{number of terms}-1."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#generating-collatz-sequences-with-python",
+    "href": "posts/longest-collatz-sequence/index.html#generating-collatz-sequences-with-python",
+    "title": "Longest Collatz Sequence",
+    "section": "Generating Collatz Sequences with Python",
+    "text": "Generating Collatz Sequences with Python\nBefore writing a search program, we should be able to generate one orbit correctly. The function below checks that its input is a positive integer and returns the sequence up to the first 11.\n\n\nHide code\ndef collatz_sequence(n):\n    \"\"\"Return the Collatz sequence from positive integer n to its first 1.\"\"\"\n    if not isinstance(n, int) or isinstance(n, bool) or n &lt; 1:\n        raise ValueError(\"n must be a positive integer\")\n\n    sequence = [n]\n    while n != 1:\n        if n % 2 == 0:\n            n //= 2\n        else:\n            n = 3 * n + 1\n        sequence.append(n)\n    return sequence\n\n\nsequence_13 = collatz_sequence(13)\nprint(sequence_13)\nprint(f\"Terms: {len(sequence_13)}\")\nprint(f\"Steps: {len(sequence_13) - 1}\")\n\n\n[13, 40, 20, 10, 5, 16, 8, 4, 2, 1]\nTerms: 10\nSteps: 9\n\n\nThe output agrees with the hand calculation: 1313 has ten terms and nine steps.\nFor a few selected values, it is useful to record the chain length and the largest value reached. This is experimental verification of particular cases, not a proof of the conjecture.\n\n\nHide code\ndef collatz_summary(n):\n    \"\"\"Return basic information about the Collatz sequence starting at n.\"\"\"\n    sequence = collatz_sequence(n)\n    return {\n        \"start\": n,\n        \"terms\": len(sequence),\n        \"steps\": len(sequence) - 1,\n        \"maximum\": max(sequence),\n    }\n\n\ntest_values = [6, 10, 13, 19, 27, 97]\nsummaries = [collatz_summary(n) for n in test_values]\nfor summary in summaries:\n    print(summary)\n\n\n{'start': 6, 'terms': 9, 'steps': 8, 'maximum': 16}\n{'start': 10, 'terms': 7, 'steps': 6, 'maximum': 16}\n{'start': 13, 'terms': 10, 'steps': 9, 'maximum': 40}\n{'start': 19, 'terms': 21, 'steps': 20, 'maximum': 88}\n{'start': 27, 'terms': 112, 'steps': 111, 'maximum': 9232}\n{'start': 97, 'terms': 119, 'steps': 118, 'maximum': 9232}\n\n\n\n\n\nStart\nTerms\nSteps\nMaximum value\n\n\n\n\n6\n9\n8\n16\n\n\n10\n7\n6\n16\n\n\n13\n10\n9\n40\n\n\n19\n21\n20\n88\n\n\n27\n112\n111\n9232\n\n\n97\n119\n118\n9232\n\n\n\nThe chain beginning at 2727 rises as high as 92329232 before returning to 11; Collatz sequences need not decrease at every step.\n\n\nHide code\nsequence_27 = collatz_sequence(27)\nprint(f\"Terms: {len(sequence_27)}\")\nprint(f\"Steps: {len(sequence_27) - 1}\")\nprint(f\"Maximum value: {max(sequence_27)}\")\n\n\nTerms: 112\nSteps: 111\nMaximum value: 9232\n\n\n\nTrajectory for n=27n=27\nA plot makes the rise and fall of this orbit easier to see.\n\n\nHide code\n%config InlineBackend.figure_format = 'svg'\nimport matplotlib.pyplot as plt\n\nfig, ax = plt.subplots(figsize=(10, 5))\nfig.patch.set_facecolor(\"#0c1521\")\nax.set_facecolor(\"#101d2d\")\nax.plot(range(len(sequence_27)), sequence_27, linewidth=1.5, color=\"#a9ecf4\")\nax.set_xlabel(\"Step number\", color=\"#e7edf4\")\nax.set_ylabel(\"Term value\", color=\"#e7edf4\")\nax.set_title(\"Collatz trajectory for n = 27\", color=\"#f1f6fb\")\nax.tick_params(colors=\"#d5e1eb\")\nfor spine in ax.spines.values():\n    spine.set_color(\"#5d7590\")\nax.grid(True, color=\"#7890a8\", alpha=0.25)\nfig.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#project-euler-problem-14",
+    "href": "posts/longest-collatz-sequence/index.html#project-euler-problem-14",
+    "title": "Longest Collatz Sequence",
+    "section": "Project Euler Problem 14",
+    "text": "Project Euler Problem 14\nThe Project Euler question is finite. It asks:\n\nAmong all starting integers satisfying\n1≤n&lt;1,000,000,\n1\\leq n&lt;1{,}000{,}000,\n\nfind the starting value that produces the longest Collatz chain before reaching 11.\n\nOnly the starting number must be below one million. Terms later in the chain may be much larger. This is important: the eventual winner rises to more than two billion."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#the-mathematical-structure-of-the-search",
+    "href": "posts/longest-collatz-sequence/index.html#the-mathematical-structure-of-the-search",
+    "title": "Longest Collatz Sequence",
+    "section": "The Mathematical Structure of the Search",
+    "text": "The Mathematical Structure of the Search\nDefine\nL(n)=number of terms from n to the first occurrence of 1.\nL(n)=\\text{number of terms from }n\\text{ to the first occurrence of }1.\n\nThen\nL(1)=1\nL(1)=1\n\nand, for n&gt;1n&gt;1,\nL(n)=1+L(T(n)).\nL(n)=1+L(T(n)).\n\nEquivalently,\nL(n)={1+L(n2),n even,1+L(3n+1),n odd.\nL(n)=\n\\begin{cases}\n1+L\\left(\\dfrac{n}{2}\\right),\n& n\\text{ even},\\\\[8pt]\n1+L(3n+1),\n& n\\text{ odd}.\n\\end{cases}\n\nThus the required value is\nnmax=arg max1≤n&lt;1,000,000L(n).\nn_{\\max}\n=\n\\operatorname*{arg\\,max}_{1\\leq n&lt;1{,}000{,}000}L(n).\n\nThe key observation is that chains share tails. Once a chain reaches a previously studied value, the remaining work is already known. For example, if L(10)L(10) is known, then\nL(20)=1+L(10),\nL(20)=1+L(10),\n\nL(40)=1+L(20),\nL(40)=1+L(20),\n\nand\nL(13)=1+L(40).\nL(13)=1+L(40).\n\nThis recurrence is the reason memoization works. First consider the direct method."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#a-direct-python-solution",
+    "href": "posts/longest-collatz-sequence/index.html#a-direct-python-solution",
+    "title": "Longest Collatz Sequence",
+    "section": "A Direct Python Solution",
+    "text": "A Direct Python Solution\nThe direct method constructs a complete chain for every possible starting value. It is correct, but it repeatedly computes common tails such as 40→20→10→⋯→140\\to20\\to10\\to\\cdots\\to1.\n\n\nHide code\ndef longest_collatz_naive(limit):\n    \"\"\"Return the start and term count of the longest chain below limit.\"\"\"\n    if not isinstance(limit, int) or isinstance(limit, bool) or limit &lt;= 1:\n        raise ValueError(\"limit must be an integer greater than 1\")\n\n    best_start, best_length = 1, 1\n    for n in range(1, limit):\n        current_length = len(collatz_sequence(n))\n        if current_length &gt; best_length:\n            best_start, best_length = n, current_length\n    return best_start, best_length\n\n\nprint(longest_collatz_naive(1_000))\n\n\n(871, 179)\n\n\nFor a small limit this method is adequate. Near one million, the repeated tails become expensive. The recurrence for L(n)L(n) tells us what to store."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#memoization",
+    "href": "posts/longest-collatz-sequence/index.html#memoization",
+    "title": "Longest Collatz Sequence",
+    "section": "Memoization",
+    "text": "Memoization\nStart with the known value L(1)=1L(1)=1. When a new path reaches a value already stored in a cache, work backwards through the new part of the path. Each predecessor has a chain one term longer than its successor.\n\n\nHide code\ndef collatz_length(n, cache):\n    \"\"\"Return the term count for n, extending cache along a new tail.\"\"\"\n    if not isinstance(n, int) or isinstance(n, bool) or n &lt; 1:\n        raise ValueError(\"n must be a positive integer\")\n\n    original_n = n\n    path = []\n    while n not in cache:\n        path.append(n)\n        if n % 2 == 0:\n            n //= 2\n        else:\n            n = 3 * n + 1\n\n    known_length = cache[n]\n    for value in reversed(path):\n        known_length += 1\n        cache[value] = known_length\n    return cache[original_n]\n\n\ndef longest_collatz(limit):\n    \"\"\"Return the start, term count, and cache for chains below limit.\"\"\"\n    if not isinstance(limit, int) or isinstance(limit, bool) or limit &lt;= 1:\n        raise ValueError(\"limit must be an integer greater than 1\")\n\n    cache = {1: 1}\n    best_start, best_length = 1, 1\n    for n in range(1, limit):\n        current_length = collatz_length(n, cache)\n        if current_length &gt; best_length:\n            best_start, best_length = n, current_length\n    return best_start, best_length, cache\n\n\nThe following finite computation solves the Project Euler search. It does not claim to prove the Collatz conjecture.\n\n\nHide code\nbest_start, best_length, length_cache = longest_collatz(1_000_000)\nprint(f\"Starting number: {best_start}\")\nprint(f\"Number of terms: {best_length}\")\nprint(f\"Number of steps: {best_length - 1}\")\n\n\nStarting number: 837799\nNumber of terms: 525\nNumber of steps: 524\n\n\n\n\n\n\n\n\nNoteFinal result\n\n\n\n837799\n\\boxed{837799}\n\nis the starting value below one million with the longest Collatz chain. The chain contains\n525 terms\n\\boxed{525\\text{ terms}}\n\nand requires\n524 steps.\n\\boxed{524\\text{ steps}}."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#inspecting-the-winning-sequence",
+    "href": "posts/longest-collatz-sequence/index.html#inspecting-the-winning-sequence",
+    "title": "Longest Collatz Sequence",
+    "section": "Inspecting the Winning Sequence",
+    "text": "Inspecting the Winning Sequence\nThe winning chain eventually enters the familiar tail 40,20,10,5,…,140,20,10,5,\\ldots,1.\n\n\nHide code\nwinning_sequence = collatz_sequence(best_start)\nprint(\"First 15 terms:\")\nprint(winning_sequence[:15])\nprint(\"\\nLast 15 terms:\")\nprint(winning_sequence[-15:])\nprint(f\"\\nMaximum value reached: {max(winning_sequence):,}\")\n\n\nFirst 15 terms:\n[837799, 2513398, 1256699, 3770098, 1885049, 5655148, 2827574, 1413787, 4241362, 2120681, 6362044, 3181022, 1590511, 4771534, 2385767]\n\nLast 15 terms:\n[70, 35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1]\n\nMaximum value reached: 2,974,984,576\n\n\n\n\nHide code\n%config InlineBackend.figure_format = 'svg'\nimport matplotlib.pyplot as plt\n\nfig, ax = plt.subplots(figsize=(11, 5))\nfig.patch.set_facecolor(\"#0c1521\")\nax.set_facecolor(\"#101d2d\")\nax.plot(range(len(winning_sequence)), winning_sequence, linewidth=1.35, color=\"#ffe09a\")\nax.set_yscale(\"log\")\nax.set_xlabel(\"Step number\", color=\"#e7edf4\")\nax.set_ylabel(\"Term value (logarithmic scale)\", color=\"#e7edf4\")\nax.set_title(\"Collatz trajectory for n = 837,799\", color=\"#f1f6fb\")\nax.tick_params(colors=\"#d5e1eb\")\nfor spine in ax.spines.values():\n    spine.set_color(\"#5d7590\")\nax.grid(True, color=\"#7890a8\", alpha=0.25)\nfig.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\nThe logarithmic vertical scale is necessary here: the chain reaches 2,974,984,5762{,}974{,}984{,}576, far above its starting value."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#mathematical-ideas-connected-with-the-collatz-conjecture",
+    "href": "posts/longest-collatz-sequence/index.html#mathematical-ideas-connected-with-the-collatz-conjecture",
+    "title": "Longest Collatz Sequence",
+    "section": "Mathematical Ideas Connected with the Collatz Conjecture",
+    "text": "Mathematical Ideas Connected with the Collatz Conjecture\nThe Collatz map is a discrete dynamical system: it studies the long-term behaviour of repeatedly applying a function on the positive integers. Questions about iteration include whether an orbit reaches a cycle, whether it escapes, and how long it takes to fall below its starting value.\nThe total stopping time is\nσ∞(n)=min⁡{k≥0:Tk(n)=1}.\n\\sigma_\\infty(n)=\\min\\{k\\geq0:T^k(n)=1\\}.\n\nWhen the orbit reaches 11, L(n)=σ∞(n)+1L(n)=\\sigma_\\infty(n)+1. A related stopping time is the first k≥1k\\geq1 for which Tk(n)&lt;nT^k(n)&lt;n. Proving that every starting value eventually falls below itself would give a route to the conjecture by strong induction, but that statement is also unproved.\nFor odd nn, the accelerated Collatz map, often called the Syracuse map, divides all powers of two out of 3n+13n+1 at once:\nS(n)=3n+12ν2(3n+1).\nS(n)=\\frac{3n+1}{2^{\\nu_2(3n+1)}}.\n\nHere ν2(m)\\nu_2(m) is the exponent of 22 in mm. The map sends odd integers directly to odd integers. Parity sequences, or parity vectors, record the even and odd decisions along an orbit. Once a finite parity pattern is fixed, the iterate has an affine form involving powers of 33 and 22; the difficulty is that the pattern depends on the orbit itself.\nThe directed Collatz graph has an arrow n→T(n)n\\longrightarrow T(n) from every positive integer. Reversing the arrows produces inverse Collatz trees, which make shared tails visible. Probabilistic heuristics model the powers of two dividing 3n+13n+1 as if they were random; they help explain the observed downward tendency, but they are not proofs because actual parity events are deterministic and dependent.\nTerence Tao proved that for every function f(N)f(N) tending to infinity, the minimum value in the orbit of NN is at most f(N)f(N) for almost all NN in the sense of logarithmic density. This does not establish the claim for every starting value. Kurtz and Simon proved an undecidability result for a generalized class of Collatz maps; their theorem does not say that the original Collatz conjecture is undecidable."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#conclusion",
+    "href": "posts/longest-collatz-sequence/index.html#conclusion",
+    "title": "Longest Collatz Sequence",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe Collatz conjecture remains open. Project Euler Problem 14 is nevertheless a finite problem, and the recurrence\nL(n)=1+L(T(n))\nL(n)=1+L(T(n))\n\nturns its repeated tails into a practical memoized computation. The longest chain below one million starts at 837799837799 and has 525525 terms."
+  },
+  {
+    "objectID": "posts/longest-collatz-sequence/index.html#references",
+    "href": "posts/longest-collatz-sequence/index.html#references",
+    "title": "Longest Collatz Sequence",
+    "section": "References",
+    "text": "References\n\nProject Euler, Problem 14: Longest Collatz Sequence\nJeffrey C. Lagarias, The 3x+13x+1 Problem: An Overview\nTerence Tao, Almost All Orbits of the Collatz Map Attain Almost Bounded Values\nTerence Tao, expository discussion of the result\nStuart A. Kurtz and Janos Simon, The Undecidability of the Generalized Collatz Problem"
+  },
+  {
+    "objectID": "posts/kings-property/index.html",
+    "href": "posts/kings-property/index.html",
+    "title": "King’s Property for Definite Integrals",
+    "section": "",
+    "text": "Let us explore one of the most useful symmetry ideas in definite integration. If ff is integrable on [a,b][a,b], King’s property says\n∫abf(x)dx=∫abf(a+b−x)dx.\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\nIn simple language: reflecting the graph horizontally across the midpoint x=(a+b)/2x=(a+b)/2 does not change its signed area over the interval.\nAdding the two equal forms gives the useful identity\n∫abf(x)dx=12∫ab[f(x)+f(a+b−x)]dx.\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr]\\,dx.}\n\n\nImportant: the property preserves signed area, so it remains valid even when parts of the graph lie below the xx-axis."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#the-property",
+    "href": "posts/kings-property/index.html#the-property",
+    "title": "King’s Property for Definite Integrals",
+    "section": "",
+    "text": "Let us explore one of the most useful symmetry ideas in definite integration. If ff is integrable on [a,b][a,b], King’s property says\n∫abf(x)dx=∫abf(a+b−x)dx.\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\nIn simple language: reflecting the graph horizontally across the midpoint x=(a+b)/2x=(a+b)/2 does not change its signed area over the interval.\nAdding the two equal forms gives the useful identity\n∫abf(x)dx=12∫ab[f(x)+f(a+b−x)]dx.\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr]\\,dx.}\n\n\nImportant: the property preserves signed area, so it remains valid even when parts of the graph lie below the xx-axis."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#proof-by-substitution",
+    "href": "posts/kings-property/index.html#proof-by-substitution",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Proof by substitution",
+    "text": "Proof by substitution\nBegin with the reflected integral\nI=∫abf(a+b−x)dx.\nI=\\int_a^b f(a+b-x)\\,dx.\n\nNow use the substitution\nu=a+b−x,du=−dx.\nu=a+b-x,\\qquad du=-dx.\n\nThe limits reverse:\nx=a⇒u=b,x=b⇒u=a.\nx=a\\Longrightarrow u=b,\n\\qquad\nx=b\\Longrightarrow u=a.\n\nTherefore\nI=∫baf(u)(−du)=∫abf(u)du=∫abf(x)dx.\n\\begin{aligned}\nI\n&=\\int_b^a f(u)(-du)\\\\\n&=\\int_a^b f(u)\\,du\\\\\n&=\\int_a^b f(x)\\,dx.\n\\end{aligned}\n\nThe variable of integration is a placeholder, so uu may be renamed xx in the last line. This proves the identity."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#geometric-interpretation",
+    "href": "posts/kings-property/index.html#geometric-interpretation",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Geometric interpretation",
+    "text": "Geometric interpretation\nFocus on the transformation\nx↦a+b−x.\nx\\longmapsto a+b-x.\n\nIt reflects every point across the midpoint m=(a+b)/2m=(a+b)/2. Imagine a very narrow strip at x=tx=t under y=f(x)y=f(x). Its approximate signed area is\nf(t)Δx.\nf(t)\\,\\Delta x.\n\nAfter reflection, its partner lies at x=a+b−tx=a+b-t. The reflected curve has height\nf(a+b−(a+b−t))=f(t).\nf\\bigl(a+b-(a+b-t)\\bigr)=f(t).\n\nReflection also preserves the width Δx\\Delta x. Therefore, the two strips have exactly the same signed area. Pairing every strip in this way shows that the two complete integrals must be equal."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#interactive-demonstration",
+    "href": "posts/kings-property/index.html#interactive-demonstration",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Interactive demonstration",
+    "text": "Interactive demonstration\nDrag across the graph, or use the slider. The blue strip is at tt under f(x)f(x); the gold strip is at its reflected position a+b−ta+b-t under f(a+b−x)f(a+b-x). The accumulated signed areas remain equal.\n\n\nReflection position\n\nt = 1.50\n\n \n\n\n\n\n\n\nOriginal strip: x = 1.50\n\n\nReflected strip: x = 4.50\n\n\nPaired height: —\n\n\nAccumulated areas: —\n\n\n\nAt the midpoint, the paired strips meet. Continue moving the slider to see them exchange sides while preserving their correspondence.\n\n\nThe applet uses [a,b]=[0,6][a,b]=[0,6] and a deliberately asymmetric function. This makes it clear that the equality comes from reflection—not from the original graph already being symmetric.\n\nApplet source\nThe complete code behind the interactive graph is included below. Expand the block to study, copy, or adapt it.\n\n\n\n\n\n\nNoteComplete JavaScript source\n\n\n\n\n\n(() =&gt; {\n  const host = document.getElementById(\"king-svg\");\n  const slider = document.getElementById(\"king-position\");\n  if (!host || !slider) return;\n\n  const NS = \"http://www.w3.org/2000/svg\";\n  const a = 0, b = 6, W = 900, H = 470;\n  const pad = { left: 58, right: 24, top: 28, bottom: 48 };\n  const plotW = W - pad.left - pad.right;\n  const plotH = H - pad.top - pad.bottom;\n  const yMax = 3.15;\n  const f = x =&gt; 1.35 + 0.42 * Math.sin(1.55 * x) + 0.16 * x;\n  const reflected = x =&gt; f(a + b - x);\n  const X = x =&gt; pad.left + (x - a) / (b - a) * plotW;\n  const Y = y =&gt; pad.top + (yMax - y) / yMax * plotH;\n  const base = Y(0);\n  const els = {\n    t: document.getElementById(\"king-t\"),\n    x: document.getElementById(\"king-x\"),\n    rx: document.getElementById(\"king-rx\"),\n    height: document.getElementById(\"king-height\"),\n    areas: document.getElementById(\"king-areas\")\n  };\n\n  const svg = document.createElementNS(NS, \"svg\");\n  svg.setAttribute(\"viewBox\", `0 0 ${W} ${H}`);\n  svg.setAttribute(\"preserveAspectRatio\", \"xMidYMid meet\");\n  svg.setAttribute(\"aria-hidden\", \"true\");\n  host.appendChild(svg);\n\n  const node = (name, attrs = {}, parent = svg) =&gt; {\n    const el = document.createElementNS(NS, name);\n    Object.entries(attrs).forEach(([key, value]) =&gt; el.setAttribute(key, value));\n    parent.appendChild(el);\n    return el;\n  };\n  const text = (value, x, y, attrs = {}) =&gt; {\n    const el = node(\"text\", { x, y, ...attrs });\n    el.textContent = value;\n    return el;\n  };\n  const points = (fn, lo = a, hi = b, count = 320) =&gt; {\n    let d = \"\";\n    for (let i = 0; i &lt;= count; i++) {\n      const x = lo + (hi - lo) * i / count;\n      d += `${i ? \"L\" : \"M\"}${X(x).toFixed(2)},${Y(fn(x)).toFixed(2)} `;\n    }\n    return d;\n  };\n  const areaPath = (fn, lo, hi) =&gt; {\n    const curve = points(fn, lo, hi, 150).replace(/^M/, \"L\");\n    return `M${X(lo)},${base} ${curve}L${X(hi)},${base} L${X(lo)},${base} Z`;\n  };\n  const integral = (fn, lo, hi, n = 600) =&gt; {\n    if (hi &lt; lo) return -integral(fn, hi, lo, n);\n    const h = (hi - lo) / n;\n    let sum = 0.5 * (fn(lo) + fn(hi));\n    for (let i = 1; i &lt; n; i++) sum += fn(lo + i * h);\n    return sum * h;\n  };\n\n  const grid = node(\"g\", { stroke: \"#aebdcb\", \"stroke-opacity\": \".18\" });\n  for (let i = 0; i &lt;= 6; i++) {\n    node(\"line\", { x1: X(i), y1: pad.top, x2: X(i), y2: base }, grid);\n    text(String(i), X(i), base + 27, { fill: \"#cbd8e4\", \"text-anchor\": \"middle\" });\n  }\n  for (let y = 0; y &lt;= 3; y++)\n    node(\"line\", { x1: pad.left, y1: Y(y), x2: W - pad.right, y2: Y(y) }, grid);\n\n  node(\"line\", { x1: pad.left, y1: base, x2: W-pad.right, y2: base, stroke: \"#aebdcb\" });\n  node(\"line\", { x1: X(3), y1: pad.top, x2: X(3), y2: base,\n    stroke: \"#ffffff\", \"stroke-opacity\": \".35\", \"stroke-dasharray\": \"7 7\" });\n  text(\"midpoint\", X(3), pad.top + 14, { fill: \"#cbd8e4\", \"text-anchor\": \"middle\" });\n  text(\"f(x)\", pad.left + 10, pad.top + 20, { fill: \"#7be1eb\", \"font-weight\": \"700\" });\n  text(\"f(a+b−x)\", pad.left + 10, pad.top + 42, { fill: \"#ffd27a\", \"font-weight\": \"700\" });\n\n  const blueArea = node(\"path\", { fill: \"#57b9c5\", \"fill-opacity\": \".22\" });\n  const goldArea = node(\"path\", { fill: \"#f3c56b\", \"fill-opacity\": \".22\" });\n  node(\"path\", { d: points(f), fill: \"none\", stroke: \"#57b9c5\", \"stroke-width\": \"4\" });\n  node(\"path\", { d: points(reflected), fill: \"none\", stroke: \"#f3c56b\", \"stroke-width\": \"4\" });\n  const blueStrip = node(\"rect\", { fill: \"#7be1eb\" });\n  const goldStrip = node(\"rect\", { fill: \"#ffd27a\" });\n  const bluePoint = node(\"circle\", { r: 7, fill: \"#7be1eb\" });\n  const goldPoint = node(\"circle\", { r: 7, fill: \"#ffd27a\" });\n\n  function draw() {\n    const t = Number(slider.value);\n    const rt = a + b - t;\n    const left = Math.min(t, rt), right = Math.max(t, rt);\n    blueArea.setAttribute(\"d\", areaPath(f, a, left));\n    goldArea.setAttribute(\"d\", areaPath(reflected, right, b));\n\n    const setStrip = (rect, point, x, fn) =&gt; {\n      const width = 10;\n      rect.setAttribute(\"x\", X(x) - width / 2);\n      rect.setAttribute(\"y\", Y(fn(x)));\n      rect.setAttribute(\"width\", width);\n      rect.setAttribute(\"height\", base - Y(fn(x)));\n      point.setAttribute(\"cx\", X(x));\n      point.setAttribute(\"cy\", Y(fn(x)));\n    };\n    setStrip(blueStrip, bluePoint, t, f);\n    setStrip(goldStrip, goldPoint, rt, reflected);\n\n    els.t.textContent = `t = ${t.toFixed(2)}`;\n    els.x.textContent = `x = ${t.toFixed(2)}`;\n    els.rx.textContent = `x = ${rt.toFixed(2)}`;\n    els.height.textContent = `${f(t).toFixed(3)} = ${reflected(rt).toFixed(3)}`;\n    els.areas.textContent =\n      `${integral(f, a, left).toFixed(3)} ≈ ${integral(reflected, right, b).toFixed(3)}`;\n  }\n\n  function setFromPointer(event) {\n    const rect = svg.getBoundingClientRect();\n    const viewX = (event.clientX - rect.left) / rect.width * W;\n    const ratio = Math.max(0, Math.min(1, (viewX - pad.left) / plotW));\n    slider.value = String(a + ratio * (b-a));\n    draw();\n  }\n\n  let dragging = false;\n  svg.addEventListener(\"pointerdown\", event =&gt; {\n    dragging = true;\n    svg.setPointerCapture(event.pointerId);\n    setFromPointer(event);\n  });\n  svg.addEventListener(\"pointermove\", event =&gt; dragging && setFromPointer(event));\n  svg.addEventListener(\"pointerup\", () =&gt; dragging = false);\n  svg.addEventListener(\"pointercancel\", () =&gt; dragging = false);\n  slider.addEventListener(\"input\", draw);\n  draw();\n})();"
+  },
+  {
+    "objectID": "posts/kings-property/index.html#computational-exploration",
+    "href": "posts/kings-property/index.html#computational-exploration",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Computational Exploration",
+    "text": "Computational Exploration\nThe same asymmetric function can be plotted and integrated numerically with Python. This gives an independent computational check of the graphical argument.\n\n\nShow the Python code\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nplt.style.use(\"dark_background\")\n\na, b = 0, 6\nx = np.linspace(a, b, 1000)\n\ndef f(x):\n    return 1.35 + 0.42 * np.sin(1.55 * x) + 0.16 * x\n\ny_original = f(x)\ny_reflected = f(a + b - x)\n\narea_original = np.trapezoid(y_original, x)\narea_reflected = np.trapezoid(y_reflected, x)\n\nprint(f\"Area under f(x):       {area_original:.8f}\")\nprint(f\"Area after reflection: {area_reflected:.8f}\")\n\nfig, ax = plt.subplots(figsize=(9, 5), facecolor=\"#0c1521\")\nax.set_facecolor(\"#0c1521\")\nplt.plot(x, y_original, label=r\"$f(x)$\", linewidth=2.5)\nplt.plot(x, y_reflected, label=r\"$f(a+b-x)$\", linewidth=2.5)\nplt.fill_between(x, y_original, alpha=0.18)\nplt.axvline((a + b) / 2, color=\"gray\", linestyle=\"--\", label=\"midpoint\")\nplt.xlabel(\"x\")\nplt.ylabel(\"y\")\nplt.title(\"A function and its reflection\")\nplt.legend()\nplt.grid(alpha=0.2)\nplt.tight_layout()\nplt.show()\n\n\nArea under f(x):       11.51982490\nArea after reflection: 11.51982490\n\n\n\n\n\n\n\n\n\nThe two printed values agree up to numerical rounding. Python confirms what the substitution already proved exactly."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#why-the-averaged-form-helps",
+    "href": "posts/kings-property/index.html#why-the-averaged-form-helps",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Why the averaged form helps",
+    "text": "Why the averaged form helps\nLet\nI=∫abf(x)dx.\nI=\\int_a^b f(x)\\,dx.\n\nKing’s property gives another expression for the same number:\nI=∫abf(a+b−x)dx.\nI=\\int_a^b f(a+b-x)\\,dx.\n\nAdding and dividing by 22 gives\nI=12∫ab[f(x)+f(a+b−x)]dx.\nI=\\frac12\\int_a^b\\left[f(x)+f(a+b-x)\\right]dx.\n\nThis is most useful when the sum inside the brackets simplifies."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#example-1",
+    "href": "posts/kings-property/index.html#example-1",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Example 1",
+    "text": "Example 1\nEvaluate\nI=∫0π/2sin⁡xsin⁡x+cos⁡xdx.\nI=\\int_0^{\\pi/2}\\frac{\\sin x}{\\sin x+\\cos x}\\,dx.\n\nHere a+b=π/2a+b=\\pi/2. King’s property gives\nI=∫0π/2cos⁡xcos⁡x+sin⁡xdx.\nI=\\int_0^{\\pi/2}\n\\frac{\\cos x}{\\cos x+\\sin x}\\,dx.\n\nAdding the two equations,\n2I=∫0π/21dx=π2.\n2I=\\int_0^{\\pi/2}1\\,dx=\\frac{\\pi}{2}.\n\nHence\nI=π4.\n\\boxed{I=\\frac{\\pi}{4}}."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#example-2",
+    "href": "posts/kings-property/index.html#example-2",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Example 2",
+    "text": "Example 2\nEvaluate\nJ=∫0πx1+sin⁡xdx.\nJ=\\int_0^\\pi \\frac{x}{1+\\sin x}\\,dx.\n\nThe factor xx makes direct integration look unpleasant. Reflecting xx across [0,π][0,\\pi] replaces it by π−x\\pi-x, while sin⁡(π−x)=sin⁡x\\sin(\\pi-x)=\\sin x. Thus\nJ=∫0ππ−x1+sin⁡xdx.\nJ=\\int_0^\\pi \\frac{\\pi-x}{1+\\sin x}\\,dx.\n\nAdding this to the original form gives\n2J=π∫0πdx1+sin⁡x.\n2J=\\pi\\int_0^\\pi\\frac{dx}{1+\\sin x}.\n\nNow rationalise the denominator:\n11+sin⁡x=1−sin⁡xcos⁡2x=sec⁡2x−sec⁡xtan⁡x.\n\\frac{1}{1+\\sin x}\n=\\frac{1-\\sin x}{\\cos^2x}\n=\\sec^2x-\\sec x\\tan x.\n\nAlthough the two terms are individually improper at x=π/2x=\\pi/2, their difference has a finite continuous limit there. An antiderivative on each side is tan⁡x−sec⁡x\\tan x-\\sec x, and the combined definite integral equals 22. Therefore\n2J=2π⇒J=π.\n2J=2\\pi\n\\qquad\\Longrightarrow\\qquad\n\\boxed{J=\\pi}.\n\nThe important move was not the final integration. King’s property first removed the troublesome factor xx."
+  },
+  {
+    "objectID": "posts/kings-property/index.html#takeaway",
+    "href": "posts/kings-property/index.html#takeaway",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Takeaway",
+    "text": "Takeaway\nKing’s property tells us that a definite integral is unchanged when its interval is reflected. Algebraically, reversing the limits cancels the minus sign in du=−dxdu=-dx. Geometrically, every signed-area strip has an equal reflected partner. The slider makes these two descriptions visible as the same idea."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I write mathematical notes centred on definitions, proofs, examples, and problem solving. When computation adds genuine insight, I use it for experiments, numerical checks, or visualisation."
+  },
+  {
+    "objectID": "about.html#ashish-k.-srivastava",
+    "href": "about.html#ashish-k.-srivastava",
+    "title": "About",
+    "section": "",
+    "text": "I write mathematical notes centred on definitions, proofs, examples, and problem solving. When computation adds genuine insight, I use it for experiments, numerical checks, or visualisation."
+  },
+  {
+    "objectID": "about.html#main-interests",
+    "href": "about.html#main-interests",
+    "title": "About",
+    "section": "Main Interests",
+    "text": "Main Interests\n\nJEE Problem Solving\nAlgebra\nCalculus\nCoordinate Geometry\nCombinatorics\nNumber Theory\nSequences and Dynamical Systems\nVisualisation\nManim"
+  },
+  {
+    "objectID": "about.html#why-i-created-pymathon",
+    "href": "about.html#why-i-created-pymathon",
+    "title": "About",
+    "section": "Why I Created PyMathon",
+    "text": "Why I Created PyMathon\nI created PyMathon as a place for serious but accessible mathematical exposition. Its articles aim to:\n\nuse computation selectively to explore mathematical ideas;\npresent multiple approaches to a problem;\nproduce clear visual explanations; and\nhelp students and teachers explore concepts more deeply.\n\nThe goal is not merely to arrive at an answer. It is to understand why the answer is correct, see how different ideas are connected, and use computation to investigate those ideas further."
+  },
+  {
+    "objectID": "about.html#my-teaching-philosophy",
+    "href": "about.html#my-teaching-philosophy",
+    "title": "About",
+    "section": "My Teaching Philosophy",
+    "text": "My Teaching Philosophy\nI believe that understanding must come before memorisation. A formula becomes truly useful only when a student understands where it comes from and when it applies.\nTraditional step-by-step reasoning remains central to my teaching. I encourage students to write complete arguments, examine more than one solution method, and develop a visual understanding wherever possible. Algebraic, geometric, combinatorial, and computational viewpoints can often illuminate different parts of the same problem.\nI use computation responsibly: Python can test examples, reveal patterns, verify calculations, and create illuminating visualisations, but it should support mathematical proof rather than replace it."
+  },
+  {
+    "objectID": "about.html#connect",
+    "href": "about.html#connect",
+    "title": "About",
+    "section": "Connect",
+    "text": "Connect\n\nEmail: kumarashish3066@gmail.com"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "PyMathon",
     "section": "",
-    "text": "PYMATHON · MATHEMATICAL NOTES BY ASHISH K. SRIVASTAVA\n\n\n\nPyMathon develops mathematical ideas from their first definitions to complete arguments, worked examples, and deeper connections.\nRead the latest articles\n\n\n\n\n|A+A|≥2|A|−1\n|A+A|\\geq 2|A|-1\n\n\n\n∫abf(x)dx=12∫ab[f(x)+f(a+b−x)]dx\n\\int_a^b f(x)\\,dx\n=\n\\frac12\\int_a^b\\!\\left[f(x)+f(a+b-x)\\right]dx\n\n\n\nStructure · symmetry · proof"
-  },
-  {
-    "objectID": "index.html#scope",
-    "href": "index.html#scope",
-    "title": "PyMathon",
-    "section": "Scope",
-    "text": "Scope\nThe articles emphasise:\n\nprecise statements and complete arguments;\nmore than one viewpoint when it improves understanding;\nworked examples and carefully chosen practice problems; and\ncomputational experiments only where they illuminate the mathematics."
+    "text": "PYMATHON · MATHEMATICAL NOTES BY ASHISH K. SRIVASTAVA\n\n\n\nPyMathon develops mathematical ideas from their first definitions to complete arguments, worked examples, and deeper connections.\nRead the latest articles\n\n\n\n\n|A+A|≥2|A|−1\n|A+A|\\geq 2|A|-1\n\n\n\n∫abf(x)dx=12∫ab[f(x)+f(a+b−x)]dx\n\\int_a^b f(x)\\,dx\n=\n\\frac12\\int_a^b\\!\\left[f(x)+f(a+b-x)\\right]\\,dx\n\n\n\nStructure · symmetry · proof"
   },
   {
     "objectID": "index.html#articles",
@@ -67,7 +256,7 @@
     "href": "posts/positive-integer-solutions/index.html#method-4-generating-functions",
     "title": "Four Ways to Count Positive Integer Solutions",
     "section": "Method 4: Generating Functions",
-    "text": "Method 4: Generating Functions\nThe positive values of xx, 2y2y, and 3z3z are encoded respectively by\nt1−t,t21−t2,t31−t3.\n\\frac{t}{1-t},\\qquad\n\\frac{t^2}{1-t^2},\\qquad\n\\frac{t^3}{1-t^3}.\n\nTheir product is\nG(t)=(t1−t)(t21−t2)(t31−t3)=t6(1−t)(1−t2)(1−t3).\nG(t)=\n\\left(\\frac{t}{1-t}\\right)\n\\left(\\frac{t^2}{1-t^2}\\right)\n\\left(\\frac{t^3}{1-t^3}\\right)\n=\\frac{t^6}{(1-t)(1-t^2)(1-t^3)}.\n\nChoosing txt^x, t2yt^{2y}, and t3zt^{3z} from the three factors produces\ntx⋅t2y⋅t3z=tx+2y+3z.\nt^x\\cdot t^{2y}\\cdot t^{3z}=t^{x+2y+3z}.\n\nThus every positive solution contributes exactly one t15t^{15} term, so the answer is\n[t15]G(t)=[t9]1(1−t)(1−t2)(1−t3).\n[t^{15}]G(t)\n=[t^9]\\frac{1}{(1-t)(1-t^2)(1-t^3)}.\n\nThat coefficient is 1212, in agreement with the direct counts."
+    "text": "Method 4: Generating Functions\nThe positive values of xx, 2y2y, and 3z3z are encoded respectively by\nt1−t,t21−t2,t31−t3.\n\\frac{t}{1-t},\\qquad\n\\frac{t^2}{1-t^2},\\qquad\n\\frac{t^3}{1-t^3}.\n\nTheir product is\nG(t)=(t1−t)(t21−t2)(t31−t3)=t6(1−t)(1−t2)(1−t3).\nG(t)=\n\\left(\\frac{t}{1-t}\\right)\n\\left(\\frac{t^2}{1-t^2}\\right)\n\\left(\\frac{t^3}{1-t^3}\\right)\n=\\frac{t^6}{(1-t)(1-t^2)(1-t^3)}.\n\nChoosing txt^x, t2yt^{2y}, and t3zt^{3z} from the three factors produces\ntx⋅t2y⋅t3z=tx+2y+3z.\nt^x\\cdot t^{2y}\\cdot t^{3z}=t^{x+2y+3z}.\n\nThus every positive solution contributes exactly one t15t^{15} term, so the answer is\n[t15]G(t)=[t9]1(1−t)(1−t2)(1−t3).\n[t^{15}]G(t)\n=[t^9]\\frac{1}{(1-t)(1-t^2)(1-t^3)}.\n\nExpanding only as far as the required term,\n1(1−t)(1−t2)(1−t3)=1+t+2t2+3t3+4t4+5t5+7t6+8t7+10t8+12t9+O(t10).\n\\frac{1}{(1-t)(1-t^2)(1-t^3)}\n=1+t+2t^2+3t^3+4t^4+5t^5+7t^6\n+8t^7+10t^8+12t^9+O(t^{10}).\n\nHence the coefficient of t9t^9 is 1212, in agreement with the direct counts."
   },
   {
     "objectID": "posts/positive-integer-solutions/index.html#computational-exploration",
@@ -95,7 +284,7 @@
     "href": "posts/positive-integer-solutions/index.html#conclusion",
     "title": "Four Ways to Count Positive Integer Solutions",
     "section": "Conclusion",
-    "text": "Conclusion\nThe four methods illuminate the same result from different angles: direct counting is concrete, shifting variables connects the problem to non-negative solutions, floor functions compress the count, and generating functions give a powerful general framework. Python verifies the final list.\n12 positive integer solutions.\n\\boxed{12\\text{ positive integer solutions}}."
+    "text": "Conclusion\nThe four methods describe the same count from different angles: direct counting lists the cases, shifting variables converts the problem to non-negative solutions, floor functions compress the count, and generating functions provide a systematic method. The Python calculation is a final check, not part of the proof.\n12 positive integer solutions.\n\\boxed{12\\text{ positive integer solutions}}."
   },
   {
     "objectID": "posts/positive-integer-solutions/index.html#try-it-yourself",
@@ -105,88 +294,18 @@
     "text": "Try It Yourself\n\nFind the number of positive integer solutions of x+2y+3z=18x+2y+3z=18.\nFind the number of non-negative integer solutions of a+2b+3c=10a+2b+3c=10.\nFind the number of positive integer solutions of x+3y+4z=20x+3y+4z=20.\n\n\n\n\n\n\n\nTipHint for Problem 1\n\n\n\n\n\nFix zz first. For each allowed value of zz, count the positive values of yy that keep x=18−2y−3zx=18-2y-3z positive.\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 1\n\n\n\n\n\nThe possible values are z=1,2,3,4,5z=1,2,3,4,5. The row counts are 7,5,4,2,17,5,4,2,1, so the total is\n7+5+4+2+1=19.\n7+5+4+2+1=\\boxed{19}.\n\n\n\n\n\n\n\n\n\n\nTipHint for Problem 2\n\n\n\n\n\nFix c=0,1,2,3c=0,1,2,3. For each cc, solve a+2b=10−3ca+2b=10-3c with a,b≥0a,b\\geq0.\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 2\n\n\n\n\n\nThe row counts are 6,4,3,16,4,3,1, giving\n6+4+3+1=14.\n6+4+3+1=\\boxed{14}.\n\n\n\n\n\n\n\n\n\n\nTipHint for Problem 3\n\n\n\n\n\nUse x=20−3y−4zx=20-3y-4z and count the positive values of yy for each possible positive zz.\n\n\n\n\n\n\n\n\n\nNoteSolution for Problem 3\n\n\n\n\n\nFor z=1,2,3,4z=1,2,3,4, the possible values of yy number 5,3,2,15,3,2,1 respectively. Hence the total is\n5+3+2+1=11.\n5+3+2+1=\\boxed{11}."
   },
   {
-    "objectID": "posts/kings-property/index.html",
-    "href": "posts/kings-property/index.html",
-    "title": "King’s Property for Definite Integrals",
-    "section": "",
-    "text": "Let us explore one of the most useful symmetry ideas in definite integration. If ff is integrable on [a,b][a,b], King’s property says\n∫abf(x)dx=∫abf(a+b−x)dx.\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\nIn simple language: reflecting the graph horizontally across the midpoint x=(a+b)/2x=(a+b)/2 does not change its signed area over the interval.\nAdding the two equal forms gives the useful identity\n∫abf(x)dx=12∫ab[f(x)+f(a+b−x)],dx.\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr],dx.}\n\n\nImportant: the property preserves signed area, so it remains valid even when parts of the graph lie below the xx-axis."
-  },
-  {
-    "objectID": "posts/kings-property/index.html#the-property",
-    "href": "posts/kings-property/index.html#the-property",
-    "title": "King’s Property for Definite Integrals",
-    "section": "",
-    "text": "Let us explore one of the most useful symmetry ideas in definite integration. If ff is integrable on [a,b][a,b], King’s property says\n∫abf(x)dx=∫abf(a+b−x)dx.\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\nIn simple language: reflecting the graph horizontally across the midpoint x=(a+b)/2x=(a+b)/2 does not change its signed area over the interval.\nAdding the two equal forms gives the useful identity\n∫abf(x)dx=12∫ab[f(x)+f(a+b−x)],dx.\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr],dx.}\n\n\nImportant: the property preserves signed area, so it remains valid even when parts of the graph lie below the xx-axis."
-  },
-  {
-    "objectID": "posts/kings-property/index.html#let-me-prove-it-mathematically",
-    "href": "posts/kings-property/index.html#let-me-prove-it-mathematically",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Let me prove it mathematically",
-    "text": "Let me prove it mathematically\nBegin with the reflected integral\nI=∫abf(a+b−x)dx.\nI=\\int_a^b f(a+b-x)\\,dx.\n\nNow use the substitution\nu=a+b−x,du=−dx.\nu=a+b-x,\\qquad du=-dx.\n\nThe limits reverse:\nx=a⇒u=b,x=b⇒u=a.\nx=a\\Longrightarrow u=b,\n\\qquad\nx=b\\Longrightarrow u=a.\n\nTherefore\nI=∫baf(u)(−du)=∫abf(u)du=∫abf(x)dx.\n\\begin{aligned}\nI\n&=\\int_b^a f(u)(-du)\\\\\n&=\\int_a^b f(u)\\,du\\\\\n&=\\int_a^b f(x)\\,dx.\n\\end{aligned}\n\nIn the last line, the dummy variable uu has simply been renamed as xx. This proves King’s property."
-  },
-  {
-    "objectID": "posts/kings-property/index.html#now-let-us-see-the-graphical-proof",
-    "href": "posts/kings-property/index.html#now-let-us-see-the-graphical-proof",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Now let us see the graphical proof",
-    "text": "Now let us see the graphical proof\nFocus on the transformation\nx↦a+b−x.\nx\\longmapsto a+b-x.\n\nIt reflects every point across the midpoint m=(a+b)/2m=(a+b)/2. Imagine a very narrow strip at x=tx=t under y=f(x)y=f(x). Its approximate signed area is\nf(t)Δx.\nf(t)\\,\\Delta x.\n\nAfter reflection, its partner lies at x=a+b−tx=a+b-t. The reflected curve has height\nf(a+b−(a+b−t))=f(t).\nf\\bigl(a+b-(a+b-t)\\bigr)=f(t).\n\nReflection also preserves the width Δx\\Delta x. Therefore, the two strips have exactly the same signed area. Pairing every strip in this way shows that the two complete integrals must be equal."
-  },
-  {
-    "objectID": "posts/kings-property/index.html#interactive-area-proof",
-    "href": "posts/kings-property/index.html#interactive-area-proof",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Interactive area proof",
-    "text": "Interactive area proof\nNow try the idea yourself. Drag directly across the graph, or use the slider. The blue strip is at tt under f(x)f(x); the gold strip is at its reflected position a+b−ta+b-t under f(a+b−x)f(a+b-x). Watch how the shaded regions accumulate equal signed areas.\n\n\nReflection position\n\nt = 1.50\n\n \n\n\n\n\n\n\nOriginal strip: x = 1.50\n\n\nReflected strip: x = 4.50\n\n\nPaired height: —\n\n\nAccumulated areas: —\n\n\n\nAt the midpoint, the paired strips meet. Continue moving the slider to see them exchange sides while preserving their correspondence.\n\n\nThe applet uses [a,b]=[0,6][a,b]=[0,6] and a deliberately asymmetric function. This makes it clear that the equality comes from reflection—not from the original graph already being symmetric.\n\nSee the applet code\nThe complete code behind the interactive graph is included below. Expand the block to study, copy, or adapt it.\n\n\n\n\n\n\nNoteComplete JavaScript source\n\n\n\n\n\n(() =&gt; {\n  const host = document.getElementById(\"king-svg\");\n  const slider = document.getElementById(\"king-position\");\n  if (!host || !slider) return;\n\n  const NS = \"http://www.w3.org/2000/svg\";\n  const a = 0, b = 6, W = 900, H = 470;\n  const pad = { left: 58, right: 24, top: 28, bottom: 48 };\n  const plotW = W - pad.left - pad.right;\n  const plotH = H - pad.top - pad.bottom;\n  const yMax = 3.15;\n  const f = x =&gt; 1.35 + 0.42 * Math.sin(1.55 * x) + 0.16 * x;\n  const reflected = x =&gt; f(a + b - x);\n  const X = x =&gt; pad.left + (x - a) / (b - a) * plotW;\n  const Y = y =&gt; pad.top + (yMax - y) / yMax * plotH;\n  const base = Y(0);\n  const els = {\n    t: document.getElementById(\"king-t\"),\n    x: document.getElementById(\"king-x\"),\n    rx: document.getElementById(\"king-rx\"),\n    height: document.getElementById(\"king-height\"),\n    areas: document.getElementById(\"king-areas\")\n  };\n\n  const svg = document.createElementNS(NS, \"svg\");\n  svg.setAttribute(\"viewBox\", `0 0 ${W} ${H}`);\n  svg.setAttribute(\"preserveAspectRatio\", \"xMidYMid meet\");\n  svg.setAttribute(\"aria-hidden\", \"true\");\n  host.appendChild(svg);\n\n  const node = (name, attrs = {}, parent = svg) =&gt; {\n    const el = document.createElementNS(NS, name);\n    Object.entries(attrs).forEach(([key, value]) =&gt; el.setAttribute(key, value));\n    parent.appendChild(el);\n    return el;\n  };\n  const text = (value, x, y, attrs = {}) =&gt; {\n    const el = node(\"text\", { x, y, ...attrs });\n    el.textContent = value;\n    return el;\n  };\n  const points = (fn, lo = a, hi = b, count = 320) =&gt; {\n    let d = \"\";\n    for (let i = 0; i &lt;= count; i++) {\n      const x = lo + (hi - lo) * i / count;\n      d += `${i ? \"L\" : \"M\"}${X(x).toFixed(2)},${Y(fn(x)).toFixed(2)} `;\n    }\n    return d;\n  };\n  const areaPath = (fn, lo, hi) =&gt; {\n    const curve = points(fn, lo, hi, 150).replace(/^M/, \"L\");\n    return `M${X(lo)},${base} ${curve}L${X(hi)},${base} L${X(lo)},${base} Z`;\n  };\n  const integral = (fn, lo, hi, n = 600) =&gt; {\n    if (hi &lt; lo) return -integral(fn, hi, lo, n);\n    const h = (hi - lo) / n;\n    let sum = 0.5 * (fn(lo) + fn(hi));\n    for (let i = 1; i &lt; n; i++) sum += fn(lo + i * h);\n    return sum * h;\n  };\n\n  const grid = node(\"g\", { stroke: \"#aebdcb\", \"stroke-opacity\": \".18\" });\n  for (let i = 0; i &lt;= 6; i++) {\n    node(\"line\", { x1: X(i), y1: pad.top, x2: X(i), y2: base }, grid);\n    text(String(i), X(i), base + 27, { fill: \"#cbd8e4\", \"text-anchor\": \"middle\" });\n  }\n  for (let y = 0; y &lt;= 3; y++)\n    node(\"line\", { x1: pad.left, y1: Y(y), x2: W - pad.right, y2: Y(y) }, grid);\n\n  node(\"line\", { x1: pad.left, y1: base, x2: W-pad.right, y2: base, stroke: \"#aebdcb\" });\n  node(\"line\", { x1: X(3), y1: pad.top, x2: X(3), y2: base,\n    stroke: \"#ffffff\", \"stroke-opacity\": \".35\", \"stroke-dasharray\": \"7 7\" });\n  text(\"midpoint\", X(3), pad.top + 14, { fill: \"#cbd8e4\", \"text-anchor\": \"middle\" });\n  text(\"f(x)\", pad.left + 10, pad.top + 20, { fill: \"#7be1eb\", \"font-weight\": \"700\" });\n  text(\"f(a+b−x)\", pad.left + 10, pad.top + 42, { fill: \"#ffd27a\", \"font-weight\": \"700\" });\n\n  const blueArea = node(\"path\", { fill: \"#57b9c5\", \"fill-opacity\": \".22\" });\n  const goldArea = node(\"path\", { fill: \"#f3c56b\", \"fill-opacity\": \".22\" });\n  node(\"path\", { d: points(f), fill: \"none\", stroke: \"#57b9c5\", \"stroke-width\": \"4\" });\n  node(\"path\", { d: points(reflected), fill: \"none\", stroke: \"#f3c56b\", \"stroke-width\": \"4\" });\n  const blueStrip = node(\"rect\", { fill: \"#7be1eb\" });\n  const goldStrip = node(\"rect\", { fill: \"#ffd27a\" });\n  const bluePoint = node(\"circle\", { r: 7, fill: \"#7be1eb\" });\n  const goldPoint = node(\"circle\", { r: 7, fill: \"#ffd27a\" });\n\n  function draw() {\n    const t = Number(slider.value);\n    const rt = a + b - t;\n    const left = Math.min(t, rt), right = Math.max(t, rt);\n    blueArea.setAttribute(\"d\", areaPath(f, a, left));\n    goldArea.setAttribute(\"d\", areaPath(reflected, right, b));\n\n    const setStrip = (rect, point, x, fn) =&gt; {\n      const width = 10;\n      rect.setAttribute(\"x\", X(x) - width / 2);\n      rect.setAttribute(\"y\", Y(fn(x)));\n      rect.setAttribute(\"width\", width);\n      rect.setAttribute(\"height\", base - Y(fn(x)));\n      point.setAttribute(\"cx\", X(x));\n      point.setAttribute(\"cy\", Y(fn(x)));\n    };\n    setStrip(blueStrip, bluePoint, t, f);\n    setStrip(goldStrip, goldPoint, rt, reflected);\n\n    els.t.textContent = `t = ${t.toFixed(2)}`;\n    els.x.textContent = `x = ${t.toFixed(2)}`;\n    els.rx.textContent = `x = ${rt.toFixed(2)}`;\n    els.height.textContent = `${f(t).toFixed(3)} = ${reflected(rt).toFixed(3)}`;\n    els.areas.textContent =\n      `${integral(f, a, left).toFixed(3)} ≈ ${integral(reflected, right, b).toFixed(3)}`;\n  }\n\n  function setFromPointer(event) {\n    const rect = svg.getBoundingClientRect();\n    const viewX = (event.clientX - rect.left) / rect.width * W;\n    const ratio = Math.max(0, Math.min(1, (viewX - pad.left) / plotW));\n    slider.value = String(a + ratio * (b-a));\n    draw();\n  }\n\n  let dragging = false;\n  svg.addEventListener(\"pointerdown\", event =&gt; {\n    dragging = true;\n    svg.setPointerCapture(event.pointerId);\n    setFromPointer(event);\n  });\n  svg.addEventListener(\"pointermove\", event =&gt; dragging && setFromPointer(event));\n  svg.addEventListener(\"pointerup\", () =&gt; dragging = false);\n  svg.addEventListener(\"pointercancel\", () =&gt; dragging = false);\n  slider.addEventListener(\"input\", draw);\n  draw();\n})();"
-  },
-  {
-    "objectID": "posts/kings-property/index.html#computational-exploration",
-    "href": "posts/kings-property/index.html#computational-exploration",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Computational Exploration",
-    "text": "Computational Exploration\nThe same asymmetric function can be plotted and integrated numerically with Python. This gives an independent computational check of the graphical argument.\n\n\nShow the Python code\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nplt.style.use(\"dark_background\")\n\na, b = 0, 6\nx = np.linspace(a, b, 1000)\n\ndef f(x):\n    return 1.35 + 0.42 * np.sin(1.55 * x) + 0.16 * x\n\ny_original = f(x)\ny_reflected = f(a + b - x)\n\narea_original = np.trapezoid(y_original, x)\narea_reflected = np.trapezoid(y_reflected, x)\n\nprint(f\"Area under f(x):       {area_original:.8f}\")\nprint(f\"Area after reflection: {area_reflected:.8f}\")\n\nfig, ax = plt.subplots(figsize=(9, 5), facecolor=\"#0c1521\")\nax.set_facecolor(\"#0c1521\")\nplt.plot(x, y_original, label=r\"$f(x)$\", linewidth=2.5)\nplt.plot(x, y_reflected, label=r\"$f(a+b-x)$\", linewidth=2.5)\nplt.fill_between(x, y_original, alpha=0.18)\nplt.axvline((a + b) / 2, color=\"gray\", linestyle=\"--\", label=\"midpoint\")\nplt.xlabel(\"x\")\nplt.ylabel(\"y\")\nplt.title(\"A function and its reflection\")\nplt.legend()\nplt.grid(alpha=0.2)\nplt.tight_layout()\nplt.show()\n\n\nArea under f(x):       11.51982490\nArea after reflection: 11.51982490\n\n\n\n\n\n\n\n\n\nThe two printed values agree up to numerical rounding. Python confirms what the substitution already proved exactly."
-  },
-  {
-    "objectID": "posts/kings-property/index.html#why-the-averaged-form-is-powerful",
-    "href": "posts/kings-property/index.html#why-the-averaged-form-is-powerful",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Why the averaged form is powerful",
-    "text": "Why the averaged form is powerful\nLet\nI=∫abf(x)dx.\nI=\\int_a^b f(x)\\,dx.\n\nKing’s property gives another expression for the same number:\nI=∫abf(a+b−x)dx.\nI=\\int_a^b f(a+b-x)\\,dx.\n\nAdding and dividing by 22 gives\nI=12∫ab[f(x)+f(a+b−x)]dx.\nI=\\frac12\\int_a^b\\left[f(x)+f(a+b-x)\\right]dx.\n\nThis is most useful when the sum inside the brackets simplifies."
-  },
-  {
-    "objectID": "posts/kings-property/index.html#let-me-work-through-an-example",
-    "href": "posts/kings-property/index.html#let-me-work-through-an-example",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Let me work through an example",
-    "text": "Let me work through an example\nEvaluate\nI=∫0π/2sin⁡xsin⁡x+cos⁡xdx.\nI=\\int_0^{\\pi/2}\\frac{\\sin x}{\\sin x+\\cos x}\\,dx.\n\nHere a+b=π/2a+b=\\pi/2. King’s property gives\nI=∫0π/2cos⁡xcos⁡x+sin⁡xdx.\nI=\\int_0^{\\pi/2}\n\\frac{\\cos x}{\\cos x+\\sin x}\\,dx.\n\nAdding the two equations,\n2I=∫0π/21dx=π2.\n2I=\\int_0^{\\pi/2}1\\,dx=\\frac{\\pi}{2}.\n\nHence\nI=π4.\n\\boxed{I=\\frac{\\pi}{4}}."
-  },
-  {
-    "objectID": "posts/kings-property/index.html#a-more-powerful-jee-style-example",
-    "href": "posts/kings-property/index.html#a-more-powerful-jee-style-example",
-    "title": "King’s Property for Definite Integrals",
-    "section": "A more powerful JEE-style example",
-    "text": "A more powerful JEE-style example\nEvaluate\nJ=∫0πx1+sin⁡xdx.\nJ=\\int_0^\\pi \\frac{x}{1+\\sin x}\\,dx.\n\nThe factor xx makes direct integration look unpleasant. Reflecting xx across [0,π][0,\\pi] replaces it by π−x\\pi-x, while sin⁡(π−x)=sin⁡x\\sin(\\pi-x)=\\sin x. Thus\nJ=∫0ππ−x1+sin⁡xdx.\nJ=\\int_0^\\pi \\frac{\\pi-x}{1+\\sin x}\\,dx.\n\nAdding this to the original form gives\n2J=π∫0πdx1+sin⁡x.\n2J=\\pi\\int_0^\\pi\\frac{dx}{1+\\sin x}.\n\nNow rationalise the denominator:\n11+sin⁡x=1−sin⁡xcos⁡2x=sec⁡2x−sec⁡xtan⁡x.\n\\frac{1}{1+\\sin x}\n=\\frac{1-\\sin x}{\\cos^2x}\n=\\sec^2x-\\sec x\\tan x.\n\nAlthough the two terms are individually improper at x=π/2x=\\pi/2, their difference has a finite continuous limit there. An antiderivative on each side is tan⁡x−sec⁡x\\tan x-\\sec x, and the combined definite integral equals 22. Therefore\n2J=2π⇒J=π.\n2J=2\\pi\n\\qquad\\Longrightarrow\\qquad\n\\boxed{J=\\pi}.\n\nThe important move was not the final integration. King’s property first removed the troublesome factor xx."
-  },
-  {
-    "objectID": "posts/kings-property/index.html#takeaway",
-    "href": "posts/kings-property/index.html#takeaway",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Takeaway",
-    "text": "Takeaway\nKing’s property tells us that a definite integral is unchanged when its interval is reflected. Algebraically, reversing the limits cancels the minus sign in du=−dxdu=-dx. Geometrically, every signed-area strip has an equal reflected partner. The slider makes these two descriptions visible as the same idea."
-  },
-  {
     "objectID": "posts/sumsets-and-arithmetic-progressions/index.html",
     "href": "posts/sumsets-and-arithmetic-progressions/index.html",
     "title": "When a Sumset Is as Small as Possible",
     "section": "",
-    "text": "Let\nA={1,a1,a2,…,a18,77}\nA=\\{1,a_1,a_2,\\ldots,a_{18},77\\}\n\nbe a set of integers satisfying\n1&lt;a1&lt;a2&lt;⋯&lt;a18&lt;77.\n1&lt;a_1&lt;a_2&lt;\\cdots&lt;a_{18}&lt;77.\n\nDefine\nA+A={x+y:x,y∈A}.\nA+A=\\{x+y:x,y\\in A\\}.\n\nIf A+AA+A contains exactly 3939 elements, find\na1+a2+⋯+a18.\na_1+a_2+\\cdots+a_{18}.\n\n\n\n\n\n\n\nNoteQuestion source\n\n\n\nThis question appeared in JEE (Main) 2022, 28 June, Morning Shift (Shift 1), Mathematics.\nView the original-question listing\n\n\nAt first, the information seems insufficient. We know only the first and last elements of AA, not the eighteen integers in between. The number 3939 is the clue: it is the smallest possible size of A+AA+A. A set whose sumset is this small must have a very special structure.\nBy the end of the article, we will prove that structure rather than guess it. The final answer will be\n702.\n\\boxed{702}.\n\n\nDifficulty: Intermediate Prerequisites: Sets, inequalities, and arithmetic progressions Main idea: Few distinct pairwise sums mean many sums coincide. Those coincidences force equal consecutive gaps."
+    "text": "Let\nA={1,a1,a2,…,a18,77}\nA=\\{1,a_1,a_2,\\ldots,a_{18},77\\}\n\nbe a set of integers satisfying\n1&lt;a1&lt;a2&lt;⋯&lt;a18&lt;77.\n1&lt;a_1&lt;a_2&lt;\\cdots&lt;a_{18}&lt;77.\n\nDefine\nA+A={x+y:x,y∈A}.\nA+A=\\{x+y:x,y\\in A\\}.\n\nIf A+AA+A contains exactly 3939 elements, find\na1+a2+⋯+a18.\na_1+a_2+\\cdots+a_{18}.\n\n\n\n\n\n\n\nNoteQuestion source\n\n\n\nThis question appeared in JEE (Main) 2022, 28 June, Morning Shift (Shift 1), Mathematics.\nView the original-question listing\n\n\nOnly the endpoints of AA are known, but the number 3939 determines the missing structure: it is the smallest possible size of A+AA+A. We will prove that equality forces AA to be an arithmetic progression. The requested sum is\n702.\n\\boxed{702}.\n\n\nDifficulty: Intermediate Prerequisites: Sets, inequalities, and arithmetic progressions Main idea: Few distinct pairwise sums mean many sums coincide. Those coincidences force equal consecutive gaps."
   },
   {
     "objectID": "posts/sumsets-and-arithmetic-progressions/index.html#the-problem-that-starts-our-investigation",
     "href": "posts/sumsets-and-arithmetic-progressions/index.html#the-problem-that-starts-our-investigation",
     "title": "When a Sumset Is as Small as Possible",
     "section": "",
-    "text": "Let\nA={1,a1,a2,…,a18,77}\nA=\\{1,a_1,a_2,\\ldots,a_{18},77\\}\n\nbe a set of integers satisfying\n1&lt;a1&lt;a2&lt;⋯&lt;a18&lt;77.\n1&lt;a_1&lt;a_2&lt;\\cdots&lt;a_{18}&lt;77.\n\nDefine\nA+A={x+y:x,y∈A}.\nA+A=\\{x+y:x,y\\in A\\}.\n\nIf A+AA+A contains exactly 3939 elements, find\na1+a2+⋯+a18.\na_1+a_2+\\cdots+a_{18}.\n\n\n\n\n\n\n\nNoteQuestion source\n\n\n\nThis question appeared in JEE (Main) 2022, 28 June, Morning Shift (Shift 1), Mathematics.\nView the original-question listing\n\n\nAt first, the information seems insufficient. We know only the first and last elements of AA, not the eighteen integers in between. The number 3939 is the clue: it is the smallest possible size of A+AA+A. A set whose sumset is this small must have a very special structure.\nBy the end of the article, we will prove that structure rather than guess it. The final answer will be\n702.\n\\boxed{702}.\n\n\nDifficulty: Intermediate Prerequisites: Sets, inequalities, and arithmetic progressions Main idea: Few distinct pairwise sums mean many sums coincide. Those coincidences force equal consecutive gaps."
+    "text": "Let\nA={1,a1,a2,…,a18,77}\nA=\\{1,a_1,a_2,\\ldots,a_{18},77\\}\n\nbe a set of integers satisfying\n1&lt;a1&lt;a2&lt;⋯&lt;a18&lt;77.\n1&lt;a_1&lt;a_2&lt;\\cdots&lt;a_{18}&lt;77.\n\nDefine\nA+A={x+y:x,y∈A}.\nA+A=\\{x+y:x,y\\in A\\}.\n\nIf A+AA+A contains exactly 3939 elements, find\na1+a2+⋯+a18.\na_1+a_2+\\cdots+a_{18}.\n\n\n\n\n\n\n\nNoteQuestion source\n\n\n\nThis question appeared in JEE (Main) 2022, 28 June, Morning Shift (Shift 1), Mathematics.\nView the original-question listing\n\n\nOnly the endpoints of AA are known, but the number 3939 determines the missing structure: it is the smallest possible size of A+AA+A. We will prove that equality forces AA to be an arithmetic progression. The requested sum is\n702.\n\\boxed{702}.\n\n\nDifficulty: Intermediate Prerequisites: Sets, inequalities, and arithmetic progressions Main idea: Few distinct pairwise sums mean many sums coincide. Those coincidences force equal consecutive gaps."
   },
   {
     "objectID": "posts/sumsets-and-arithmetic-progressions/index.html#what-is-a-sumset",
@@ -228,14 +347,14 @@
     "href": "posts/sumsets-and-arithmetic-progressions/index.html#explore-sumsets-with-python",
     "title": "When a Sumset Is as Small as Possible",
     "section": "6. Explore sumsets with Python",
-    "text": "6. Explore sumsets with Python\nThe mathematics proves the result for every valid set. Python is useful for experimenting with examples, seeing collisions, and checking conjectures.\n\nA basic sumset tool\n\n\nHide code\ndef sumset(A, B=None):\n    \"\"\"Return the sorted sumset A+B; use B=A when B is omitted.\"\"\"\n    A = set(A)\n    B = A if B is None else set(B)\n    return sorted(a + b for a in A for b in B)\n\n\nA = {1, 3, 5}\nB = {1, 3, 8}\n\nprint(\"A + A =\", sumset(A))\nprint(\"|A + A| =\", len(sumset(A)))\nprint(\"B + B =\", sumset(B))\nprint(\"|B + B| =\", len(sumset(B)))\n\n\nA + A = [2, 4, 4, 6, 6, 6, 8, 8, 10]\n|A + A| = 9\nB + B = [2, 4, 4, 6, 9, 9, 11, 11, 16]\n|B + B| = 9\n\n\nUsing a Python set is essential: if the same sum arises from several pairs, it must still be counted only once.\n\n\nFind which pairs collide\n\n\nHide code\nfrom collections import defaultdict\n\n\ndef sum_representations(A):\n    \"\"\"Map each sum to unordered pairs that produce it.\"\"\"\n    values = sorted(set(A))\n    representations = defaultdict(list)\n\n    for i, x in enumerate(values):\n        for y in values[i:]:\n            representations[x + y].append((x, y))\n\n    return dict(sorted(representations.items()))\n\n\nfor total, pairs in sum_representations({1, 3, 5}).items():\n    print(f\"{total:2} can be made by {pairs}\")\n\n\n 2 can be made by [(1, 1)]\n 4 can be made by [(1, 3)]\n 6 can be made by [(1, 5), (3, 3)]\n 8 can be made by [(3, 5)]\n10 can be made by [(5, 5)]\n\n\nThis prints, among other lines,\n 6 can be made by [(1, 5), (3, 3)]\nThe ordered pair (5,1)(5,1) is not printed separately because addition is commutative.\n\n\nTest the theorem on examples\n\n\nHide code\ndef is_arithmetic_progression(A):\n    values = sorted(set(A))\n    if len(values) &lt; 3:\n        return True\n\n    d = values[1] - values[0]\n    return all(\n        values[i + 1] - values[i] == d\n        for i in range(len(values) - 1)\n    )\n\n\ndef report(A):\n    values = sorted(set(A))\n    n = len(values)\n    size = len(sumset(values))\n    print(\"A =\", values)\n    print(f\"|A| = {n}, |A+A| = {size}, lower bound = {2*n - 1}\")\n    print(\"Arithmetic progression?\", is_arithmetic_progression(values))\n\n\nreport({1, 5, 9, 13})\nprint()\nreport({1, 5, 9, 14})\n\n\nA = [1, 5, 9, 13]\n|A| = 4, |A+A| = 16, lower bound = 7\nArithmetic progression? True\n\nA = [1, 5, 9, 14]\n|A| = 4, |A+A| = 16, lower bound = 7\nArithmetic progression? False\n\n\nChanging the last element from 1313 to 1414 breaks the equal spacing and makes the sumset larger.\n\n\nSearch all small sets\nThe next experiment lists every four-element subset of {0,1,…,8}\\{0,1,\\ldots,8\\} whose sumset has the minimum size 77.\n\n\nHide code\nfrom itertools import combinations\n\nn = 4\nminimum = 2 * n - 1\nminimal_sets = []\n\nfor candidate in combinations(range(9), n):\n    if len(sumset(candidate)) == minimum:\n        minimal_sets.append(candidate)\n\nprint(\"Sets with a minimum-size sumset:\")\nfor candidate in minimal_sets:\n    print(candidate)\n\nprint(\n    \"Every result is an AP:\",\n    all(is_arithmetic_progression(A) for A in minimal_sets),\n)\n\n\nSets with a minimum-size sumset:\nEvery result is an AP: True\n\n\nThis is experimental evidence, not a substitute for the proof. A finite search checks only the cases inside its chosen range; the theorem covers all finite sets of real numbers.\n\n\nVerify the contest problem directly\n\n\nHide code\nA = list(range(1, 78, 4))\nAA = sumset(A)\n\nprint(\"A =\", A)\nprint(\"|A| =\", len(A))\nprint(\"A+A =\", AA)\nprint(\"|A+A| =\", len(AA))\nprint(\"Sum of the 18 interior terms =\", sum(A[1:-1]))\n\n\nA = [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77]\n|A| = 20\nA+A = [2, 6, 6, 10, 10, 10, 14, 14, 14, 14, 18, 18, 18, 18, 18, 22, 22, 22, 22, 22, 22, 26, 26, 26, 26, 26, 26, 26, 30, 30, 30, 30, 30, 30, 30, 30, 34, 34, 34, 34, 34, 34, 34, 34, 34, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 118, 118, 118, 118, 118, 118, 118, 118, 118, 118, 122, 122, 122, 122, 122, 122, 122, 122, 122, 126, 126, 126, 126, 126, 126, 126, 126, 130, 130, 130, 130, 130, 130, 130, 134, 134, 134, 134, 134, 134, 138, 138, 138, 138, 138, 142, 142, 142, 142, 146, 146, 146, 150, 150, 154]\n|A+A| = 400\nSum of the 18 interior terms = 702\n\n\nThe program produces 2020 elements in AA, 3939 elements in A+AA+A, and an interior sum of 702702."
+    "text": "6. Explore sumsets with Python\nThe mathematics proves the result for every valid set. Python is useful for experimenting with examples, seeing collisions, and checking conjectures.\n\nA basic sumset tool\n\n\nHide code\ndef sumset(A, B=None):\n    \"\"\"Return the sorted sumset A+B; use B=A when B is omitted.\"\"\"\n    A = set(A)\n    B = A if B is None else set(B)\n    return sorted({a + b for a in A for b in B})\n\n\nA = {1, 3, 5}\nB = {1, 3, 8}\n\nprint(\"A + A =\", sumset(A))\nprint(\"|A + A| =\", len(sumset(A)))\nprint(\"B + B =\", sumset(B))\nprint(\"|B + B| =\", len(sumset(B)))\n\n\nA + A = [2, 4, 6, 8, 10]\n|A + A| = 5\nB + B = [2, 4, 6, 9, 11, 16]\n|B + B| = 6\n\n\nUsing a Python set is essential: if the same sum arises from several pairs, it must still be counted only once.\n\n\nFind which pairs collide\n\n\nHide code\nfrom collections import defaultdict\n\n\ndef sum_representations(A):\n    \"\"\"Map each sum to unordered pairs that produce it.\"\"\"\n    values = sorted(set(A))\n    representations = defaultdict(list)\n\n    for i, x in enumerate(values):\n        for y in values[i:]:\n            representations[x + y].append((x, y))\n\n    return dict(sorted(representations.items()))\n\n\nfor total, pairs in sum_representations({1, 3, 5}).items():\n    print(f\"{total:2} can be made by {pairs}\")\n\n\n 2 can be made by [(1, 1)]\n 4 can be made by [(1, 3)]\n 6 can be made by [(1, 5), (3, 3)]\n 8 can be made by [(3, 5)]\n10 can be made by [(5, 5)]\n\n\nThis prints, among other lines,\n 6 can be made by [(1, 5), (3, 3)]\nThe ordered pair (5,1)(5,1) is not printed separately because addition is commutative.\n\n\nTest the theorem on examples\n\n\nHide code\ndef is_arithmetic_progression(A):\n    values = sorted(set(A))\n    if len(values) &lt; 3:\n        return True\n\n    d = values[1] - values[0]\n    return all(\n        values[i + 1] - values[i] == d\n        for i in range(len(values) - 1)\n    )\n\n\ndef report(A):\n    values = sorted(set(A))\n    n = len(values)\n    size = len(sumset(values))\n    print(\"A =\", values)\n    print(f\"|A| = {n}, |A+A| = {size}, lower bound = {2*n - 1}\")\n    print(\"Arithmetic progression?\", is_arithmetic_progression(values))\n\n\nreport({1, 5, 9, 13})\nprint()\nreport({1, 5, 9, 14})\n\n\nA = [1, 5, 9, 13]\n|A| = 4, |A+A| = 7, lower bound = 7\nArithmetic progression? True\n\nA = [1, 5, 9, 14]\n|A| = 4, |A+A| = 9, lower bound = 7\nArithmetic progression? False\n\n\nChanging the last element from 1313 to 1414 breaks the equal spacing and makes the sumset larger.\n\n\nSearch all small sets\nThe next experiment lists every four-element subset of {0,1,…,8}\\{0,1,\\ldots,8\\} whose sumset has the minimum size 77.\n\n\nHide code\nfrom itertools import combinations\n\nn = 4\nminimum = 2 * n - 1\nminimal_sets = []\n\nfor candidate in combinations(range(9), n):\n    if len(sumset(candidate)) == minimum:\n        minimal_sets.append(candidate)\n\nprint(\"Sets with a minimum-size sumset:\")\nfor candidate in minimal_sets:\n    print(candidate)\n\nprint(\n    \"Every result is an AP:\",\n    all(is_arithmetic_progression(A) for A in minimal_sets),\n)\n\n\nSets with a minimum-size sumset:\n(0, 1, 2, 3)\n(0, 2, 4, 6)\n(1, 2, 3, 4)\n(1, 3, 5, 7)\n(2, 3, 4, 5)\n(2, 4, 6, 8)\n(3, 4, 5, 6)\n(4, 5, 6, 7)\n(5, 6, 7, 8)\nEvery result is an AP: True\n\n\nThis is experimental evidence, not a substitute for the proof. A finite search checks only the cases inside its chosen range; the theorem covers all finite sets of real numbers.\n\n\nVerify the contest problem directly\n\n\nHide code\nA = list(range(1, 78, 4))\nAA = sumset(A)\n\nprint(\"A =\", A)\nprint(\"|A| =\", len(A))\nprint(\"A+A =\", AA)\nprint(\"|A+A| =\", len(AA))\nprint(\"Sum of the 18 interior terms =\", sum(A[1:-1]))\n\n\nA = [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77]\n|A| = 20\nA+A = [2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94, 98, 102, 106, 110, 114, 118, 122, 126, 130, 134, 138, 142, 146, 150, 154]\n|A+A| = 39\nSum of the 18 interior terms = 702\n\n\nThe program produces 2020 elements in AA, 3939 elements in A+AA+A, and an interior sum of 702702."
   },
   {
-    "objectID": "posts/sumsets-and-arithmetic-progressions/index.html#a-broader-viewpoint",
-    "href": "posts/sumsets-and-arithmetic-progressions/index.html#a-broader-viewpoint",
+    "objectID": "posts/sumsets-and-arithmetic-progressions/index.html#connection-to-additive-combinatorics",
+    "href": "posts/sumsets-and-arithmetic-progressions/index.html#connection-to-additive-combinatorics",
     "title": "When a Sumset Is as Small as Possible",
-    "section": "7. A broader viewpoint",
-    "text": "7. A broader viewpoint\nThis problem is a first glimpse of additive combinatorics, the study of how the arithmetic structure of a set is reflected in sets such as A+AA+A and A−AA-A.\nThe quantity\n|A+A||A|\n\\frac{|A+A|}{|A|}\n\nis called the doubling constant of AA. A small doubling constant suggests that AA is highly structured. In our extreme one-dimensional case,\n|A+A|=2|A|−1\n|A+A|=2|A|-1\n\nforces the strongest possible structure: an arithmetic progression.\nYou do not need additive combinatorics to solve the original question. Still, it is useful to see the larger mathematical theme:\n\nThe number of distinct sums reveals how regularly the original set is arranged."
+    "section": "7. Connection to additive combinatorics",
+    "text": "7. Connection to additive combinatorics\nThis problem is a first glimpse of additive combinatorics, the study of how the arithmetic structure of a set is reflected in sets such as A+AA+A and A−AA-A.\nThe quantity\n|A+A||A|\n\\frac{|A+A|}{|A|}\n\nis called the doubling constant of AA. A small doubling constant suggests that AA is highly structured. In our extreme one-dimensional case,\n|A+A|=2|A|−1\n|A+A|=2|A|-1\n\nforces the strongest possible structure: an arithmetic progression.\nYou do not need additive combinatorics to solve the original question. Still, it is useful to see the larger mathematical theme:\n\nThe number of distinct sums reveals how regularly the original set is arranged."
   },
   {
     "objectID": "posts/sumsets-and-arithmetic-progressions/index.html#common-mistakes",
@@ -257,89 +376,5 @@
     "title": "When a Sumset Is as Small as Possible",
     "section": "Conclusion",
     "text": "Conclusion\nFor a set of nn distinct ordered numbers, the chain formed from the smallest and largest elements guarantees at least 2n−12n-1 distinct pairwise sums. Arithmetic progressions attain this bound, and attaining the bound forces all consecutive gaps to be equal.\nIn the original problem, |A|=20|A|=20 and |A+A|=39=2|A|−1|A+A|=39=2|A|-1. Hence AA must be\n{1,5,9,…,73,77},\n\\{1,5,9,\\ldots,73,77\\},\n\nso\na1+a2+⋯+a18=702.\n\\boxed{a_1+a_2+\\cdots+a_{18}=702}."
-  },
-  {
-    "objectID": "source-notebooks/positive-integer-solutions.html",
-    "href": "source-notebooks/positive-integer-solutions.html",
-    "title": "Positive Integer Solutions of a Linear Equation",
-    "section": "",
-    "text": "Find the number of positive integer solutions of\nx+2y+3z=15,\nx+2y+3z=15,\n\nwhere\nx,y,z∈ℤ+.\nx,y,z\\in\\mathbb{Z}^{+}."
-  },
-  {
-    "objectID": "source-notebooks/positive-integer-solutions.html#problem",
-    "href": "source-notebooks/positive-integer-solutions.html#problem",
-    "title": "Positive Integer Solutions of a Linear Equation",
-    "section": "",
-    "text": "Find the number of positive integer solutions of\nx+2y+3z=15,\nx+2y+3z=15,\n\nwhere\nx,y,z∈ℤ+.\nx,y,z\\in\\mathbb{Z}^{+}."
-  },
-  {
-    "objectID": "source-notebooks/positive-integer-solutions.html#counting-the-non-negative-integer-solutions",
-    "href": "source-notebooks/positive-integer-solutions.html#counting-the-non-negative-integer-solutions",
-    "title": "Positive Integer Solutions of a Linear Equation",
-    "section": "Counting the Non-negative Integer Solutions",
-    "text": "Counting the Non-negative Integer Solutions\nFor every fixed value of cc,\na+2b=9−3c.\na+2b=9-3c.\n\nSince a,b,c≥0a,b,c\\geq 0, the possible values of cc are\nc=0,1,2,3.\nc=0,1,2,3.\n\nFor an equation of the form\na+2b=N,\na+2b=N,\n\nwe have\na=N−2b.\na=N-2b.\n\nTherefore, bb may take the values\n0,1,2,…,⌊N2⌋.\n0,1,2,\\ldots,\\left\\lfloor\\frac{N}{2}\\right\\rfloor.\n\nHence, the number of non-negative integer solutions is\n⌊N2⌋+1.\n\\left\\lfloor\\frac{N}{2}\\right\\rfloor+1.\n\nNow consider each value of cc.\n\nWhen c=0c=0\na+2b=9.\na+2b=9.\n\nNumber of solutions:\n⌊92⌋+1=5.\n\\left\\lfloor\\frac{9}{2}\\right\\rfloor+1=5.\n\n\n\nWhen c=1c=1\na+2b=6.\na+2b=6.\n\nNumber of solutions:\n⌊62⌋+1=4.\n\\left\\lfloor\\frac{6}{2}\\right\\rfloor+1=4.\n\n\n\nWhen c=2c=2\na+2b=3.\na+2b=3.\n\nNumber of solutions:\n⌊32⌋+1=2.\n\\left\\lfloor\\frac{3}{2}\\right\\rfloor+1=2.\n\n\n\nWhen c=3c=3\na+2b=0.\na+2b=0.\n\nNumber of solutions:\n1.\n1.\n\nTherefore,\n5+4+2+1=12.\n5+4+2+1=12.\n\nHence,\n12\n\\boxed{12}"
-  },
-  {
-    "objectID": "index.html#the-property",
-    "href": "index.html#the-property",
-    "title": "King’s Property for Definite Integrals",
-    "section": "The property",
-    "text": "The property\nLet us explore one of the most useful symmetry ideas in definite integration. If ff is integrable on [a,b][a,b], King’s property says\n∫abf(x)dx=∫abf(a+b−x)dx.\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\nIn simple language: reflecting the graph horizontally across the midpoint x=(a+b)/2x=(a+b)/2 does not change its signed area over the interval.\nAdding the two equal forms gives the useful identity\n∫abf(x)dx=12∫ab[f(x)+f(a+b−x)],dx.\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr],dx.}\n\n\nImportant: the property preserves signed area, so it remains valid even when parts of the graph lie below the xx-axis."
-  },
-  {
-    "objectID": "index.html#let-me-prove-it-mathematically",
-    "href": "index.html#let-me-prove-it-mathematically",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Let me prove it mathematically",
-    "text": "Let me prove it mathematically\nBegin with the reflected integral\nI=∫abf(a+b−x)dx.\nI=\\int_a^b f(a+b-x)\\,dx.\n\nNow use the substitution\nu=a+b−x,du=−dx.\nu=a+b-x,\\qquad du=-dx.\n\nThe limits reverse:\nx=a⇒u=b,x=b⇒u=a.\nx=a\\Longrightarrow u=b,\n\\qquad\nx=b\\Longrightarrow u=a.\n\nTherefore\nI=∫baf(u)(−du)=∫abf(u)du=∫abf(x)dx.\n\\begin{aligned}\nI\n&=\\int_b^a f(u)(-du)\\\\\n&=\\int_a^b f(u)\\,du\\\\\n&=\\int_a^b f(x)\\,dx.\n\\end{aligned}\n\nIn the last line, the dummy variable uu has simply been renamed as xx. This proves King’s property."
-  },
-  {
-    "objectID": "index.html#now-let-us-see-the-graphical-proof",
-    "href": "index.html#now-let-us-see-the-graphical-proof",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Now let us see the graphical proof",
-    "text": "Now let us see the graphical proof\nFocus on the transformation\nx↦a+b−x.\nx\\longmapsto a+b-x.\n\nIt reflects every point across the midpoint m=(a+b)/2m=(a+b)/2. Imagine a very narrow strip at x=tx=t under y=f(x)y=f(x). Its approximate signed area is\nf(t)Δx.\nf(t)\\,\\Delta x.\n\nAfter reflection, its partner lies at x=a+b−tx=a+b-t. The reflected curve has height\nf(a+b−(a+b−t))=f(t).\nf\\bigl(a+b-(a+b-t)\\bigr)=f(t).\n\nReflection also preserves the width Δx\\Delta x. Therefore, the two strips have exactly the same signed area. Pairing every strip in this way shows that the two complete integrals must be equal."
-  },
-  {
-    "objectID": "index.html#interactive-area-proof",
-    "href": "index.html#interactive-area-proof",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Interactive area proof",
-    "text": "Interactive area proof\nNow try the idea yourself. Drag directly across the graph, or use the slider. The blue strip is at tt under f(x)f(x); the gold strip is at its reflected position a+b−ta+b-t under f(a+b−x)f(a+b-x). Watch how the shaded regions accumulate equal signed areas.\n\n\nReflection position\n\nt = 1.50\n\n \n\n\n\n\n\n\nOriginal strip: x = 1.50\n\n\nReflected strip: x = 4.50\n\n\nPaired height: —\n\n\nAccumulated areas: —\n\n\n\nAt the midpoint, the paired strips meet. Continue moving the slider to see them exchange sides while preserving their correspondence.\n\n\nThe applet uses [a,b]=[0,6][a,b]=[0,6] and a deliberately asymmetric function. This makes it clear that the equality comes from reflection—not from the original graph already being symmetric.\n\nSee the applet code\nThe complete code behind the interactive graph is included below. Expand the block to study, copy, or adapt it.\n\n\n\n\n\n\nNoteComplete JavaScript source\n\n\n\n\n\n{{&lt; include king-property.js &gt;}}"
-  },
-  {
-    "objectID": "index.html#computational-exploration",
-    "href": "index.html#computational-exploration",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Computational Exploration",
-    "text": "Computational Exploration\nThe same asymmetric function can be plotted and integrated numerically with Python. This gives an independent computational check of the graphical argument.\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nplt.style.use(\"dark_background\")\n\na, b = 0, 6\nx = np.linspace(a, b, 1000)\n\ndef f(x):\n    return 1.35 + 0.42 * np.sin(1.55 * x) + 0.16 * x\n\ny_original = f(x)\ny_reflected = f(a + b - x)\n\narea_original = np.trapezoid(y_original, x)\narea_reflected = np.trapezoid(y_reflected, x)\n\nprint(f\"Area under f(x):       {area_original:.8f}\")\nprint(f\"Area after reflection: {area_reflected:.8f}\")\n\nfig, ax = plt.subplots(figsize=(9, 5), facecolor=\"#0c1521\")\nax.set_facecolor(\"#0c1521\")\nplt.plot(x, y_original, label=r\"$f(x)$\", linewidth=2.5)\nplt.plot(x, y_reflected, label=r\"$f(a+b-x)$\", linewidth=2.5)\nplt.fill_between(x, y_original, alpha=0.18)\nplt.axvline((a + b) / 2, color=\"gray\", linestyle=\"--\", label=\"midpoint\")\nplt.xlabel(\"x\")\nplt.ylabel(\"y\")\nplt.title(\"A function and its reflection\")\nplt.legend()\nplt.grid(alpha=0.2)\nplt.tight_layout()\nplt.show()\nThe two printed values agree up to numerical rounding. Python confirms what the substitution already proved exactly."
-  },
-  {
-    "objectID": "index.html#why-the-averaged-form-is-powerful",
-    "href": "index.html#why-the-averaged-form-is-powerful",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Why the averaged form is powerful",
-    "text": "Why the averaged form is powerful\nLet\nI=∫abf(x)dx.\nI=\\int_a^b f(x)\\,dx.\n\nKing’s property gives another expression for the same number:\nI=∫abf(a+b−x)dx.\nI=\\int_a^b f(a+b-x)\\,dx.\n\nAdding and dividing by 22 gives\nI=12∫ab[f(x)+f(a+b−x)]dx.\nI=\\frac12\\int_a^b\\left[f(x)+f(a+b-x)\\right]dx.\n\nThis is most useful when the sum inside the brackets simplifies."
-  },
-  {
-    "objectID": "index.html#let-me-work-through-an-example",
-    "href": "index.html#let-me-work-through-an-example",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Let me work through an example",
-    "text": "Let me work through an example\nEvaluate\nI=∫0π/2sin⁡xsin⁡x+cos⁡xdx.\nI=\\int_0^{\\pi/2}\\frac{\\sin x}{\\sin x+\\cos x}\\,dx.\n\nHere a+b=π/2a+b=\\pi/2. King’s property gives\nI=∫0π/2cos⁡xcos⁡x+sin⁡xdx.\nI=\\int_0^{\\pi/2}\n\\frac{\\cos x}{\\cos x+\\sin x}\\,dx.\n\nAdding the two equations,\n2I=∫0π/21dx=π2.\n2I=\\int_0^{\\pi/2}1\\,dx=\\frac{\\pi}{2}.\n\nHence\nI=π4.\n\\boxed{I=\\frac{\\pi}{4}}."
-  },
-  {
-    "objectID": "index.html#a-more-powerful-jee-style-example",
-    "href": "index.html#a-more-powerful-jee-style-example",
-    "title": "King’s Property for Definite Integrals",
-    "section": "A more powerful JEE-style example",
-    "text": "A more powerful JEE-style example\nEvaluate\nJ=∫0πx1+sin⁡xdx.\nJ=\\int_0^\\pi \\frac{x}{1+\\sin x}\\,dx.\n\nThe factor xx makes direct integration look unpleasant. Reflecting xx across [0,π][0,\\pi] replaces it by π−x\\pi-x, while sin⁡(π−x)=sin⁡x\\sin(\\pi-x)=\\sin x. Thus\nJ=∫0ππ−x1+sin⁡xdx.\nJ=\\int_0^\\pi \\frac{\\pi-x}{1+\\sin x}\\,dx.\n\nAdding this to the original form gives\n2J=π∫0πdx1+sin⁡x.\n2J=\\pi\\int_0^\\pi\\frac{dx}{1+\\sin x}.\n\nNow rationalise the denominator:\n11+sin⁡x=1−sin⁡xcos⁡2x=sec⁡2x−sec⁡xtan⁡x.\n\\frac{1}{1+\\sin x}\n=\\frac{1-\\sin x}{\\cos^2x}\n=\\sec^2x-\\sec x\\tan x.\n\nAlthough the two terms are individually improper at x=π/2x=\\pi/2, their difference has a finite continuous limit there. An antiderivative on each side is tan⁡x−sec⁡x\\tan x-\\sec x, and the combined definite integral equals 22. Therefore\n2J=2π⇒J=π.\n2J=2\\pi\n\\qquad\\Longrightarrow\\qquad\n\\boxed{J=\\pi}.\n\nThe important move was not the final integration. King’s property first removed the troublesome factor xx."
-  },
-  {
-    "objectID": "index.html#takeaway",
-    "href": "index.html#takeaway",
-    "title": "King’s Property for Definite Integrals",
-    "section": "Takeaway",
-    "text": "Takeaway\nKing’s property tells us that a definite integral is unchanged when its interval is reflected. Algebraically, reversing the limits cancels the minus sign in du=−dxdu=-dx. Geometrically, every signed-area strip has an equal reflected partner. The slider makes these two descriptions visible as the same idea."
   }
 ]

@@ -1216,9 +1216,54 @@ div.sourceCode.cell-code pre.sourceCode {
   border: 0;
 }
 
-.code-copy-button {
-  top: 0.42rem;
-  right: 0.48rem;
+pre.numberSource {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+pre.numberSource code {
+  counter-reset: source-line;
+}
+
+pre.numberSource code > span {
+  display: block;
+  counter-increment: source-line;
+  left: 0 !important;
+}
+
+pre.numberSource code > span > a:first-child::before {
+  position: static !important;
+  display: inline-block;
+  content: counter(source-line);
+  width: 3.15rem;
+  margin-right: 0.85rem;
+  padding: 0 0.75rem 0 0.35rem;
+  text-align: right;
+  color: #657181;
+  border-right: 1px solid #252e39;
+  text-decoration: none !important;
+}
+
+.code-copy-outer-scaffold > .code-copy-button {
+  top: 0.34rem !important;
+  right: 0.55rem !important;
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+  padding: 0 !important;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.code-copy-button > .bi,
+.code-copy-button > .bi::before {
+  display: block;
+  margin: 0 !important;
+  line-height: 1;
+  vertical-align: 0;
 }
 
 .cell-output-stdout {

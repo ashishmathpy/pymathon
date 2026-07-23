@@ -1,6 +1,6 @@
 ---
 title: "King's Property for Definite Integrals"
-subtitle: "Let me show you the algebra, the geometry, and an interactive area proof"
+subtitle: "Substitution, reflection, and a geometric interpretation"
 author: "Ashish K. Srivastava"
 date: "2026-06-21"
 description: "King's property explained through substitution, graph reflection, worked examples, and an optional computational exploration."
@@ -38,14 +38,14 @@ Adding the two equal forms gives the useful identity
 
 $$
 \boxed{\int_a^b f(x)\,dx
-=\frac12\int_a^b\bigl[f(x)+f(a+b-x)\bigr],dx.}
+=\frac12\int_a^b\bigl[f(x)+f(a+b-x)\bigr]\,dx.}
 $$
 
 ::: {.article-info}
 **Important:** the property preserves **signed area**, so it remains valid even when parts of the graph lie below the $x$-axis.
 :::
 
-## Let me prove it mathematically
+## Proof by substitution
 
 Begin with the reflected integral
 
@@ -78,9 +78,10 @@ I
 \end{aligned}
 $$
 
-In the last line, the dummy variable $u$ has simply been renamed as $x$. This proves King's property.
+The variable of integration is a placeholder, so $u$ may be renamed $x$ in
+the last line. This proves the identity.
 
-## Now let us see the graphical proof
+## Geometric interpretation
 
 Focus on the transformation
 
@@ -102,9 +103,11 @@ $$
 
 Reflection also preserves the width $\Delta x$. Therefore, the two strips have exactly the same signed area. Pairing every strip in this way shows that the two complete integrals must be equal.
 
-## Interactive area proof
+## Interactive demonstration
 
-Now try the idea yourself. Drag directly across the graph, or use the slider. The blue strip is at $t$ under $f(x)$; the gold strip is at its reflected position $a+b-t$ under $f(a+b-x)$. Watch how the shaded regions accumulate equal signed areas.
+Drag across the graph, or use the slider. The blue strip is at $t$ under
+$f(x)$; the gold strip is at its reflected position $a+b-t$ under
+$f(a+b-x)$. The accumulated signed areas remain equal.
 
 ::: {.king-applet aria-label="Interactive graphical demonstration of King's property"}
 <div class="king-toolbar">
@@ -123,7 +126,7 @@ Now try the idea yourself. Drag directly across the graph, or use the slider. Th
 
 The applet uses $[a,b]=[0,6]$ and a deliberately asymmetric function. This makes it clear that the equality comes from reflection—not from the original graph already being symmetric.
 
-### See the applet code
+### Applet source
 
 The complete code behind the interactive graph is included below. Expand the block to study, copy, or adapt it.
 
@@ -177,7 +180,7 @@ plt.show()
 
 The two printed values agree up to numerical rounding. Python confirms what the substitution already proved exactly.
 
-## Why the averaged form is powerful
+## Why the averaged form helps
 
 Let
 
@@ -199,7 +202,7 @@ $$
 
 This is most useful when the sum inside the brackets simplifies.
 
-## Let me work through an example
+## Example 1
 
 Evaluate
 
@@ -226,7 +229,7 @@ $$
 \boxed{I=\frac{\pi}{4}}.
 $$
 
-## A more powerful JEE-style example
+## Example 2
 
 Evaluate
 
