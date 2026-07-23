@@ -39,6 +39,7 @@ format:
     theme: cosmo
     html-math-method: mathml
     highlight-style: monokai
+    code-line-numbers: true
     canonical-url: true
     toc: true
     css: styles.css

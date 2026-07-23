@@ -311,25 +311,25 @@ T^k(n)=1.
 <div id="5d3ba664" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.396416Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.396313Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.401273Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.401046Z&quot;}}" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> collatz_sequence(n):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the Collatz sequence from positive integer n to its first 1."""</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(n, <span class="bu">int</span>) <span class="kw">or</span> <span class="bu">isinstance</span>(n, <span class="bu">bool</span>) <span class="kw">or</span> n <span class="op">&lt;</span> <span class="dv">1</span>:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"n must be a positive integer"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    sequence <span class="op">=</span> [n]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> n <span class="op">!=</span> <span class="dv">1</span>:</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            n <span class="op">//=</span> <span class="dv">2</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> n <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        sequence.append(n)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sequence</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>sequence_13 <span class="op">=</span> collatz_sequence(<span class="dv">13</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sequence_13)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Terms: </span><span class="sc">{</span><span class="bu">len</span>(sequence_13)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Steps: </span><span class="sc">{</span><span class="bu">len</span>(sequence_13) <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> collatz_sequence(n):</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="co">"""Return the Collatz sequence from positive integer n to its first 1."""</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(n, <span class="bu">int</span>) <span class="kw">or</span> <span class="bu">isinstance</span>(n, <span class="bu">bool</span>) <span class="kw">or</span> n <span class="op">&lt;</span> <span class="dv">1</span>:</span>
+<span id="cb1-4"><a href="#cb1-4"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"n must be a positive integer"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    sequence <span class="op">=</span> [n]</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="cf">while</span> n <span class="op">!=</span> <span class="dv">1</span>:</span>
+<span id="cb1-8"><a href="#cb1-8"></a>        <span class="cf">if</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb1-9"><a href="#cb1-9"></a>            n <span class="op">//=</span> <span class="dv">2</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>        <span class="cf">else</span>:</span>
+<span id="cb1-11"><a href="#cb1-11"></a>            n <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> n <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>        sequence.append(n)</span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="cf">return</span> sequence</span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a>sequence_13 <span class="op">=</span> collatz_sequence(<span class="dv">13</span>)</span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="bu">print</span>(sequence_13)</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="bu">print</span>(<span class="ss">f"Terms: </span><span class="sc">{</span><span class="bu">len</span>(sequence_13)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="bu">print</span>(<span class="ss">f"Steps: </span><span class="sc">{</span><span class="bu">len</span>(sequence_13) <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[13, 40, 20, 10, 5, 16, 8, 4, 2, 1]
@@ -342,21 +342,21 @@ Steps: 9</code></pre>
 <div id="85b42dd4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.402378Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.402303Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.404421Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.404192Z&quot;}}" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> collatz_summary(n):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return basic information about the Collatz sequence starting at n."""</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    sequence <span class="op">=</span> collatz_sequence(n)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"start"</span>: n,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"terms"</span>: <span class="bu">len</span>(sequence),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"steps"</span>: <span class="bu">len</span>(sequence) <span class="op">-</span> <span class="dv">1</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"maximum"</span>: <span class="bu">max</span>(sequence),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>test_values <span class="op">=</span> [<span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">19</span>, <span class="dv">27</span>, <span class="dv">97</span>]</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>summaries <span class="op">=</span> [collatz_summary(n) <span class="cf">for</span> n <span class="kw">in</span> test_values]</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> summary <span class="kw">in</span> summaries:</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">def</span> collatz_summary(n):</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="co">"""Return basic information about the Collatz sequence starting at n."""</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>    sequence <span class="op">=</span> collatz_sequence(n)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="cf">return</span> {</span>
+<span id="cb3-5"><a href="#cb3-5"></a>        <span class="st">"start"</span>: n,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>        <span class="st">"terms"</span>: <span class="bu">len</span>(sequence),</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        <span class="st">"steps"</span>: <span class="bu">len</span>(sequence) <span class="op">-</span> <span class="dv">1</span>,</span>
+<span id="cb3-8"><a href="#cb3-8"></a>        <span class="st">"maximum"</span>: <span class="bu">max</span>(sequence),</span>
+<span id="cb3-9"><a href="#cb3-9"></a>    }</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a>test_values <span class="op">=</span> [<span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">19</span>, <span class="dv">27</span>, <span class="dv">97</span>]</span>
+<span id="cb3-13"><a href="#cb3-13"></a>summaries <span class="op">=</span> [collatz_summary(n) <span class="cf">for</span> n <span class="kw">in</span> test_values]</span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="cf">for</span> summary <span class="kw">in</span> summaries:</span>
+<span id="cb3-15"><a href="#cb3-15"></a>    <span class="bu">print</span>(summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>{'start': 6, 'terms': 9, 'steps': 8, 'maximum': 16}
@@ -419,10 +419,10 @@ Steps: 9</code></pre>
 <div id="601c5dd9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.405505Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.405427Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.407189Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.406966Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sequence_27 <span class="op">=</span> collatz_sequence(<span class="dv">27</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Terms: </span><span class="sc">{</span><span class="bu">len</span>(sequence_27)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Steps: </span><span class="sc">{</span><span class="bu">len</span>(sequence_27) <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Maximum value: </span><span class="sc">{</span><span class="bu">max</span>(sequence_27)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>sequence_27 <span class="op">=</span> collatz_sequence(<span class="dv">27</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="bu">print</span>(<span class="ss">f"Terms: </span><span class="sc">{</span><span class="bu">len</span>(sequence_27)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="bu">print</span>(<span class="ss">f"Steps: </span><span class="sc">{</span><span class="bu">len</span>(sequence_27) <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="bu">print</span>(<span class="ss">f"Maximum value: </span><span class="sc">{</span><span class="bu">max</span>(sequence_27)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Terms: 112
@@ -436,22 +436,22 @@ Maximum value: 9232</code></pre>
 <div id="ca913a71" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.408325Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.408255Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.938188Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.937909Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>config InlineBackend.figure_format <span class="op">=</span> <span class="st">'svg'</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(<span class="st">"#0c1521"</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(<span class="st">"#101d2d"</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(sequence_27)), sequence_27, linewidth<span class="op">=</span><span class="fl">1.5</span>, color<span class="op">=</span><span class="st">"#a9ecf4"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Step number"</span>, color<span class="op">=</span><span class="st">"#e7edf4"</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Term value"</span>, color<span class="op">=</span><span class="st">"#e7edf4"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Collatz trajectory for n = 27"</span>, color<span class="op">=</span><span class="st">"#f1f6fb"</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ax.tick_params(colors<span class="op">=</span><span class="st">"#d5e1eb"</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> spine <span class="kw">in</span> ax.spines.values():</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    spine.set_color(<span class="st">"#5d7590"</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, color<span class="op">=</span><span class="st">"#7890a8"</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="op">%</span>config InlineBackend.figure_format <span class="op">=</span> <span class="st">'svg'</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb7-5"><a href="#cb7-5"></a>fig.patch.set_facecolor(<span class="st">"#0c1521"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>ax.set_facecolor(<span class="st">"#101d2d"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7"></a>ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(sequence_27)), sequence_27, linewidth<span class="op">=</span><span class="fl">1.5</span>, color<span class="op">=</span><span class="st">"#a9ecf4"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>ax.set_xlabel(<span class="st">"Step number"</span>, color<span class="op">=</span><span class="st">"#e7edf4"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>ax.set_ylabel(<span class="st">"Term value"</span>, color<span class="op">=</span><span class="st">"#e7edf4"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>ax.set_title(<span class="st">"Collatz trajectory for n = 27"</span>, color<span class="op">=</span><span class="st">"#f1f6fb"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>ax.tick_params(colors<span class="op">=</span><span class="st">"#d5e1eb"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="cf">for</span> spine <span class="kw">in</span> ax.spines.values():</span>
+<span id="cb7-13"><a href="#cb7-13"></a>    spine.set_color(<span class="st">"#5d7590"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14"></a>ax.grid(<span class="va">True</span>, color<span class="op">=</span><span class="st">"#7890a8"</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a>fig.tight_layout()</span>
+<span id="cb7-16"><a href="#cb7-16"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -524,20 +524,20 @@ L(13)=1+L(40).
 <div id="0f81ac89" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.939551Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.939444Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.946015Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.945757Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> longest_collatz_naive(limit):</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the start and term count of the longest chain below limit."""</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(limit, <span class="bu">int</span>) <span class="kw">or</span> <span class="bu">isinstance</span>(limit, <span class="bu">bool</span>) <span class="kw">or</span> limit <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"limit must be an integer greater than 1"</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    best_start, best_length <span class="op">=</span> <span class="dv">1</span>, <span class="dv">1</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, limit):</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        current_length <span class="op">=</span> <span class="bu">len</span>(collatz_sequence(n))</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> current_length <span class="op">&gt;</span> best_length:</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>            best_start, best_length <span class="op">=</span> n, current_length</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_start, best_length</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(longest_collatz_naive(<span class="dv">1_000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">def</span> longest_collatz_naive(limit):</span>
+<span id="cb8-2"><a href="#cb8-2"></a>    <span class="co">"""Return the start and term count of the longest chain below limit."""</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(limit, <span class="bu">int</span>) <span class="kw">or</span> <span class="bu">isinstance</span>(limit, <span class="bu">bool</span>) <span class="kw">or</span> limit <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb8-4"><a href="#cb8-4"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"limit must be an integer greater than 1"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a>    best_start, best_length <span class="op">=</span> <span class="dv">1</span>, <span class="dv">1</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, limit):</span>
+<span id="cb8-8"><a href="#cb8-8"></a>        current_length <span class="op">=</span> <span class="bu">len</span>(collatz_sequence(n))</span>
+<span id="cb8-9"><a href="#cb8-9"></a>        <span class="cf">if</span> current_length <span class="op">&gt;</span> best_length:</span>
+<span id="cb8-10"><a href="#cb8-10"></a>            best_start, best_length <span class="op">=</span> n, current_length</span>
+<span id="cb8-11"><a href="#cb8-11"></a>    <span class="cf">return</span> best_start, best_length</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="bu">print</span>(longest_collatz_naive(<span class="dv">1_000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(871, 179)</code></pre>
@@ -551,49 +551,49 @@ L(13)=1+L(40).
 <div id="babbfa1b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.947247Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.947167Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.949607Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.949393Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> collatz_length(n, cache):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the term count for n, extending cache along a new tail."""</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(n, <span class="bu">int</span>) <span class="kw">or</span> <span class="bu">isinstance</span>(n, <span class="bu">bool</span>) <span class="kw">or</span> n <span class="op">&lt;</span> <span class="dv">1</span>:</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"n must be a positive integer"</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    original_n <span class="op">=</span> n</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> []</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> n <span class="kw">not</span> <span class="kw">in</span> cache:</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        path.append(n)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            n <span class="op">//=</span> <span class="dv">2</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> n <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    known_length <span class="op">=</span> cache[n]</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> value <span class="kw">in</span> <span class="bu">reversed</span>(path):</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        known_length <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        cache[value] <span class="op">=</span> known_length</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cache[original_n]</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> longest_collatz(limit):</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the start, term count, and cache for chains below limit."""</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(limit, <span class="bu">int</span>) <span class="kw">or</span> <span class="bu">isinstance</span>(limit, <span class="bu">bool</span>) <span class="kw">or</span> limit <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"limit must be an integer greater than 1"</span>)</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    cache <span class="op">=</span> {<span class="dv">1</span>: <span class="dv">1</span>}</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    best_start, best_length <span class="op">=</span> <span class="dv">1</span>, <span class="dv">1</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, limit):</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        current_length <span class="op">=</span> collatz_length(n, cache)</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> current_length <span class="op">&gt;</span> best_length:</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>            best_start, best_length <span class="op">=</span> n, current_length</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_start, best_length, cache</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">def</span> collatz_length(n, cache):</span>
+<span id="cb10-2"><a href="#cb10-2"></a>    <span class="co">"""Return the term count for n, extending cache along a new tail."""</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(n, <span class="bu">int</span>) <span class="kw">or</span> <span class="bu">isinstance</span>(n, <span class="bu">bool</span>) <span class="kw">or</span> n <span class="op">&lt;</span> <span class="dv">1</span>:</span>
+<span id="cb10-4"><a href="#cb10-4"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"n must be a positive integer"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a>    original_n <span class="op">=</span> n</span>
+<span id="cb10-7"><a href="#cb10-7"></a>    path <span class="op">=</span> []</span>
+<span id="cb10-8"><a href="#cb10-8"></a>    <span class="cf">while</span> n <span class="kw">not</span> <span class="kw">in</span> cache:</span>
+<span id="cb10-9"><a href="#cb10-9"></a>        path.append(n)</span>
+<span id="cb10-10"><a href="#cb10-10"></a>        <span class="cf">if</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb10-11"><a href="#cb10-11"></a>            n <span class="op">//=</span> <span class="dv">2</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>        <span class="cf">else</span>:</span>
+<span id="cb10-13"><a href="#cb10-13"></a>            n <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> n <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a></span>
+<span id="cb10-15"><a href="#cb10-15"></a>    known_length <span class="op">=</span> cache[n]</span>
+<span id="cb10-16"><a href="#cb10-16"></a>    <span class="cf">for</span> value <span class="kw">in</span> <span class="bu">reversed</span>(path):</span>
+<span id="cb10-17"><a href="#cb10-17"></a>        known_length <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a>        cache[value] <span class="op">=</span> known_length</span>
+<span id="cb10-19"><a href="#cb10-19"></a>    <span class="cf">return</span> cache[original_n]</span>
+<span id="cb10-20"><a href="#cb10-20"></a></span>
+<span id="cb10-21"><a href="#cb10-21"></a></span>
+<span id="cb10-22"><a href="#cb10-22"></a><span class="kw">def</span> longest_collatz(limit):</span>
+<span id="cb10-23"><a href="#cb10-23"></a>    <span class="co">"""Return the start, term count, and cache for chains below limit."""</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(limit, <span class="bu">int</span>) <span class="kw">or</span> <span class="bu">isinstance</span>(limit, <span class="bu">bool</span>) <span class="kw">or</span> limit <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb10-25"><a href="#cb10-25"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"limit must be an integer greater than 1"</span>)</span>
+<span id="cb10-26"><a href="#cb10-26"></a></span>
+<span id="cb10-27"><a href="#cb10-27"></a>    cache <span class="op">=</span> {<span class="dv">1</span>: <span class="dv">1</span>}</span>
+<span id="cb10-28"><a href="#cb10-28"></a>    best_start, best_length <span class="op">=</span> <span class="dv">1</span>, <span class="dv">1</span></span>
+<span id="cb10-29"><a href="#cb10-29"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, limit):</span>
+<span id="cb10-30"><a href="#cb10-30"></a>        current_length <span class="op">=</span> collatz_length(n, cache)</span>
+<span id="cb10-31"><a href="#cb10-31"></a>        <span class="cf">if</span> current_length <span class="op">&gt;</span> best_length:</span>
+<span id="cb10-32"><a href="#cb10-32"></a>            best_start, best_length <span class="op">=</span> n, current_length</span>
+<span id="cb10-33"><a href="#cb10-33"></a>    <span class="cf">return</span> best_start, best_length, cache</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Now we can translate the recurrence into Python. The following finite computation solves the Project Euler search; it does not claim to prove the Collatz conjecture.</p>
 <div id="88e91c29" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.950625Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.950550Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.609217Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.608877Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>best_start, best_length, length_cache <span class="op">=</span> longest_collatz(<span class="dv">1_000_000</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Starting number: </span><span class="sc">{</span>best_start<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of terms: </span><span class="sc">{</span>best_length<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of steps: </span><span class="sc">{</span>best_length <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>best_start, best_length, length_cache <span class="op">=</span> longest_collatz(<span class="dv">1_000_000</span>)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="bu">print</span>(<span class="ss">f"Starting number: </span><span class="sc">{</span>best_start<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="bu">print</span>(<span class="ss">f"Number of terms: </span><span class="sc">{</span>best_length<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="bu">print</span>(<span class="ss">f"Number of steps: </span><span class="sc">{</span>best_length <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Starting number: 837799
@@ -631,12 +631,12 @@ Number of steps: 524</code></pre>
 <div id="8243cb04" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:45.611649Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:45.611490Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.613767Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.613520Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>winning_sequence <span class="op">=</span> collatz_sequence(best_start)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First 15 terms:"</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(winning_sequence[:<span class="dv">15</span>])</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Last 15 terms:"</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(winning_sequence[<span class="op">-</span><span class="dv">15</span>:])</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Maximum value reached: </span><span class="sc">{</span><span class="bu">max</span>(winning_sequence)<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>winning_sequence <span class="op">=</span> collatz_sequence(best_start)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="bu">print</span>(<span class="st">"First 15 terms:"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="bu">print</span>(winning_sequence[:<span class="dv">15</span>])</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Last 15 terms:"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="bu">print</span>(winning_sequence[<span class="op">-</span><span class="dv">15</span>:])</span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Maximum value reached: </span><span class="sc">{</span><span class="bu">max</span>(winning_sequence)<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>First 15 terms:
@@ -651,23 +651,23 @@ Maximum value reached: 2,974,984,576</code></pre>
 <div id="2b8efa12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:45.614902Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:45.614801Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.739017Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.738707Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>config InlineBackend.figure_format <span class="op">=</span> <span class="st">'svg'</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>))</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(<span class="st">"#0c1521"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(<span class="st">"#101d2d"</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(winning_sequence)), winning_sequence, linewidth<span class="op">=</span><span class="fl">1.35</span>, color<span class="op">=</span><span class="st">"#ffe09a"</span>)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>ax.set_yscale(<span class="st">"log"</span>)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Step number"</span>, color<span class="op">=</span><span class="st">"#e7edf4"</span>)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Term value (logarithmic scale)"</span>, color<span class="op">=</span><span class="st">"#e7edf4"</span>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Collatz trajectory for n = 837,799"</span>, color<span class="op">=</span><span class="st">"#f1f6fb"</span>)</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>ax.tick_params(colors<span class="op">=</span><span class="st">"#d5e1eb"</span>)</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> spine <span class="kw">in</span> ax.spines.values():</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    spine.set_color(<span class="st">"#5d7590"</span>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, color<span class="op">=</span><span class="st">"#7890a8"</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="op">%</span>config InlineBackend.figure_format <span class="op">=</span> <span class="st">'svg'</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-3"><a href="#cb15-3"></a></span>
+<span id="cb15-4"><a href="#cb15-4"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>))</span>
+<span id="cb15-5"><a href="#cb15-5"></a>fig.patch.set_facecolor(<span class="st">"#0c1521"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6"></a>ax.set_facecolor(<span class="st">"#101d2d"</span>)</span>
+<span id="cb15-7"><a href="#cb15-7"></a>ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(winning_sequence)), winning_sequence, linewidth<span class="op">=</span><span class="fl">1.35</span>, color<span class="op">=</span><span class="st">"#ffe09a"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8"></a>ax.set_yscale(<span class="st">"log"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9"></a>ax.set_xlabel(<span class="st">"Step number"</span>, color<span class="op">=</span><span class="st">"#e7edf4"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10"></a>ax.set_ylabel(<span class="st">"Term value (logarithmic scale)"</span>, color<span class="op">=</span><span class="st">"#e7edf4"</span>)</span>
+<span id="cb15-11"><a href="#cb15-11"></a>ax.set_title(<span class="st">"Collatz trajectory for n = 837,799"</span>, color<span class="op">=</span><span class="st">"#f1f6fb"</span>)</span>
+<span id="cb15-12"><a href="#cb15-12"></a>ax.tick_params(colors<span class="op">=</span><span class="st">"#d5e1eb"</span>)</span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="cf">for</span> spine <span class="kw">in</span> ax.spines.values():</span>
+<span id="cb15-14"><a href="#cb15-14"></a>    spine.set_color(<span class="st">"#5d7590"</span>)</span>
+<span id="cb15-15"><a href="#cb15-15"></a>ax.grid(<span class="va">True</span>, color<span class="op">=</span><span class="st">"#7890a8"</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb15-16"><a href="#cb15-16"></a>fig.tight_layout()</span>
+<span id="cb15-17"><a href="#cb15-17"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
