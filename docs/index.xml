@@ -53,6 +53,12 @@
 <strong>Prerequisites:</strong> Sets, inequalities, arithmetic progressions, and basic Python<br>
 <strong>Main idea:</strong> Few distinct pairwise sums mean many sums coincide. Those coincidences force equal consecutive gaps.</p>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://ashishmathpy.github.io/pymathon/posts/sumsets-and-arithmetic-progressions/sumset-cover.png" class="img-fluid figure-img" alt="A mathematical illustration showing four evenly spaced points flowing into seven evenly spaced sumset points."></p>
+<figcaption>Four equally spaced source points producing the seven equally spaced points of a minimum-size sumset.</figcaption>
+</figure>
+</div>
 </section>
 <section id="what-is-a-sumset" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-a-sumset">1. What is a sumset?</h2>
@@ -64,7 +70,8 @@
 <p>Take</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0AA=%5C%7B1,3,5%5C%7D.%0A"></p>
 <p>The addition table is</p>
-<table style="display:table; width:auto; margin:1rem 0 1.5rem; border:2px solid #9fb3c5; border-collapse:collapse;">
+<div class="responsive-table" aria-label="Addition table for the set 1, 3, 5" tabindex="0">
+<table class="addition-grid" style="display:table; width:auto; margin:1rem 0 1.5rem; border:2px solid #9fb3c5; border-collapse:collapse;">
 <thead>
 <tr>
 <th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
@@ -126,6 +133,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>Therefore,</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0AA+A=%5C%7B2,4,6,8,10%5C%7D,%0A"></p>
 <p>and <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C=5">. The vertical bars mean “number of elements”.</p>
@@ -274,7 +282,7 @@
 <p>The mathematics proves the result for every valid set. Python is useful for experimenting with examples, seeing collisions, and checking conjectures.</p>
 <section id="a-basic-sumset-tool" class="level3">
 <h3 class="anchored" data-anchor-id="a-basic-sumset-tool">A basic sumset tool</h3>
-<div id="88faa382" class="cell" data-execution_count="1">
+<div id="5f72a298" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
@@ -386,7 +394,7 @@ B + B = [2, 4, 4, 6, 9, 9, 11, 11, 16]
 </section>
 <section id="find-which-pairs-collide" class="level3">
 <h3 class="anchored" data-anchor-id="find-which-pairs-collide">Find which pairs collide</h3>
-<div id="a4426499" class="cell" data-execution_count="2">
+<div id="c6ea077b" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
@@ -491,7 +499,7 @@ font-style: inherit;">"</span>)</span></code></pre></div></div>
 </section>
 <section id="test-the-theorem-on-examples" class="level3">
 <h3 class="anchored" data-anchor-id="test-the-theorem-on-examples">Test the theorem on examples</h3>
-<div id="3fd78990" class="cell" data-execution_count="3">
+<div id="a94cf10a" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
@@ -665,7 +673,7 @@ Arithmetic progression? False</code></pre>
 <section id="search-all-small-sets" class="level3">
 <h3 class="anchored" data-anchor-id="search-all-small-sets">Search all small sets</h3>
 <p>The next experiment lists every four-element subset of <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,%5Cldots,8%5C%7D"> whose sumset has the minimum size <img src="https://latex.codecogs.com/png.latex?7">.</p>
-<div id="173f3a10" class="cell" data-execution_count="4">
+<div id="7c477076" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
@@ -757,7 +765,7 @@ Every result is an AP: True</code></pre>
 </section>
 <section id="verify-the-contest-problem-directly" class="level3">
 <h3 class="anchored" data-anchor-id="verify-the-contest-problem-directly">Verify the contest problem directly</h3>
-<div id="56454a38" class="cell" data-execution_count="5">
+<div id="5847d406" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">A <span class="op" style="color: #5E5E5E;
@@ -929,6 +937,7 @@ Sum of the 18 interior terms = 702</code></pre>
   <category>Python for Mathematics</category>
   <guid>https://ashishmathpy.github.io/pymathon/posts/sumsets-and-arithmetic-progressions/</guid>
   <pubDate>Wed, 22 Jul 2026 18:30:00 GMT</pubDate>
+  <media:content url="https://ashishmathpy.github.io/pymathon/posts/sumsets-and-arithmetic-progressions/sumset-cover.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Longest Collatz Sequence</title>

@@ -4,6 +4,7 @@ subtitle: "How ordered sums force an arithmetic progression"
 author: "Ashish K. Srivastava"
 date: "2026-07-23"
 description: "A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and a Python exploration leading to a contest problem."
+image: "sumset-cover.png"
 categories:
 - JEE Mathematics
 - Combinatorics
@@ -73,6 +74,8 @@ $$
 **Main idea:** Few distinct pairwise sums mean many sums coincide. Those
 coincidences force equal consecutive gaps.
 :::
+
+![Four equally spaced source points producing the seven equally spaced points of a minimum-size sumset.](sumset-cover.png){fig-alt="A mathematical illustration showing four evenly spaced points flowing into seven evenly spaced sumset points."}
 
 ## 1. What is a sumset?
 
