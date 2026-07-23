@@ -1184,6 +1184,99 @@ pre code,
   letter-spacing: -0.012em;
 }
 
+/* Make executable Python cells read like source-code editors. */
+div.sourceCode.cell-code {
+  overflow: hidden;
+  background: #0b1016 !important;
+  border: 1px solid #46505c;
+  border-radius: 0.45rem;
+}
+
+div.sourceCode.cell-code::before {
+  display: block;
+  padding: 0.58rem 3.5rem 0.58rem 4.75rem;
+  color: #929dab;
+  background:
+    radial-gradient(circle at 1.15rem 50%, #ff5f57 0 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 2.15rem 50%, #febc2e 0 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 3.15rem 50%, #28c840 0 0.28rem, transparent 0.3rem),
+    #151b23;
+  border-bottom: 1px solid #39424d;
+  content: "PYTHON";
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.69rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+}
+
+div.sourceCode.cell-code pre.sourceCode {
+  margin: 0;
+  padding: 1rem 0;
+  background: #0b1016 !important;
+  border: 0;
+}
+
+pre.sourceCode code.sourceCode {
+  display: block;
+  counter-reset: source-line;
+}
+
+pre.sourceCode code.sourceCode > span {
+  position: relative;
+  display: block;
+  min-height: 1.55em;
+  padding-right: 1rem;
+  padding-left: 4.25rem;
+  counter-increment: source-line;
+}
+
+pre.sourceCode code.sourceCode > span::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3.1rem;
+  padding-right: 0.75rem;
+  color: #596472;
+  border-right: 1px solid #232b35;
+  content: counter(source-line);
+  font-size: 0.78em;
+  line-height: inherit;
+  text-align: right;
+  user-select: none;
+}
+
+.code-copy-button {
+  top: 0.42rem;
+  right: 0.48rem;
+}
+
+.cell-output-stdout {
+  margin-top: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #39424d;
+  border-radius: 0.35rem;
+}
+
+.cell-output-stdout::before {
+  display: block;
+  padding: 0.42rem 0.8rem;
+  color: #84909e;
+  background: #151b23;
+  border-bottom: 1px solid #303945;
+  content: "OUTPUT";
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+}
+
+.cell-output-stdout pre {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border: 0;
+}
+
 code.sourceCode > span,
 pre > code.sourceCode > span,
 code span {
@@ -1330,5 +1423,15 @@ table {
 
   .home-principle:last-child {
     border-bottom: 0;
+  }
+
+  pre.sourceCode code.sourceCode > span {
+    padding-right: 0.7rem;
+    padding-left: 3.45rem;
+  }
+
+  pre.sourceCode code.sourceCode > span::before {
+    width: 2.55rem;
+    padding-right: 0.55rem;
   }
 }
