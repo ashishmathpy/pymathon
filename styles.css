@@ -10,11 +10,30 @@
   --pymathon-code: #0a111b;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: clip;
+}
+
 body {
   color: var(--pymathon-ink);
   background-color: var(--pymathon-page);
   font-size: 1.05rem;
   line-height: 1.72;
+  overflow-wrap: break-word;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
 }
 
 a,
@@ -531,6 +550,25 @@ table {
   overflow-x: auto;
 }
 
+.responsive-table {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.responsive-table:focus-visible {
+  outline: 2px solid var(--pymathon-accent);
+  outline-offset: 0.2rem;
+}
+
+pre,
+.sourceCode,
+.cell-output {
+  max-width: 100%;
+}
+
 @media (max-width: 700px) {
   body {
     font-size: 1rem;
@@ -671,6 +709,19 @@ table {
 
   table {
     font-size: 0.9rem;
+  }
+
+  .addition-grid th,
+  .addition-grid td {
+    min-width: 3.25rem !important;
+    padding: 0.5rem 0.7rem !important;
+  }
+
+  .math.display,
+  .MathJax_Display,
+  div[id^="MathJax-Element-"] {
+    font-size: 0.96em;
+    scrollbar-width: thin;
   }
 }
 

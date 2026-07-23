@@ -39,3 +39,4 @@ format:
     canonical-url: true
     toc: true
     css: styles.css
+    include-in-header: includes/seo-head.html

@@ -1,5 +1,7 @@
 ---
 title: "PyMathon"
+description: "Learn mathematics through clear proofs, JEE problem solving, Python verification, interactive visualisations, and carefully explained examples."
+author: "Ashish K. Srivastava"
 comments: false
 listing:
   contents: posts
