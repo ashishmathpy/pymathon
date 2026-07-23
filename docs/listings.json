@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/sumsets-and-arithmetic-progressions/index.html",
       "/posts/longest-collatz-sequence/index.html",
       "/posts/positive-integer-solutions/index.html",
       "/posts/kings-property/index.html"

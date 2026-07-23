@@ -10,7 +10,926 @@
 <atom:link href="https://ashishmathpy.github.io/pymathon/index.xml" rel="self" type="application/rss+xml"/>
 <description>PyMathon explores mathematics through rigorous reasoning, multiple solution methods, Python verification, and visualisation.</description>
 <generator>quarto-1.9.38</generator>
-<lastBuildDate>Sat, 11 Jul 2026 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 22 Jul 2026 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>When a Sumset Is as Small as Possible</title>
+  <dc:creator>Ashish K. Srivastava</dc:creator>
+  <link>https://ashishmathpy.github.io/pymathon/posts/sumsets-and-arithmetic-progressions/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="the-problem-that-starts-our-investigation" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-that-starts-our-investigation">The problem that starts our investigation</h2>
+<p>Let</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA=%5C%7B1,a_1,a_2,%5Cldots,a_%7B18%7D,77%5C%7D%0A"></p>
+<p>be a set of integers satisfying</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A1%3Ca_1%3Ca_2%3C%5Ccdots%3Ca_%7B18%7D%3C77.%0A"></p>
+<p>Define</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA+A=%5C%7Bx+y:x,y%5Cin%20A%5C%7D.%0A"></p>
+<p>If <img src="https://latex.codecogs.com/png.latex?A+A"> contains exactly <img src="https://latex.codecogs.com/png.latex?39"> elements, find</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa_1+a_2+%5Ccdots+a_%7B18%7D.%0A"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Question source
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This question appeared in <strong>JEE (Main) 2022, 28 June, Morning Shift (Shift 1), Mathematics</strong>.<br>
+<a href="https://questions.examside.com/past-years/jee/question/plet-a--1-asub1sub-asub2sub--asub18-jee-main-mathematics-trigonometric-functions-and-equations-gvl4fwlruku9lx4c">View the original-question listing</a></p>
+</div>
+</div>
+<p>At first, the information seems insufficient. We know only the first and last elements of <img src="https://latex.codecogs.com/png.latex?A">, not the eighteen integers in between. The number <img src="https://latex.codecogs.com/png.latex?39"> is the clue: it is the smallest possible size of <img src="https://latex.codecogs.com/png.latex?A+A">. A set whose sumset is this small must have a very special structure.</p>
+<p>By the end of the article, we will prove that structure rather than guess it. The final answer will be</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B702%7D.%0A"></p>
+<div class="article-info">
+<p><strong>Difficulty:</strong> Intermediate<br>
+<strong>Prerequisites:</strong> Sets, inequalities, arithmetic progressions, and basic Python<br>
+<strong>Main idea:</strong> Few distinct pairwise sums mean many sums coincide. Those coincidences force equal consecutive gaps.</p>
+</div>
+</section>
+<section id="what-is-a-sumset" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-sumset">1. What is a sumset?</h2>
+<p>If <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> are sets of numbers, their <strong>sumset</strong> is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA+B=%5C%7Ba+b:a%5Cin%20A,%5C%20b%5Cin%20B%5C%7D.%0A"></p>
+<p>The notation <img src="https://latex.codecogs.com/png.latex?A+A"> means that both addends are chosen from the same set. Repetition is allowed when choosing the two addends: <img src="https://latex.codecogs.com/png.latex?a+a"> is included. However, the result is a <strong>set</strong>, so a value is written only once even if several pairs produce it.</p>
+<section id="a-small-example" class="level3">
+<h3 class="anchored" data-anchor-id="a-small-example">A small example</h3>
+<p>Take</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA=%5C%7B1,3,5%5C%7D.%0A"></p>
+<p>The addition table is</p>
+<table style="display:table; width:auto; margin:1rem 0 1.5rem; border:2px solid #9fb3c5; border-collapse:collapse;">
+<thead>
+<tr>
+<th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<img src="https://latex.codecogs.com/png.latex?+">
+</th>
+<th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<img src="https://latex.codecogs.com/png.latex?1">
+</th>
+<th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<img src="https://latex.codecogs.com/png.latex?3">
+</th>
+<th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<img src="https://latex.codecogs.com/png.latex?5">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<img src="https://latex.codecogs.com/png.latex?1">
+</th>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<img src="https://latex.codecogs.com/png.latex?2">
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<img src="https://latex.codecogs.com/png.latex?4">
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<img src="https://latex.codecogs.com/png.latex?6">
+</td>
+</tr>
+<tr>
+<th style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<img src="https://latex.codecogs.com/png.latex?3">
+</th>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<img src="https://latex.codecogs.com/png.latex?4">
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<img src="https://latex.codecogs.com/png.latex?6">
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<img src="https://latex.codecogs.com/png.latex?8">
+</td>
+</tr>
+<tr>
+<th style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<img src="https://latex.codecogs.com/png.latex?5">
+</th>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<img src="https://latex.codecogs.com/png.latex?6">
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<img src="https://latex.codecogs.com/png.latex?8">
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<img src="https://latex.codecogs.com/png.latex?10">
+</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA+A=%5C%7B2,4,6,8,10%5C%7D,%0A"></p>
+<p>and <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C=5">. The vertical bars mean “number of elements”.</p>
+<p>There are <img src="https://latex.codecogs.com/png.latex?3%5E2=9"> ordered choices of two elements, but only five distinct answers. For example,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A1+5=3+3=5+1.%0A"></p>
+<p>Such equalities are called <strong>collisions of sums</strong>.</p>
+<p>Now compare this with <img src="https://latex.codecogs.com/png.latex?B=%5C%7B1,3,8%5C%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AB+B=%5C%7B2,4,6,9,11,16%5C%7D.%0A"></p>
+<p>Thus <img src="https://latex.codecogs.com/png.latex?%7CB+B%7C=6">. The irregular gap from <img src="https://latex.codecogs.com/png.latex?3"> to <img src="https://latex.codecogs.com/png.latex?8"> creates an additional distinct sum. This hints at the principle we will prove:</p>
+<blockquote class="blockquote">
+<p>Equally spaced sets have the smallest possible sumsets.</p>
+</blockquote>
+</section>
+</section>
+<section id="ordering-gives-a-guaranteed-chain-of-sums" class="level2">
+<h2 class="anchored" data-anchor-id="ordering-gives-a-guaranteed-chain-of-sums">2. Ordering gives a guaranteed chain of sums</h2>
+<p>Let a set of <img src="https://latex.codecogs.com/png.latex?n"> distinct real numbers be written in increasing order:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA=%5C%7Bx_1,x_2,%5Cldots,x_n%5C%7D,%0A%5Cqquad%0Ax_1%3Cx_2%3C%5Ccdots%3Cx_n.%0A"></p>
+<p>Every number below belongs to <img src="https://latex.codecogs.com/png.latex?A+A">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Ax_1+x_1%0A&amp;%3Cx_1+x_2%0A%3C%5Ccdots%0A%3Cx_1+x_n%5C%5C%0A&amp;%3Cx_2+x_n%0A%3Cx_3+x_n%0A%3C%5Ccdots%0A%3Cx_n+x_n.%0A%5Cend%7Baligned%7D%0A"></p>
+<p>Why is the middle inequality strict? Since <img src="https://latex.codecogs.com/png.latex?x_1%3Cx_2">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax_1+x_n%3Cx_2+x_n.%0A"></p>
+<p>The chain contains</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0An+(n-1)=2n-1%0A"></p>
+<p>different sums. Consequently:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Sumset lower bound
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For every finite set <img src="https://latex.codecogs.com/png.latex?A"> of <img src="https://latex.codecogs.com/png.latex?n"> distinct real numbers,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B%7CA+A%7C%5Cgeq%202n-1.%7D%0A"></p>
+</div>
+</div>
+<p>This proof needs only ordering. In particular, it works for sets of integers, rational numbers, or real numbers.</p>
+<section id="what-the-theorem-doesand-does-notsay" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-theorem-doesand-does-notsay">What the theorem does—and does not—say</h3>
+<p>The theorem does not claim that <img src="https://latex.codecogs.com/png.latex?A+A"> always has exactly <img src="https://latex.codecogs.com/png.latex?2n-1"> elements. It says that <img src="https://latex.codecogs.com/png.latex?2n-1"> is the minimum possible.</p>
+<p>For <img src="https://latex.codecogs.com/png.latex?n=3">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5C%7B1,3,5%5C%7D+%5C%7B1,3,5%5C%7D%0A=%5C%7B2,4,6,8,10%5C%7D%0A"></p>
+<p>has <img src="https://latex.codecogs.com/png.latex?2(3)-1=5"> elements, while</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5C%7B1,3,8%5C%7D+%5C%7B1,3,8%5C%7D%0A=%5C%7B2,4,6,9,11,16%5C%7D%0A"></p>
+<p>has six.</p>
+</section>
+</section>
+<section id="arithmetic-progressions-attain-the-lower-bound" class="level2">
+<h2 class="anchored" data-anchor-id="arithmetic-progressions-attain-the-lower-bound">3. Arithmetic progressions attain the lower bound</h2>
+<p>Suppose <img src="https://latex.codecogs.com/png.latex?A"> is an arithmetic progression:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA=%5C%7Ba,a+d,a+2d,%5Cldots,a+(n-1)d%5C%7D,%0A%5Cqquad%20d%3E0.%0A"></p>
+<p>Choose the terms with indices <img src="https://latex.codecogs.com/png.latex?i"> and <img src="https://latex.codecogs.com/png.latex?j">, where <img src="https://latex.codecogs.com/png.latex?0%5Cleq%20i,j%5Cleq%20n-1">. Their sum is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A(a+id)+(a+jd)=2a+(i+j)d.%0A"></p>
+<p>Only the value of <img src="https://latex.codecogs.com/png.latex?i+j"> matters. Its possible values are</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A0,1,2,%5Cldots,2n-2,%0A"></p>
+<p>which gives exactly <img src="https://latex.codecogs.com/png.latex?2n-1"> distinct sums. In fact,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA+A%0A=%5C%7B2a,2a+d,2a+2d,%5Cldots,2a+(2n-2)d%5C%7D.%0A"></p>
+<p>So <img src="https://latex.codecogs.com/png.latex?A+A"> is itself an arithmetic progression, with the same common difference.</p>
+<p>For example,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA=%5C%7B1,5,9,13%5C%7D%0A"></p>
+<p>gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA+A=%5C%7B2,6,10,14,18,22,26%5C%7D.%0A"></p>
+<p>Here <img src="https://latex.codecogs.com/png.latex?%7CA%7C=4"> and <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C=7=2(4)-1">.</p>
+</section>
+<section id="the-equality-case-minimum-size-forces-an-ap" class="level2">
+<h2 class="anchored" data-anchor-id="the-equality-case-minimum-size-forces-an-ap">4. The equality case: minimum size forces an AP</h2>
+<p>We have shown one direction:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA%5Ctext%7B%20is%20an%20AP%7D%5Cquad%5CLongrightarrow%5Cquad%20%7CA+A%7C=2n-1.%0A"></p>
+<p>The surprising part is the converse.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Minimal-sumset theorem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a finite set <img src="https://latex.codecogs.com/png.latex?A=%5C%7Bx_1%3Cx_2%3C%5Ccdots%3Cx_n%5C%7D"> of real numbers, with <img src="https://latex.codecogs.com/png.latex?n%5Cgeq2">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B%7CA+A%7C=2n-1%0A%5Cquad%5CLongleftrightarrow%5Cquad%0AA%5Ctext%7B%20is%20an%20arithmetic%20progression%7D.%7D%0A"></p>
+</div>
+</div>
+<p>We now prove the difficult direction in small steps.</p>
+<section id="step-1-the-master-chain-already-fills-the-sumset" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-the-master-chain-already-fills-the-sumset">Step 1: The master chain already fills the sumset</h3>
+<p>Recall the <img src="https://latex.codecogs.com/png.latex?2n-1"> sums</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Ax_1+x_1%0A&amp;%3Cx_1+x_2%3C%5Ccdots%3Cx_1+x_n%5C%5C%0A&amp;%3Cx_2+x_n%3Cx_3+x_n%3C%5Ccdots%3Cx_n+x_n.%0A%5Cend%7Baligned%7D%0A%5Ctag%7B1%7D%0A"></p>
+<p>If <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C=2n-1">, there is no room for any additional value. Therefore every sum <img src="https://latex.codecogs.com/png.latex?x_i+x_j"> must equal one of the values in this master chain.</p>
+</section>
+<section id="step-2-insert-sums-made-with-x_2" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-insert-sums-made-with-x_2">Step 2: Insert sums made with <img src="https://latex.codecogs.com/png.latex?x_2"></h3>
+<p>Consider</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax_2+x_1%3Cx_2+x_2%3C%5Ccdots%3Cx_2+x_n.%0A%5Ctag%7B2%7D%0A"></p>
+<p>Its endpoints are already in the master chain:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax_2+x_1=x_1+x_2%0A"></p>
+<p>and <img src="https://latex.codecogs.com/png.latex?x_2+x_n"> is the value immediately after <img src="https://latex.codecogs.com/png.latex?x_1+x_n">.</p>
+<p>Between these endpoints, the master chain contains exactly</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax_1+x_3,%5C%20x_1+x_4,%5Cldots,x_1+x_n,%0A"></p>
+<p>which are <img src="https://latex.codecogs.com/png.latex?n-2"> values. The second chain also contains exactly <img src="https://latex.codecogs.com/png.latex?n-2"> interior values:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax_2+x_2,%5C%20x_2+x_3,%5Cldots,x_2+x_%7Bn-1%7D.%0A"></p>
+<p>There are no other sumset values available. Both lists are strictly increasing, so their terms must match in order:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax_2+x_i=x_1+x_%7Bi+1%7D,%0A%5Cqquad%20i=2,3,%5Cldots,n-1.%0A"></p>
+<p>Rearranging gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax_%7Bi+1%7D-x_i=x_2-x_1,%0A%5Cqquad%20i=2,3,%5Cldots,n-1.%0A"></p>
+<p>The same equality is automatically true for <img src="https://latex.codecogs.com/png.latex?i=1">. Thus</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax_2-x_1=x_3-x_2=%5Ccdots=x_n-x_%7Bn-1%7D.%0A"></p>
+<p>All consecutive gaps are equal, which is precisely the definition of an arithmetic progression. This completes the proof.</p>
+</section>
+<section id="the-central-intuition" class="level3">
+<h3 class="anchored" data-anchor-id="the-central-intuition">The central intuition</h3>
+<p>A randomly spaced set creates many distinct sums. To reach the absolute minimum <img src="https://latex.codecogs.com/png.latex?2n-1">, every sum outside the guaranteed master chain must collide with a sum already in it. The first row of necessary collisions forces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ax_2+x_i=x_1+x_%7Bi+1%7D,%0A"></p>
+<p>and therefore forces every consecutive gap to be the same.</p>
+</section>
+</section>
+<section id="solving-the-original-problem" class="level2">
+<h2 class="anchored" data-anchor-id="solving-the-original-problem">5. Solving the original problem</h2>
+<p>The set</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA=%5C%7B1,a_1,a_2,%5Cldots,a_%7B18%7D,77%5C%7D%0A"></p>
+<p>contains</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A1+18+1=20%0A"></p>
+<p>elements. Hence the general lower bound is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%7CA+A%7C%5Cgeq2(20)-1=39.%0A"></p>
+<p>We are told that <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C=39">, so equality occurs. By the minimal-sumset theorem, <img src="https://latex.codecogs.com/png.latex?A"> must be an arithmetic progression.</p>
+<p>Let its common difference be <img src="https://latex.codecogs.com/png.latex?d">. There are <img src="https://latex.codecogs.com/png.latex?19"> equal gaps from the first term to the twentieth term, so</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A77=1+19d.%0A"></p>
+<p>Therefore,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A19d=76%0A%5Cquad%5CLongrightarrow%5Cquad%0Ad=4.%0A"></p>
+<p>Thus</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA=%5C%7B1,5,9,13,%5Cldots,73,77%5C%7D,%0A"></p>
+<p>and the requested terms are</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa_1,a_2,%5Cldots,a_%7B18%7D=5,9,13,%5Cldots,73.%0A"></p>
+<p>Their sum is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Csum_%7Bi=1%7D%5E%7B18%7Da_i%0A&amp;=%5Cfrac%7B18%7D%7B2%7D(5+73)%5C%5C%0A&amp;=9%5Ccdot78%5C%5C%0A&amp;=%5Cboxed%7B702%7D.%0A%5Cend%7Baligned%7D%0A"></p>
+<p>There is also a quick symmetry check. The sum of all <img src="https://latex.codecogs.com/png.latex?20"> terms is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7B20%7D%7B2%7D(1+77)=780.%0A"></p>
+<p>Removing the two endpoints gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A780-1-77=%5Cboxed%7B702%7D.%0A"></p>
+</section>
+<section id="explore-sumsets-with-python" class="level2">
+<h2 class="anchored" data-anchor-id="explore-sumsets-with-python">6. Explore sumsets with Python</h2>
+<p>The mathematics proves the result for every valid set. Python is useful for experimenting with examples, seeing collisions, and checking conjectures.</p>
+<section id="a-basic-sumset-tool" class="level3">
+<h3 class="anchored" data-anchor-id="a-basic-sumset-tool">A basic sumset tool</h3>
+<div id="88faa382" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> sumset(A, B<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>):</span>
+<span id="cb1-2">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Return the sorted sumset A+B; use B=A when B is omitted."""</span></span>
+<span id="cb1-3">    A <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">set</span>(A)</span>
+<span id="cb1-4">    B <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> A <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> B <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">is</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">set</span>(B)</span>
+<span id="cb1-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sorted</span>(a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> a <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> A <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> B)</span>
+<span id="cb1-6"></span>
+<span id="cb1-7"></span>
+<span id="cb1-8">A <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>}</span>
+<span id="cb1-9">B <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>}</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A + A ="</span>, sumset(A))</span>
+<span id="cb1-12"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"|A + A| ="</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sumset(A)))</span>
+<span id="cb1-13"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B + B ="</span>, sumset(B))</span>
+<span id="cb1-14"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"|B + B| ="</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sumset(B)))</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>A + A = [2, 4, 4, 6, 6, 6, 8, 8, 10]
+|A + A| = 9
+B + B = [2, 4, 4, 6, 9, 9, 11, 11, 16]
+|B + B| = 9</code></pre>
+</div>
+</div>
+<p>Using a Python <code>set</code> is essential: if the same sum arises from several pairs, it must still be counted only once.</p>
+</section>
+<section id="find-which-pairs-collide" class="level3">
+<h3 class="anchored" data-anchor-id="find-which-pairs-collide">Find which pairs collide</h3>
+<div id="a4426499" class="cell" data-execution_count="2">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> collections <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> defaultdict</span>
+<span id="cb3-2"></span>
+<span id="cb3-3"></span>
+<span id="cb3-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> sum_representations(A):</span>
+<span id="cb3-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Map each sum to unordered pairs that produce it."""</span></span>
+<span id="cb3-6">    values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sorted</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">set</span>(A))</span>
+<span id="cb3-7">    representations <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> defaultdict(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>)</span>
+<span id="cb3-8"></span>
+<span id="cb3-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(values):</span>
+<span id="cb3-10">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> y <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> values[i:]:</span>
+<span id="cb3-11">            representations[x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y].append((x, y))</span>
+<span id="cb3-12"></span>
+<span id="cb3-13">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sorted</span>(representations.items()))</span>
+<span id="cb3-14"></span>
+<span id="cb3-15"></span>
+<span id="cb3-16"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> total, pairs <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> sum_representations({<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>}).items():</span>
+<span id="cb3-17">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>total<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:2}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> can be made by </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>pairs<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> 2 can be made by [(1, 1)]
+ 4 can be made by [(1, 3)]
+ 6 can be made by [(1, 5), (3, 3)]
+ 8 can be made by [(3, 5)]
+10 can be made by [(5, 5)]</code></pre>
+</div>
+</div>
+<p>This prints, among other lines,</p>
+<pre class="text"><code> 6 can be made by [(1, 5), (3, 3)]</code></pre>
+<p>The ordered pair <img src="https://latex.codecogs.com/png.latex?(5,1)"> is not printed separately because addition is commutative.</p>
+</section>
+<section id="test-the-theorem-on-examples" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-theorem-on-examples">Test the theorem on examples</h3>
+<div id="3fd78990" class="cell" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> is_arithmetic_progression(A):</span>
+<span id="cb6-2">    values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sorted</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">set</span>(A))</span>
+<span id="cb6-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(values) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>:</span>
+<span id="cb6-4">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span></span>
+<span id="cb6-5"></span>
+<span id="cb6-6">    d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> values[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> values[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb6-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">all</span>(</span>
+<span id="cb6-8">        values[i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> values[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> d</span>
+<span id="cb6-9">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(values) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb6-10">    )</span>
+<span id="cb6-11"></span>
+<span id="cb6-12"></span>
+<span id="cb6-13"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> report(A):</span>
+<span id="cb6-14">    values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sorted</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">set</span>(A))</span>
+<span id="cb6-15">    n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(values)</span>
+<span id="cb6-16">    size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sumset(values))</span>
+<span id="cb6-17">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A ="</span>, values)</span>
+<span id="cb6-18">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"|A| = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>n<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, |A+A| = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>size<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, lower bound = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb6-19">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Arithmetic progression?"</span>, is_arithmetic_progression(values))</span>
+<span id="cb6-20"></span>
+<span id="cb6-21"></span>
+<span id="cb6-22">report({<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>})</span>
+<span id="cb6-23"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>()</span>
+<span id="cb6-24">report({<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>})</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>A = [1, 5, 9, 13]
+|A| = 4, |A+A| = 16, lower bound = 7
+Arithmetic progression? True
+
+A = [1, 5, 9, 14]
+|A| = 4, |A+A| = 16, lower bound = 7
+Arithmetic progression? False</code></pre>
+</div>
+</div>
+<p>Changing the last element from <img src="https://latex.codecogs.com/png.latex?13"> to <img src="https://latex.codecogs.com/png.latex?14"> breaks the equal spacing and makes the sumset larger.</p>
+</section>
+<section id="search-all-small-sets" class="level3">
+<h3 class="anchored" data-anchor-id="search-all-small-sets">Search all small sets</h3>
+<p>The next experiment lists every four-element subset of <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,%5Cldots,8%5C%7D"> whose sumset has the minimum size <img src="https://latex.codecogs.com/png.latex?7">.</p>
+<div id="173f3a10" class="cell" data-execution_count="4">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> itertools <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> combinations</span>
+<span id="cb8-2"></span>
+<span id="cb8-3">n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span></span>
+<span id="cb8-4">minimum <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb8-5">minimal_sets <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb8-6"></span>
+<span id="cb8-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> candidate <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> combinations(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>), n):</span>
+<span id="cb8-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sumset(candidate)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> minimum:</span>
+<span id="cb8-9">        minimal_sets.append(candidate)</span>
+<span id="cb8-10"></span>
+<span id="cb8-11"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sets with a minimum-size sumset:"</span>)</span>
+<span id="cb8-12"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> candidate <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> minimal_sets:</span>
+<span id="cb8-13">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(candidate)</span>
+<span id="cb8-14"></span>
+<span id="cb8-15"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(</span>
+<span id="cb8-16">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Every result is an AP:"</span>,</span>
+<span id="cb8-17">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">all</span>(is_arithmetic_progression(A) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> A <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> minimal_sets),</span>
+<span id="cb8-18">)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sets with a minimum-size sumset:
+Every result is an AP: True</code></pre>
+</div>
+</div>
+<p>This is experimental evidence, not a substitute for the proof. A finite search checks only the cases inside its chosen range; the theorem covers all finite sets of real numbers.</p>
+</section>
+<section id="verify-the-contest-problem-directly" class="level3">
+<h3 class="anchored" data-anchor-id="verify-the-contest-problem-directly">Verify the contest problem directly</h3>
+<div id="56454a38" class="cell" data-execution_count="5">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">A <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">78</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span>
+<span id="cb10-2">AA <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sumset(A)</span>
+<span id="cb10-3"></span>
+<span id="cb10-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A ="</span>, A)</span>
+<span id="cb10-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"|A| ="</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(A))</span>
+<span id="cb10-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A+A ="</span>, AA)</span>
+<span id="cb10-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"|A+A| ="</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(AA))</span>
+<span id="cb10-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sum of the 18 interior terms ="</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(A[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]))</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>A = [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77]
+|A| = 20
+A+A = [2, 6, 6, 10, 10, 10, 14, 14, 14, 14, 18, 18, 18, 18, 18, 22, 22, 22, 22, 22, 22, 26, 26, 26, 26, 26, 26, 26, 30, 30, 30, 30, 30, 30, 30, 30, 34, 34, 34, 34, 34, 34, 34, 34, 34, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 118, 118, 118, 118, 118, 118, 118, 118, 118, 118, 122, 122, 122, 122, 122, 122, 122, 122, 122, 126, 126, 126, 126, 126, 126, 126, 126, 130, 130, 130, 130, 130, 130, 130, 134, 134, 134, 134, 134, 134, 138, 138, 138, 138, 138, 142, 142, 142, 142, 146, 146, 146, 150, 150, 154]
+|A+A| = 400
+Sum of the 18 interior terms = 702</code></pre>
+</div>
+</div>
+<p>The program produces <img src="https://latex.codecogs.com/png.latex?20"> elements in <img src="https://latex.codecogs.com/png.latex?A">, <img src="https://latex.codecogs.com/png.latex?39"> elements in <img src="https://latex.codecogs.com/png.latex?A+A">, and an interior sum of <img src="https://latex.codecogs.com/png.latex?702">.</p>
+</section>
+</section>
+<section id="a-broader-viewpoint" class="level2">
+<h2 class="anchored" data-anchor-id="a-broader-viewpoint">7. A broader viewpoint</h2>
+<p>This problem is a first glimpse of <strong>additive combinatorics</strong>, the study of how the arithmetic structure of a set is reflected in sets such as <img src="https://latex.codecogs.com/png.latex?A+A"> and <img src="https://latex.codecogs.com/png.latex?A-A">.</p>
+<p>The quantity</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7B%7CA+A%7C%7D%7B%7CA%7C%7D%0A"></p>
+<p>is called the <strong>doubling constant</strong> of <img src="https://latex.codecogs.com/png.latex?A">. A small doubling constant suggests that <img src="https://latex.codecogs.com/png.latex?A"> is highly structured. In our extreme one-dimensional case,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%7CA+A%7C=2%7CA%7C-1%0A"></p>
+<p>forces the strongest possible structure: an arithmetic progression.</p>
+<p>You do not need additive combinatorics to solve the original question. Still, it is useful to see the larger mathematical theme:</p>
+<blockquote class="blockquote">
+<p>The number of distinct sums reveals how regularly the original set is arranged.</p>
+</blockquote>
+</section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">8. Common mistakes</h2>
+<section id="counting-pairs-instead-of-distinct-sums" class="level3">
+<h3 class="anchored" data-anchor-id="counting-pairs-instead-of-distinct-sums">Counting pairs instead of distinct sums</h3>
+<p><img src="https://latex.codecogs.com/png.latex?A+A"> is a set of values, not a list of pairs. Although there are <img src="https://latex.codecogs.com/png.latex?n%5E2"> ordered pairs <img src="https://latex.codecogs.com/png.latex?(x,y)">, different pairs may give the same sum.</p>
+</section>
+<section id="forgetting-that-an-element-may-be-used-twice" class="level3">
+<h3 class="anchored" data-anchor-id="forgetting-that-an-element-may-be-used-twice">Forgetting that an element may be used twice</h3>
+<p>Because <img src="https://latex.codecogs.com/png.latex?x"> and <img src="https://latex.codecogs.com/png.latex?y"> are independently chosen from <img src="https://latex.codecogs.com/png.latex?A">, sums such as <img src="https://latex.codecogs.com/png.latex?2x=x+x"> are allowed.</p>
+</section>
+<section id="assuming-the-ap-structure-without-proving-equality" class="level3">
+<h3 class="anchored" data-anchor-id="assuming-the-ap-structure-without-proving-equality">Assuming the AP structure without proving equality</h3>
+<p>The lower bound <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C%5Cgeq2n-1"> alone does not make <img src="https://latex.codecogs.com/png.latex?A"> an AP. We need the given equality <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C=2n-1"> and the equality-case theorem.</p>
+</section>
+<section id="miscounting-the-number-of-terms" class="level3">
+<h3 class="anchored" data-anchor-id="miscounting-the-number-of-terms">Miscounting the number of terms</h3>
+<p>The set in the problem has <img src="https://latex.codecogs.com/png.latex?20"> terms:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A1,%5Cquad%2018%5Ctext%7B%20intermediate%20terms%7D,%5Cquad%2077.%0A"></p>
+<p>Therefore it has <img src="https://latex.codecogs.com/png.latex?19"> consecutive gaps, not <img src="https://latex.codecogs.com/png.latex?20">.</p>
+</section>
+</section>
+<section id="try-it-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-yourself">9. Try it yourself</h2>
+<ol type="1">
+<li>Find <img src="https://latex.codecogs.com/png.latex?A+A"> when <img src="https://latex.codecogs.com/png.latex?A=%5C%7B2,5,8,11%5C%7D">. Verify that its size is <img src="https://latex.codecogs.com/png.latex?2%7CA%7C-1">.</li>
+<li>If <img src="https://latex.codecogs.com/png.latex?A"> has <img src="https://latex.codecogs.com/png.latex?12"> distinct real elements, what is the smallest possible value of <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C">?</li>
+<li>Let <img src="https://latex.codecogs.com/png.latex?A=%5C%7B4,b_1,b_2,b_3,b_4,34%5C%7D"> be a set of integers with <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C=11">. Find <img src="https://latex.codecogs.com/png.latex?b_1+b_2+b_3+b_4">.</li>
+<li>Compare the sumset sizes of <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,2,3,4%5C%7D"> and <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,2,3,5%5C%7D">. Which new sums appear after the last term is changed?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hints
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Write the sums in increasing order; the answer is also an AP.</li>
+<li>Use <img src="https://latex.codecogs.com/png.latex?2n-1">.</li>
+<li>There are six elements, and <img src="https://latex.codecogs.com/png.latex?11=2(6)-1">.</li>
+<li>Use the Python <code>sumset</code> function or construct two addition tables.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answers
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><img src="https://latex.codecogs.com/png.latex?A+A=%5C%7B4,7,10,13,16,19,22%5C%7D">, so <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C=7">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?2(12)-1=%5Cboxed%7B23%7D">.</li>
+<li>Equality forces an AP. Its common difference is <img src="https://latex.codecogs.com/png.latex?(34-4)/5=6">, so the interior terms are <img src="https://latex.codecogs.com/png.latex?10,16,22,28"> and their sum is <img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B76%7D">.</li>
+<li>The sizes are <img src="https://latex.codecogs.com/png.latex?9"> and <img src="https://latex.codecogs.com/png.latex?10">, respectively. The first sumset is <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,%5Cldots,8%5C%7D">; the second is <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,2,3,4,5,6,7,8,10%5C%7D">.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>For a set of <img src="https://latex.codecogs.com/png.latex?n"> distinct ordered numbers, the chain formed from the smallest and largest elements guarantees at least <img src="https://latex.codecogs.com/png.latex?2n-1"> distinct pairwise sums. Arithmetic progressions attain this bound, and attaining the bound forces all consecutive gaps to be equal.</p>
+<p>In the original problem, <img src="https://latex.codecogs.com/png.latex?%7CA%7C=20"> and <img src="https://latex.codecogs.com/png.latex?%7CA+A%7C=39=2%7CA%7C-1">. Hence <img src="https://latex.codecogs.com/png.latex?A"> must be</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5C%7B1,5,9,%5Cldots,73,77%5C%7D,%0A"></p>
+<p>so</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7Ba_1+a_2+%5Ccdots+a_%7B18%7D=702%7D.%0A"></p>
+
+
+</section>
+
+ ]]></description>
+  <category>JEE Mathematics</category>
+  <category>Combinatorics</category>
+  <category>Number Theory</category>
+  <category>Python for Mathematics</category>
+  <guid>https://ashishmathpy.github.io/pymathon/posts/sumsets-and-arithmetic-progressions/</guid>
+  <pubDate>Wed, 22 Jul 2026 18:30:00 GMT</pubDate>
+</item>
 <item>
   <title>Longest Collatz Sequence</title>
   <dc:creator>Ashish K. Srivastava</dc:creator>

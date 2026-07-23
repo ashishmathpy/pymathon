@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ashish K. Srivastava">
+<meta name="dcterms.date" content="2026-07-23">
+<meta name="description" content="A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and a Python exploration leading to a contest problem.">
+
+<title>When a Sumset Is as Small as Possible – PyMathon</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="When a Sumset Is as Small as Possible – PyMathon">
+<meta property="og:description" content="A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and a Python exploration leading to a contest problem.">
+<meta property="og:site_name" content="PyMathon">
+<link rel="canonical" href="https://ashishmathpy.github.io/pymathon/posts/sumsets-and-arithmetic-progressions/">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../image.png" alt="PyMathon logo" class="navbar-logo light-content">
+    <img src="../../image.png" alt="PyMathon logo" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">PyMathon</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#latest-articles"> 
+<span class="menu-text">Articles</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">When a Sumset Is as Small as Possible</h1>
+            <p class="subtitle lead">How ordered sums force an arithmetic progression</p>
+                  <div>
+        <div class="description">
+          A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and a Python exploration leading to a contest problem.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">JEE Mathematics</div>
+                <div class="quarto-category">Combinatorics</div>
+                <div class="quarto-category">Number Theory</div>
+                <div class="quarto-category">Python for Mathematics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Ashish K. Srivastava </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 23, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-problem-that-starts-our-investigation" id="toc-the-problem-that-starts-our-investigation" class="nav-link active" data-scroll-target="#the-problem-that-starts-our-investigation">The problem that starts our investigation</a></li>
+  <li><a href="#what-is-a-sumset" id="toc-what-is-a-sumset" class="nav-link" data-scroll-target="#what-is-a-sumset">1. What is a sumset?</a>
+  <ul class="collapse">
+  <li><a href="#a-small-example" id="toc-a-small-example" class="nav-link" data-scroll-target="#a-small-example">A small example</a></li>
+  </ul></li>
+  <li><a href="#ordering-gives-a-guaranteed-chain-of-sums" id="toc-ordering-gives-a-guaranteed-chain-of-sums" class="nav-link" data-scroll-target="#ordering-gives-a-guaranteed-chain-of-sums">2. Ordering gives a guaranteed chain of sums</a>
+  <ul class="collapse">
+  <li><a href="#what-the-theorem-doesand-does-notsay" id="toc-what-the-theorem-doesand-does-notsay" class="nav-link" data-scroll-target="#what-the-theorem-doesand-does-notsay">What the theorem does—and does not—say</a></li>
+  </ul></li>
+  <li><a href="#arithmetic-progressions-attain-the-lower-bound" id="toc-arithmetic-progressions-attain-the-lower-bound" class="nav-link" data-scroll-target="#arithmetic-progressions-attain-the-lower-bound">3. Arithmetic progressions attain the lower bound</a></li>
+  <li><a href="#the-equality-case-minimum-size-forces-an-ap" id="toc-the-equality-case-minimum-size-forces-an-ap" class="nav-link" data-scroll-target="#the-equality-case-minimum-size-forces-an-ap">4. The equality case: minimum size forces an AP</a>
+  <ul class="collapse">
+  <li><a href="#step-1-the-master-chain-already-fills-the-sumset" id="toc-step-1-the-master-chain-already-fills-the-sumset" class="nav-link" data-scroll-target="#step-1-the-master-chain-already-fills-the-sumset">Step 1: The master chain already fills the sumset</a></li>
+  <li><a href="#step-2-insert-sums-made-with-x_2" id="toc-step-2-insert-sums-made-with-x_2" class="nav-link" data-scroll-target="#step-2-insert-sums-made-with-x_2">Step 2: Insert sums made with <span class="math inline">\(x_2\)</span></a></li>
+  <li><a href="#the-central-intuition" id="toc-the-central-intuition" class="nav-link" data-scroll-target="#the-central-intuition">The central intuition</a></li>
+  </ul></li>
+  <li><a href="#solving-the-original-problem" id="toc-solving-the-original-problem" class="nav-link" data-scroll-target="#solving-the-original-problem">5. Solving the original problem</a></li>
+  <li><a href="#explore-sumsets-with-python" id="toc-explore-sumsets-with-python" class="nav-link" data-scroll-target="#explore-sumsets-with-python">6. Explore sumsets with Python</a>
+  <ul class="collapse">
+  <li><a href="#a-basic-sumset-tool" id="toc-a-basic-sumset-tool" class="nav-link" data-scroll-target="#a-basic-sumset-tool">A basic sumset tool</a></li>
+  <li><a href="#find-which-pairs-collide" id="toc-find-which-pairs-collide" class="nav-link" data-scroll-target="#find-which-pairs-collide">Find which pairs collide</a></li>
+  <li><a href="#test-the-theorem-on-examples" id="toc-test-the-theorem-on-examples" class="nav-link" data-scroll-target="#test-the-theorem-on-examples">Test the theorem on examples</a></li>
+  <li><a href="#search-all-small-sets" id="toc-search-all-small-sets" class="nav-link" data-scroll-target="#search-all-small-sets">Search all small sets</a></li>
+  <li><a href="#verify-the-contest-problem-directly" id="toc-verify-the-contest-problem-directly" class="nav-link" data-scroll-target="#verify-the-contest-problem-directly">Verify the contest problem directly</a></li>
+  </ul></li>
+  <li><a href="#a-broader-viewpoint" id="toc-a-broader-viewpoint" class="nav-link" data-scroll-target="#a-broader-viewpoint">7. A broader viewpoint</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">8. Common mistakes</a>
+  <ul class="collapse">
+  <li><a href="#counting-pairs-instead-of-distinct-sums" id="toc-counting-pairs-instead-of-distinct-sums" class="nav-link" data-scroll-target="#counting-pairs-instead-of-distinct-sums">Counting pairs instead of distinct sums</a></li>
+  <li><a href="#forgetting-that-an-element-may-be-used-twice" id="toc-forgetting-that-an-element-may-be-used-twice" class="nav-link" data-scroll-target="#forgetting-that-an-element-may-be-used-twice">Forgetting that an element may be used twice</a></li>
+  <li><a href="#assuming-the-ap-structure-without-proving-equality" id="toc-assuming-the-ap-structure-without-proving-equality" class="nav-link" data-scroll-target="#assuming-the-ap-structure-without-proving-equality">Assuming the AP structure without proving equality</a></li>
+  <li><a href="#miscounting-the-number-of-terms" id="toc-miscounting-the-number-of-terms" class="nav-link" data-scroll-target="#miscounting-the-number-of-terms">Miscounting the number of terms</a></li>
+  </ul></li>
+  <li><a href="#try-it-yourself" id="toc-try-it-yourself" class="nav-link" data-scroll-target="#try-it-yourself">9. Try it yourself</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="the-problem-that-starts-our-investigation" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-that-starts-our-investigation">The problem that starts our investigation</h2>
+<p>Let</p>
+<p><span class="math display">\[
+A=\{1,a_1,a_2,\ldots,a_{18},77\}
+\]</span></p>
+<p>be a set of integers satisfying</p>
+<p><span class="math display">\[
+1&lt;a_1&lt;a_2&lt;\cdots&lt;a_{18}&lt;77.
+\]</span></p>
+<p>Define</p>
+<p><span class="math display">\[
+A+A=\{x+y:x,y\in A\}.
+\]</span></p>
+<p>If <span class="math inline">\(A+A\)</span> contains exactly <span class="math inline">\(39\)</span> elements, find</p>
+<p><span class="math display">\[
+a_1+a_2+\cdots+a_{18}.
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Question source
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This question appeared in <strong>JEE (Main) 2022, 28 June, Morning Shift (Shift 1), Mathematics</strong>.<br>
+<a href="https://questions.examside.com/past-years/jee/question/plet-a--1-asub1sub-asub2sub--asub18-jee-main-mathematics-trigonometric-functions-and-equations-gvl4fwlruku9lx4c">View the original-question listing</a></p>
+</div>
+</div>
+<p>At first, the information seems insufficient. We know only the first and last elements of <span class="math inline">\(A\)</span>, not the eighteen integers in between. The number <span class="math inline">\(39\)</span> is the clue: it is the smallest possible size of <span class="math inline">\(A+A\)</span>. A set whose sumset is this small must have a very special structure.</p>
+<p>By the end of the article, we will prove that structure rather than guess it. The final answer will be</p>
+<p><span class="math display">\[
+\boxed{702}.
+\]</span></p>
+<div class="article-info">
+<p><strong>Difficulty:</strong> Intermediate<br>
+<strong>Prerequisites:</strong> Sets, inequalities, arithmetic progressions, and basic Python<br>
+<strong>Main idea:</strong> Few distinct pairwise sums mean many sums coincide. Those coincidences force equal consecutive gaps.</p>
+</div>
+</section>
+<section id="what-is-a-sumset" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-sumset">1. What is a sumset?</h2>
+<p>If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are sets of numbers, their <strong>sumset</strong> is</p>
+<p><span class="math display">\[
+A+B=\{a+b:a\in A,\ b\in B\}.
+\]</span></p>
+<p>The notation <span class="math inline">\(A+A\)</span> means that both addends are chosen from the same set. Repetition is allowed when choosing the two addends: <span class="math inline">\(a+a\)</span> is included. However, the result is a <strong>set</strong>, so a value is written only once even if several pairs produce it.</p>
+<section id="a-small-example" class="level3">
+<h3 class="anchored" data-anchor-id="a-small-example">A small example</h3>
+<p>Take</p>
+<p><span class="math display">\[
+A=\{1,3,5\}.
+\]</span></p>
+<p>The addition table is</p>
+<table style="display:table; width:auto; margin:1rem 0 1.5rem; border:2px solid #9fb3c5; border-collapse:collapse;">
+<thead>
+<tr>
+<th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<span class="math inline">\(+\)</span>
+</th>
+<th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<span class="math inline">\(1\)</span>
+</th>
+<th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<span class="math inline">\(3\)</span>
+</th>
+<th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<span class="math inline">\(5\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<span class="math inline">\(1\)</span>
+</th>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<span class="math inline">\(2\)</span>
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<span class="math inline">\(4\)</span>
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<span class="math inline">\(6\)</span>
+</td>
+</tr>
+<tr>
+<th style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<span class="math inline">\(3\)</span>
+</th>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<span class="math inline">\(4\)</span>
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<span class="math inline">\(6\)</span>
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<span class="math inline">\(8\)</span>
+</td>
+</tr>
+<tr>
+<th style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
+<span class="math inline">\(5\)</span>
+</th>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<span class="math inline">\(6\)</span>
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<span class="math inline">\(8\)</span>
+</td>
+<td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
+<span class="math inline">\(10\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore,</p>
+<p><span class="math display">\[
+A+A=\{2,4,6,8,10\},
+\]</span></p>
+<p>and <span class="math inline">\(|A+A|=5\)</span>. The vertical bars mean “number of elements”.</p>
+<p>There are <span class="math inline">\(3^2=9\)</span> ordered choices of two elements, but only five distinct answers. For example,</p>
+<p><span class="math display">\[
+1+5=3+3=5+1.
+\]</span></p>
+<p>Such equalities are called <strong>collisions of sums</strong>.</p>
+<p>Now compare this with <span class="math inline">\(B=\{1,3,8\}\)</span>:</p>
+<p><span class="math display">\[
+B+B=\{2,4,6,9,11,16\}.
+\]</span></p>
+<p>Thus <span class="math inline">\(|B+B|=6\)</span>. The irregular gap from <span class="math inline">\(3\)</span> to <span class="math inline">\(8\)</span> creates an additional distinct sum. This hints at the principle we will prove:</p>
+<blockquote class="blockquote">
+<p>Equally spaced sets have the smallest possible sumsets.</p>
+</blockquote>
+</section>
+</section>
+<section id="ordering-gives-a-guaranteed-chain-of-sums" class="level2">
+<h2 class="anchored" data-anchor-id="ordering-gives-a-guaranteed-chain-of-sums">2. Ordering gives a guaranteed chain of sums</h2>
+<p>Let a set of <span class="math inline">\(n\)</span> distinct real numbers be written in increasing order:</p>
+<p><span class="math display">\[
+A=\{x_1,x_2,\ldots,x_n\},
+\qquad
+x_1&lt;x_2&lt;\cdots&lt;x_n.
+\]</span></p>
+<p>Every number below belongs to <span class="math inline">\(A+A\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+x_1+x_1
+&amp;&lt;x_1+x_2
+&lt;\cdots
+&lt;x_1+x_n\\
+&amp;&lt;x_2+x_n
+&lt;x_3+x_n
+&lt;\cdots
+&lt;x_n+x_n.
+\end{aligned}
+\]</span></p>
+<p>Why is the middle inequality strict? Since <span class="math inline">\(x_1&lt;x_2\)</span>,</p>
+<p><span class="math display">\[
+x_1+x_n&lt;x_2+x_n.
+\]</span></p>
+<p>The chain contains</p>
+<p><span class="math display">\[
+n+(n-1)=2n-1
+\]</span></p>
+<p>different sums. Consequently:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Sumset lower bound
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For every finite set <span class="math inline">\(A\)</span> of <span class="math inline">\(n\)</span> distinct real numbers,</p>
+<p><span class="math display">\[
+\boxed{|A+A|\geq 2n-1.}
+\]</span></p>
+</div>
+</div>
+<p>This proof needs only ordering. In particular, it works for sets of integers, rational numbers, or real numbers.</p>
+<section id="what-the-theorem-doesand-does-notsay" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-theorem-doesand-does-notsay">What the theorem does—and does not—say</h3>
+<p>The theorem does not claim that <span class="math inline">\(A+A\)</span> always has exactly <span class="math inline">\(2n-1\)</span> elements. It says that <span class="math inline">\(2n-1\)</span> is the minimum possible.</p>
+<p>For <span class="math inline">\(n=3\)</span>:</p>
+<p><span class="math display">\[
+\{1,3,5\}+\{1,3,5\}
+=\{2,4,6,8,10\}
+\]</span></p>
+<p>has <span class="math inline">\(2(3)-1=5\)</span> elements, while</p>
+<p><span class="math display">\[
+\{1,3,8\}+\{1,3,8\}
+=\{2,4,6,9,11,16\}
+\]</span></p>
+<p>has six.</p>
+</section>
+</section>
+<section id="arithmetic-progressions-attain-the-lower-bound" class="level2">
+<h2 class="anchored" data-anchor-id="arithmetic-progressions-attain-the-lower-bound">3. Arithmetic progressions attain the lower bound</h2>
+<p>Suppose <span class="math inline">\(A\)</span> is an arithmetic progression:</p>
+<p><span class="math display">\[
+A=\{a,a+d,a+2d,\ldots,a+(n-1)d\},
+\qquad d&gt;0.
+\]</span></p>
+<p>Choose the terms with indices <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, where <span class="math inline">\(0\leq i,j\leq n-1\)</span>. Their sum is</p>
+<p><span class="math display">\[
+(a+id)+(a+jd)=2a+(i+j)d.
+\]</span></p>
+<p>Only the value of <span class="math inline">\(i+j\)</span> matters. Its possible values are</p>
+<p><span class="math display">\[
+0,1,2,\ldots,2n-2,
+\]</span></p>
+<p>which gives exactly <span class="math inline">\(2n-1\)</span> distinct sums. In fact,</p>
+<p><span class="math display">\[
+A+A
+=\{2a,2a+d,2a+2d,\ldots,2a+(2n-2)d\}.
+\]</span></p>
+<p>So <span class="math inline">\(A+A\)</span> is itself an arithmetic progression, with the same common difference.</p>
+<p>For example,</p>
+<p><span class="math display">\[
+A=\{1,5,9,13\}
+\]</span></p>
+<p>gives</p>
+<p><span class="math display">\[
+A+A=\{2,6,10,14,18,22,26\}.
+\]</span></p>
+<p>Here <span class="math inline">\(|A|=4\)</span> and <span class="math inline">\(|A+A|=7=2(4)-1\)</span>.</p>
+</section>
+<section id="the-equality-case-minimum-size-forces-an-ap" class="level2">
+<h2 class="anchored" data-anchor-id="the-equality-case-minimum-size-forces-an-ap">4. The equality case: minimum size forces an AP</h2>
+<p>We have shown one direction:</p>
+<p><span class="math display">\[
+A\text{ is an AP}\quad\Longrightarrow\quad |A+A|=2n-1.
+\]</span></p>
+<p>The surprising part is the converse.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Minimal-sumset theorem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a finite set <span class="math inline">\(A=\{x_1&lt;x_2&lt;\cdots&lt;x_n\}\)</span> of real numbers, with <span class="math inline">\(n\geq2\)</span>,</p>
+<p><span class="math display">\[
+\boxed{|A+A|=2n-1
+\quad\Longleftrightarrow\quad
+A\text{ is an arithmetic progression}.}
+\]</span></p>
+</div>
+</div>
+<p>We now prove the difficult direction in small steps.</p>
+<section id="step-1-the-master-chain-already-fills-the-sumset" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-the-master-chain-already-fills-the-sumset">Step 1: The master chain already fills the sumset</h3>
+<p>Recall the <span class="math inline">\(2n-1\)</span> sums</p>
+<p><span class="math display">\[
+\begin{aligned}
+x_1+x_1
+&amp;&lt;x_1+x_2&lt;\cdots&lt;x_1+x_n\\
+&amp;&lt;x_2+x_n&lt;x_3+x_n&lt;\cdots&lt;x_n+x_n.
+\end{aligned}
+\tag{1}
+\]</span></p>
+<p>If <span class="math inline">\(|A+A|=2n-1\)</span>, there is no room for any additional value. Therefore every sum <span class="math inline">\(x_i+x_j\)</span> must equal one of the values in this master chain.</p>
+</section>
+<section id="step-2-insert-sums-made-with-x_2" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-insert-sums-made-with-x_2">Step 2: Insert sums made with <span class="math inline">\(x_2\)</span></h3>
+<p>Consider</p>
+<p><span class="math display">\[
+x_2+x_1&lt;x_2+x_2&lt;\cdots&lt;x_2+x_n.
+\tag{2}
+\]</span></p>
+<p>Its endpoints are already in the master chain:</p>
+<p><span class="math display">\[
+x_2+x_1=x_1+x_2
+\]</span></p>
+<p>and <span class="math inline">\(x_2+x_n\)</span> is the value immediately after <span class="math inline">\(x_1+x_n\)</span>.</p>
+<p>Between these endpoints, the master chain contains exactly</p>
+<p><span class="math display">\[
+x_1+x_3,\ x_1+x_4,\ldots,x_1+x_n,
+\]</span></p>
+<p>which are <span class="math inline">\(n-2\)</span> values. The second chain also contains exactly <span class="math inline">\(n-2\)</span> interior values:</p>
+<p><span class="math display">\[
+x_2+x_2,\ x_2+x_3,\ldots,x_2+x_{n-1}.
+\]</span></p>
+<p>There are no other sumset values available. Both lists are strictly increasing, so their terms must match in order:</p>
+<p><span class="math display">\[
+x_2+x_i=x_1+x_{i+1},
+\qquad i=2,3,\ldots,n-1.
+\]</span></p>
+<p>Rearranging gives</p>
+<p><span class="math display">\[
+x_{i+1}-x_i=x_2-x_1,
+\qquad i=2,3,\ldots,n-1.
+\]</span></p>
+<p>The same equality is automatically true for <span class="math inline">\(i=1\)</span>. Thus</p>
+<p><span class="math display">\[
+x_2-x_1=x_3-x_2=\cdots=x_n-x_{n-1}.
+\]</span></p>
+<p>All consecutive gaps are equal, which is precisely the definition of an arithmetic progression. This completes the proof.</p>
+</section>
+<section id="the-central-intuition" class="level3">
+<h3 class="anchored" data-anchor-id="the-central-intuition">The central intuition</h3>
+<p>A randomly spaced set creates many distinct sums. To reach the absolute minimum <span class="math inline">\(2n-1\)</span>, every sum outside the guaranteed master chain must collide with a sum already in it. The first row of necessary collisions forces</p>
+<p><span class="math display">\[
+x_2+x_i=x_1+x_{i+1},
+\]</span></p>
+<p>and therefore forces every consecutive gap to be the same.</p>
+</section>
+</section>
+<section id="solving-the-original-problem" class="level2">
+<h2 class="anchored" data-anchor-id="solving-the-original-problem">5. Solving the original problem</h2>
+<p>The set</p>
+<p><span class="math display">\[
+A=\{1,a_1,a_2,\ldots,a_{18},77\}
+\]</span></p>
+<p>contains</p>
+<p><span class="math display">\[
+1+18+1=20
+\]</span></p>
+<p>elements. Hence the general lower bound is</p>
+<p><span class="math display">\[
+|A+A|\geq2(20)-1=39.
+\]</span></p>
+<p>We are told that <span class="math inline">\(|A+A|=39\)</span>, so equality occurs. By the minimal-sumset theorem, <span class="math inline">\(A\)</span> must be an arithmetic progression.</p>
+<p>Let its common difference be <span class="math inline">\(d\)</span>. There are <span class="math inline">\(19\)</span> equal gaps from the first term to the twentieth term, so</p>
+<p><span class="math display">\[
+77=1+19d.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+19d=76
+\quad\Longrightarrow\quad
+d=4.
+\]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[
+A=\{1,5,9,13,\ldots,73,77\},
+\]</span></p>
+<p>and the requested terms are</p>
+<p><span class="math display">\[
+a_1,a_2,\ldots,a_{18}=5,9,13,\ldots,73.
+\]</span></p>
+<p>Their sum is</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{i=1}^{18}a_i
+&amp;=\frac{18}{2}(5+73)\\
+&amp;=9\cdot78\\
+&amp;=\boxed{702}.
+\end{aligned}
+\]</span></p>
+<p>There is also a quick symmetry check. The sum of all <span class="math inline">\(20\)</span> terms is</p>
+<p><span class="math display">\[
+\frac{20}{2}(1+77)=780.
+\]</span></p>
+<p>Removing the two endpoints gives</p>
+<p><span class="math display">\[
+780-1-77=\boxed{702}.
+\]</span></p>
+</section>
+<section id="explore-sumsets-with-python" class="level2">
+<h2 class="anchored" data-anchor-id="explore-sumsets-with-python">6. Explore sumsets with Python</h2>
+<p>The mathematics proves the result for every valid set. Python is useful for experimenting with examples, seeing collisions, and checking conjectures.</p>
+<section id="a-basic-sumset-tool" class="level3">
+<h3 class="anchored" data-anchor-id="a-basic-sumset-tool">A basic sumset tool</h3>
+<div id="88faa382" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sumset(A, B<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the sorted sumset A+B; use B=A when B is omitted."""</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> <span class="bu">set</span>(A)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> A <span class="cf">if</span> B <span class="kw">is</span> <span class="va">None</span> <span class="cf">else</span> <span class="bu">set</span>(B)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sorted</span>(a <span class="op">+</span> b <span class="cf">for</span> a <span class="kw">in</span> A <span class="cf">for</span> b <span class="kw">in</span> B)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">8</span>}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"A + A ="</span>, sumset(A))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"|A + A| ="</span>, <span class="bu">len</span>(sumset(A)))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"B + B ="</span>, sumset(B))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"|B + B| ="</span>, <span class="bu">len</span>(sumset(B)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>A + A = [2, 4, 4, 6, 6, 6, 8, 8, 10]
+|A + A| = 9
+B + B = [2, 4, 4, 6, 9, 9, 11, 11, 16]
+|B + B| = 9</code></pre>
+</div>
+</div>
+<p>Using a Python <code>set</code> is essential: if the same sum arises from several pairs, it must still be counted only once.</p>
+</section>
+<section id="find-which-pairs-collide" class="level3">
+<h3 class="anchored" data-anchor-id="find-which-pairs-collide">Find which pairs collide</h3>
+<div id="a4426499" class="cell" data-execution_count="2">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sum_representations(A):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Map each sum to unordered pairs that produce it."""</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(A))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    representations <span class="op">=</span> defaultdict(<span class="bu">list</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, x <span class="kw">in</span> <span class="bu">enumerate</span>(values):</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> y <span class="kw">in</span> values[i:]:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            representations[x <span class="op">+</span> y].append((x, y))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">dict</span>(<span class="bu">sorted</span>(representations.items()))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> total, pairs <span class="kw">in</span> sum_representations({<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>}).items():</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>total<span class="sc">:2}</span><span class="ss"> can be made by </span><span class="sc">{</span>pairs<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> 2 can be made by [(1, 1)]
+ 4 can be made by [(1, 3)]
+ 6 can be made by [(1, 5), (3, 3)]
+ 8 can be made by [(3, 5)]
+10 can be made by [(5, 5)]</code></pre>
+</div>
+</div>
+<p>This prints, among other lines,</p>
+<pre class="text"><code> 6 can be made by [(1, 5), (3, 3)]</code></pre>
+<p>The ordered pair <span class="math inline">\((5,1)\)</span> is not printed separately because addition is commutative.</p>
+</section>
+<section id="test-the-theorem-on-examples" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-theorem-on-examples">Test the theorem on examples</h3>
+<div id="3fd78990" class="cell" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_arithmetic_progression(A):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(A))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(values) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> values[<span class="dv">1</span>] <span class="op">-</span> values[<span class="dv">0</span>]</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">all</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        values[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">-</span> values[i] <span class="op">==</span> d</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(values) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> report(A):</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(A))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(values)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    size <span class="op">=</span> <span class="bu">len</span>(sumset(values))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"A ="</span>, values)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"|A| = </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">, |A+A| = </span><span class="sc">{</span>size<span class="sc">}</span><span class="ss">, lower bound = </span><span class="sc">{</span><span class="dv">2</span><span class="op">*</span>n <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Arithmetic progression?"</span>, is_arithmetic_progression(values))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>report({<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">13</span>})</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>report({<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">14</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>A = [1, 5, 9, 13]
+|A| = 4, |A+A| = 16, lower bound = 7
+Arithmetic progression? True
+
+A = [1, 5, 9, 14]
+|A| = 4, |A+A| = 16, lower bound = 7
+Arithmetic progression? False</code></pre>
+</div>
+</div>
+<p>Changing the last element from <span class="math inline">\(13\)</span> to <span class="math inline">\(14\)</span> breaks the equal spacing and makes the sumset larger.</p>
+</section>
+<section id="search-all-small-sets" class="level3">
+<h3 class="anchored" data-anchor-id="search-all-small-sets">Search all small sets</h3>
+<p>The next experiment lists every four-element subset of <span class="math inline">\(\{0,1,\ldots,8\}\)</span> whose sumset has the minimum size <span class="math inline">\(7\)</span>.</p>
+<div id="173f3a10" class="cell" data-execution_count="4">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>minimum <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> n <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>minimal_sets <span class="op">=</span> []</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> candidate <span class="kw">in</span> combinations(<span class="bu">range</span>(<span class="dv">9</span>), n):</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(sumset(candidate)) <span class="op">==</span> minimum:</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        minimal_sets.append(candidate)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sets with a minimum-size sumset:"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> candidate <span class="kw">in</span> minimal_sets:</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(candidate)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Every result is an AP:"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">all</span>(is_arithmetic_progression(A) <span class="cf">for</span> A <span class="kw">in</span> minimal_sets),</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sets with a minimum-size sumset:
+Every result is an AP: True</code></pre>
+</div>
+</div>
+<p>This is experimental evidence, not a substitute for the proof. A finite search checks only the cases inside its chosen range; the theorem covers all finite sets of real numbers.</p>
+</section>
+<section id="verify-the-contest-problem-directly" class="level3">
+<h3 class="anchored" data-anchor-id="verify-the-contest-problem-directly">Verify the contest problem directly</h3>
+<div id="56454a38" class="cell" data-execution_count="5">
+<details open="" class="code-fold">
+<summary>Hide code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">78</span>, <span class="dv">4</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>AA <span class="op">=</span> sumset(A)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"A ="</span>, A)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"|A| ="</span>, <span class="bu">len</span>(A))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"A+A ="</span>, AA)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"|A+A| ="</span>, <span class="bu">len</span>(AA))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sum of the 18 interior terms ="</span>, <span class="bu">sum</span>(A[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>A = [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77]
+|A| = 20
+A+A = [2, 6, 6, 10, 10, 10, 14, 14, 14, 14, 18, 18, 18, 18, 18, 22, 22, 22, 22, 22, 22, 26, 26, 26, 26, 26, 26, 26, 30, 30, 30, 30, 30, 30, 30, 30, 34, 34, 34, 34, 34, 34, 34, 34, 34, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 54, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 74, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 78, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 86, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 94, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 118, 118, 118, 118, 118, 118, 118, 118, 118, 118, 122, 122, 122, 122, 122, 122, 122, 122, 122, 126, 126, 126, 126, 126, 126, 126, 126, 130, 130, 130, 130, 130, 130, 130, 134, 134, 134, 134, 134, 134, 138, 138, 138, 138, 138, 142, 142, 142, 142, 146, 146, 146, 150, 150, 154]
+|A+A| = 400
+Sum of the 18 interior terms = 702</code></pre>
+</div>
+</div>
+<p>The program produces <span class="math inline">\(20\)</span> elements in <span class="math inline">\(A\)</span>, <span class="math inline">\(39\)</span> elements in <span class="math inline">\(A+A\)</span>, and an interior sum of <span class="math inline">\(702\)</span>.</p>
+</section>
+</section>
+<section id="a-broader-viewpoint" class="level2">
+<h2 class="anchored" data-anchor-id="a-broader-viewpoint">7. A broader viewpoint</h2>
+<p>This problem is a first glimpse of <strong>additive combinatorics</strong>, the study of how the arithmetic structure of a set is reflected in sets such as <span class="math inline">\(A+A\)</span> and <span class="math inline">\(A-A\)</span>.</p>
+<p>The quantity</p>
+<p><span class="math display">\[
+\frac{|A+A|}{|A|}
+\]</span></p>
+<p>is called the <strong>doubling constant</strong> of <span class="math inline">\(A\)</span>. A small doubling constant suggests that <span class="math inline">\(A\)</span> is highly structured. In our extreme one-dimensional case,</p>
+<p><span class="math display">\[
+|A+A|=2|A|-1
+\]</span></p>
+<p>forces the strongest possible structure: an arithmetic progression.</p>
+<p>You do not need additive combinatorics to solve the original question. Still, it is useful to see the larger mathematical theme:</p>
+<blockquote class="blockquote">
+<p>The number of distinct sums reveals how regularly the original set is arranged.</p>
+</blockquote>
+</section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">8. Common mistakes</h2>
+<section id="counting-pairs-instead-of-distinct-sums" class="level3">
+<h3 class="anchored" data-anchor-id="counting-pairs-instead-of-distinct-sums">Counting pairs instead of distinct sums</h3>
+<p><span class="math inline">\(A+A\)</span> is a set of values, not a list of pairs. Although there are <span class="math inline">\(n^2\)</span> ordered pairs <span class="math inline">\((x,y)\)</span>, different pairs may give the same sum.</p>
+</section>
+<section id="forgetting-that-an-element-may-be-used-twice" class="level3">
+<h3 class="anchored" data-anchor-id="forgetting-that-an-element-may-be-used-twice">Forgetting that an element may be used twice</h3>
+<p>Because <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are independently chosen from <span class="math inline">\(A\)</span>, sums such as <span class="math inline">\(2x=x+x\)</span> are allowed.</p>
+</section>
+<section id="assuming-the-ap-structure-without-proving-equality" class="level3">
+<h3 class="anchored" data-anchor-id="assuming-the-ap-structure-without-proving-equality">Assuming the AP structure without proving equality</h3>
+<p>The lower bound <span class="math inline">\(|A+A|\geq2n-1\)</span> alone does not make <span class="math inline">\(A\)</span> an AP. We need the given equality <span class="math inline">\(|A+A|=2n-1\)</span> and the equality-case theorem.</p>
+</section>
+<section id="miscounting-the-number-of-terms" class="level3">
+<h3 class="anchored" data-anchor-id="miscounting-the-number-of-terms">Miscounting the number of terms</h3>
+<p>The set in the problem has <span class="math inline">\(20\)</span> terms:</p>
+<p><span class="math display">\[
+1,\quad 18\text{ intermediate terms},\quad 77.
+\]</span></p>
+<p>Therefore it has <span class="math inline">\(19\)</span> consecutive gaps, not <span class="math inline">\(20\)</span>.</p>
+</section>
+</section>
+<section id="try-it-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-yourself">9. Try it yourself</h2>
+<ol type="1">
+<li>Find <span class="math inline">\(A+A\)</span> when <span class="math inline">\(A=\{2,5,8,11\}\)</span>. Verify that its size is <span class="math inline">\(2|A|-1\)</span>.</li>
+<li>If <span class="math inline">\(A\)</span> has <span class="math inline">\(12\)</span> distinct real elements, what is the smallest possible value of <span class="math inline">\(|A+A|\)</span>?</li>
+<li>Let <span class="math inline">\(A=\{4,b_1,b_2,b_3,b_4,34\}\)</span> be a set of integers with <span class="math inline">\(|A+A|=11\)</span>. Find <span class="math inline">\(b_1+b_2+b_3+b_4\)</span>.</li>
+<li>Compare the sumset sizes of <span class="math inline">\(\{0,1,2,3,4\}\)</span> and <span class="math inline">\(\{0,1,2,3,5\}\)</span>. Which new sums appear after the last term is changed?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hints
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Write the sums in increasing order; the answer is also an AP.</li>
+<li>Use <span class="math inline">\(2n-1\)</span>.</li>
+<li>There are six elements, and <span class="math inline">\(11=2(6)-1\)</span>.</li>
+<li>Use the Python <code>sumset</code> function or construct two addition tables.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answers
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><span class="math inline">\(A+A=\{4,7,10,13,16,19,22\}\)</span>, so <span class="math inline">\(|A+A|=7\)</span>.</li>
+<li><span class="math inline">\(2(12)-1=\boxed{23}\)</span>.</li>
+<li>Equality forces an AP. Its common difference is <span class="math inline">\((34-4)/5=6\)</span>, so the interior terms are <span class="math inline">\(10,16,22,28\)</span> and their sum is <span class="math inline">\(\boxed{76}\)</span>.</li>
+<li>The sizes are <span class="math inline">\(9\)</span> and <span class="math inline">\(10\)</span>, respectively. The first sumset is <span class="math inline">\(\{0,1,\ldots,8\}\)</span>; the second is <span class="math inline">\(\{0,1,2,3,4,5,6,7,8,10\}\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>For a set of <span class="math inline">\(n\)</span> distinct ordered numbers, the chain formed from the smallest and largest elements guarantees at least <span class="math inline">\(2n-1\)</span> distinct pairwise sums. Arithmetic progressions attain this bound, and attaining the bound forces all consecutive gaps to be equal.</p>
+<p>In the original problem, <span class="math inline">\(|A|=20\)</span> and <span class="math inline">\(|A+A|=39=2|A|-1\)</span>. Hence <span class="math inline">\(A\)</span> must be</p>
+<p><span class="math display">\[
+\{1,5,9,\ldots,73,77\},
+\]</span></p>
+<p>so</p>
+<p><span class="math display">\[
+\boxed{a_1+a_2+\cdots+a_{18}=702}.
+\]</span></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<section class="article-share" aria-labelledby="share-heading">
+  <h2 id="share-heading">Share this article</h2>
+  <p>Share this article with someone who may enjoy exploring the idea.</p>
+  <div class="share-controls" role="group" aria-label="Article sharing options">
+    <a class="share-button" data-share="whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Share this article on WhatsApp">WhatsApp</a>
+    <a class="share-button" data-share="linkedin" target="_blank" rel="noopener noreferrer" aria-label="Share this article on LinkedIn">LinkedIn</a>
+    <a class="share-button" data-share="x" target="_blank" rel="noopener noreferrer" aria-label="Share this article on X">X</a>
+    <a class="share-button" data-share="facebook" target="_blank" rel="noopener noreferrer" aria-label="Share this article on Facebook">Facebook</a>
+    <a class="share-button" data-share="email" aria-label="Share this article by email">Email</a>
+    <button class="share-button" type="button" data-share="copy" aria-label="Copy this article's link">Copy link</button>
+  </div>
+</section>
+
+<script src="../../share.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ashishmathpy\.github\.io\/pymathon\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
