@@ -7,6 +7,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --pymathon-ink: #e7edf4;
   --pymathon-muted: #aebdcb;
@@ -1154,6 +1162,7 @@ samp,
 .cell-code,
 .cell-output pre {
   font-family:
+    "JetBrains Mono",
     ui-monospace,
     "SFMono-Regular",
     "SF Mono",
@@ -1163,6 +1172,7 @@ samp,
     "Liberation Mono",
     "Courier New",
     monospace !important;
+  font-weight: 400;
   font-variant-ligatures: none;
   font-feature-settings: "liga" 0, "calt" 0;
 }
