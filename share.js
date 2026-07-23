@@ -1,4 +1,24 @@
 (() => {
+  const decorateCodeBlocks = () => {
+    document.querySelectorAll(".code-copy-outer-scaffold > .sourceCode.cell-code").forEach((block) => {
+      const scaffold = block.parentElement;
+      if (scaffold.classList.contains("code-editor")) return;
+
+      scaffold.classList.add("code-editor");
+
+      const header = document.createElement("div");
+      header.className = "code-editor-header";
+      header.setAttribute("aria-hidden", "true");
+      header.innerHTML = `
+        <span class="code-editor-lights">
+          <span></span><span></span><span></span>
+        </span>
+        <span class="code-editor-language">PYTHON</span>
+      `;
+      scaffold.insertBefore(header, block);
+    });
+  };
+
   const setShareLinks = () => {
     const articleTitle = document.querySelector("main h1")?.textContent.trim() || document.title;
     const articleUrl = window.location.href;
@@ -50,8 +70,12 @@
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setShareLinks);
+    document.addEventListener("DOMContentLoaded", () => {
+      decorateCodeBlocks();
+      setShareLinks();
+    });
   } else {
+    decorateCodeBlocks();
     setShareLinks();
   }
 })();

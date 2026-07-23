@@ -1185,31 +1185,62 @@ pre code,
 }
 
 /* Make executable Python cells read like source-code editors. */
-div.sourceCode.cell-code {
+.code-copy-outer-scaffold.code-editor {
+  position: relative;
+  margin: 1em 0;
   overflow: hidden;
   background: #0b1016 !important;
   border: 1px solid #46505c;
   border-radius: 0.45rem;
 }
 
-div.sourceCode.cell-code::before {
-  display: block;
-  padding: 0.58rem 3.5rem 0.58rem 4.75rem;
+.code-editor-header {
+  display: flex;
+  height: 2.55rem;
+  padding: 0 3.5rem 0 1rem;
+  align-items: center;
+  gap: 1.55rem;
   color: #929dab;
-  background:
-    radial-gradient(circle at 1.15rem 50%, #ff5f57 0 0.28rem, transparent 0.3rem),
-    radial-gradient(circle at 2.15rem 50%, #febc2e 0 0.28rem, transparent 0.3rem),
-    radial-gradient(circle at 3.15rem 50%, #28c840 0 0.28rem, transparent 0.3rem),
-    #151b23;
+  background: #151b23;
   border-bottom: 1px solid #39424d;
-  content: "PYTHON";
+}
+
+.code-editor-lights {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.55rem;
+}
+
+.code-editor-lights > span {
+  display: block;
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+}
+
+.code-editor-lights > span:nth-child(1) { background: #ff5f57; }
+.code-editor-lights > span:nth-child(2) { background: #febc2e; }
+.code-editor-lights > span:nth-child(3) { background: #28c840; }
+
+.code-editor-language {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 0.69rem;
   font-weight: 600;
   letter-spacing: 0.11em;
 }
 
-div.sourceCode.cell-code pre.sourceCode {
+.code-editor > div.sourceCode.cell-code {
+  margin: 0;
+  overflow-x: auto;
+  border: 0;
+  border-radius: 0;
+}
+
+.code-editor > div.sourceCode.cell-code::before {
+  content: none;
+}
+
+.code-editor div.sourceCode.cell-code pre.sourceCode {
   margin: 0;
   padding: 1rem 0;
   background: #0b1016 !important;
@@ -1231,7 +1262,7 @@ pre.numberSource code > span {
   left: 0 !important;
 }
 
-pre.numberSource code > span > a:first-child::before {
+pre.numberSource code > span::before {
   position: static !important;
   display: inline-block;
   content: counter(source-line);
@@ -1239,18 +1270,27 @@ pre.numberSource code > span > a:first-child::before {
   margin-right: 0.85rem;
   padding: 0 0.75rem 0 0.35rem;
   text-align: right;
-  color: #657181;
+  color: #778391 !important;
   border-right: 1px solid #252e39;
   text-decoration: none !important;
+  user-select: none;
 }
 
-.code-copy-outer-scaffold > .code-copy-button {
-  top: 0.34rem !important;
+pre.numberSource code > span > a:first-child {
+  display: none;
+}
+
+pre.numberSource code > span > a:first-child::before {
+  content: none !important;
+}
+
+.code-editor > .code-copy-button {
+  top: 0 !important;
   right: 0.55rem !important;
   display: flex;
   width: 2rem;
-  height: 2rem;
-  margin: 0;
+  height: 2.55rem;
+  margin: 0 !important;
   padding: 0 !important;
   align-items: center;
   justify-content: center;
