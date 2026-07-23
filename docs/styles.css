@@ -939,8 +939,154 @@ math {
   font-size: 1.08em;
 }
 
+/* Euler's integral is broad; give native MathML limits enough horizontal room. */
+msubsup:has(> mo:first-child) > :nth-child(2),
+msubsup:has(> mo:first-child) > :nth-child(3) {
+  transform: translateX(0.16em);
+}
+
+msubsup:has(> mo:first-child) {
+  padding-inline-end: 0.12em;
+}
+
 math[display="block"] {
   margin-block: 0.8em;
+}
+
+/* Homepage */
+body:has(.home-hero) #title-block-header {
+  display: none;
+}
+
+body:has(.home-hero) main.content {
+  max-width: 1180px;
+}
+
+.home-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  min-height: 520px;
+  margin: 1.25rem 0 2.75rem;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgb(14 19 25 / 98%), rgb(14 19 25 / 78%)),
+    repeating-linear-gradient(0deg, transparent 0 39px, rgb(201 168 106 / 7%) 40px),
+    repeating-linear-gradient(90deg, transparent 0 39px, rgb(201 168 106 / 7%) 40px);
+  border-top: 1px solid #4b5159;
+  border-bottom: 1px solid #4b5159;
+}
+
+.home-hero::before {
+  position: absolute;
+  top: -13rem;
+  right: -9rem;
+  width: 34rem;
+  height: 34rem;
+  border: 1px solid rgb(201 168 106 / 20%);
+  border-radius: 50%;
+  content: "";
+}
+
+.home-hero-copy {
+  z-index: 1;
+  align-self: center;
+  padding: clamp(2.4rem, 6vw, 5.5rem);
+}
+
+.home-hero h1 {
+  max-width: 12ch;
+  margin: 0.6rem 0 1.35rem;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.home-hero-copy > p {
+  max-width: 54ch;
+  color: #c7c5be;
+  font-size: clamp(1.05rem, 2vw, 1.22rem);
+}
+
+.home-eyebrow,
+.home-math-caption {
+  color: #c9a86a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.home-primary-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding-bottom: 0.22rem;
+  color: #e5c889;
+  border-bottom: 1px solid #c9a86a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+.home-primary-link::after {
+  margin-left: 0.55rem;
+  content: "→";
+}
+
+.home-math-panel {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem);
+  background: rgb(18 24 32 / 78%);
+  border-left: 1px solid #3d434b;
+}
+
+.home-math-line {
+  padding: 1.35rem 0;
+  color: #f1eee6;
+  border-bottom: 1px solid #343a42;
+  font-size: clamp(0.84rem, 1.5vw, 1.08rem);
+}
+
+.home-math-line:first-child {
+  border-top: 1px solid #343a42;
+}
+
+.home-math-caption {
+  margin-top: 1.35rem;
+}
+
+.home-principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 0 3.75rem;
+  border-top: 1px solid #343a42;
+  border-bottom: 1px solid #343a42;
+}
+
+.home-principle {
+  padding: 1.6rem 2rem 1.75rem;
+  border-right: 1px solid #343a42;
+}
+
+.home-principle:last-child {
+  border-right: 0;
+}
+
+.home-principle h3 {
+  margin: 0 0 0.65rem;
+  color: #e5c889;
+  font-size: 1.15rem;
+}
+
+.home-principle p {
+  margin: 0;
+  color: #afaea8;
+  font-size: 0.98rem;
+  line-height: 1.6;
 }
 
 .quarto-listing .listing-title a {
@@ -1105,5 +1251,45 @@ table {
 
   .article-cover {
     margin: 1.5rem 0 2rem;
+  }
+
+  .home-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    margin-top: 0.5rem;
+  }
+
+  .home-hero-copy {
+    padding: 3rem 1.15rem 2.25rem;
+  }
+
+  .home-hero h1 {
+    font-size: clamp(2.8rem, 15vw, 4.2rem);
+  }
+
+  .home-math-panel {
+    padding: 1.2rem 1.15rem 1.65rem;
+    border-top: 1px solid #3d434b;
+    border-left: 0;
+  }
+
+  .home-math-line {
+    overflow-x: auto;
+    font-size: 0.78rem;
+  }
+
+  .home-principles {
+    grid-template-columns: 1fr;
+    margin-bottom: 2.75rem;
+  }
+
+  .home-principle {
+    padding: 1.25rem 0.25rem;
+    border-right: 0;
+    border-bottom: 1px solid #343a42;
+  }
+
+  .home-principle:last-child {
+    border-bottom: 0;
   }
 }

@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "PyMathon",
     "section": "",
-    "text": "PYMATHON · MATHEMATICAL NOTES\n\n\n\nPyMathon is a collection of rigorous, readable mathematical articles built around definitions, proofs, examples, and problems.\nComputation appears only as a secondary tool for exploration, numerical checks, or visualisation. The mathematics remains central."
+    "text": "PYMATHON · MATHEMATICAL NOTES BY ASHISH K. SRIVASTAVA\n\n\n\nPyMathon develops mathematical ideas from their first definitions to complete arguments, worked examples, and deeper connections.\nRead the latest articles\n\n\n\n\n|A+A|≥2|A|−1\n|A+A|\\geq 2|A|-1\n\n\n\n∫abf(x)dx=12∫ab[f(x)+f(a+b−x)]dx\n\\int_a^b f(x)\\,dx\n=\n\\frac12\\int_a^b\\!\\left[f(x)+f(a+b-x)\\right]dx\n\n\n\nStructure · symmetry · proof"
   },
   {
     "objectID": "index.html#scope",
@@ -278,5 +278,68 @@
     "title": "Positive Integer Solutions of a Linear Equation",
     "section": "Counting the Non-negative Integer Solutions",
     "text": "Counting the Non-negative Integer Solutions\nFor every fixed value of cc,\na+2b=9−3c.\na+2b=9-3c.\n\nSince a,b,c≥0a,b,c\\geq 0, the possible values of cc are\nc=0,1,2,3.\nc=0,1,2,3.\n\nFor an equation of the form\na+2b=N,\na+2b=N,\n\nwe have\na=N−2b.\na=N-2b.\n\nTherefore, bb may take the values\n0,1,2,…,⌊N2⌋.\n0,1,2,\\ldots,\\left\\lfloor\\frac{N}{2}\\right\\rfloor.\n\nHence, the number of non-negative integer solutions is\n⌊N2⌋+1.\n\\left\\lfloor\\frac{N}{2}\\right\\rfloor+1.\n\nNow consider each value of cc.\n\nWhen c=0c=0\na+2b=9.\na+2b=9.\n\nNumber of solutions:\n⌊92⌋+1=5.\n\\left\\lfloor\\frac{9}{2}\\right\\rfloor+1=5.\n\n\n\nWhen c=1c=1\na+2b=6.\na+2b=6.\n\nNumber of solutions:\n⌊62⌋+1=4.\n\\left\\lfloor\\frac{6}{2}\\right\\rfloor+1=4.\n\n\n\nWhen c=2c=2\na+2b=3.\na+2b=3.\n\nNumber of solutions:\n⌊32⌋+1=2.\n\\left\\lfloor\\frac{3}{2}\\right\\rfloor+1=2.\n\n\n\nWhen c=3c=3\na+2b=0.\na+2b=0.\n\nNumber of solutions:\n1.\n1.\n\nTherefore,\n5+4+2+1=12.\n5+4+2+1=12.\n\nHence,\n12\n\\boxed{12}"
+  },
+  {
+    "objectID": "index.html#the-property",
+    "href": "index.html#the-property",
+    "title": "King’s Property for Definite Integrals",
+    "section": "The property",
+    "text": "The property\nLet us explore one of the most useful symmetry ideas in definite integration. If ff is integrable on [a,b][a,b], King’s property says\n∫abf(x)dx=∫abf(a+b−x)dx.\n\\boxed{\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.}\n\nIn simple language: reflecting the graph horizontally across the midpoint x=(a+b)/2x=(a+b)/2 does not change its signed area over the interval.\nAdding the two equal forms gives the useful identity\n∫abf(x)dx=12∫ab[f(x)+f(a+b−x)],dx.\n\\boxed{\\int_a^b f(x)\\,dx\n=\\frac12\\int_a^b\\bigl[f(x)+f(a+b-x)\\bigr],dx.}\n\n\nImportant: the property preserves signed area, so it remains valid even when parts of the graph lie below the xx-axis."
+  },
+  {
+    "objectID": "index.html#let-me-prove-it-mathematically",
+    "href": "index.html#let-me-prove-it-mathematically",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Let me prove it mathematically",
+    "text": "Let me prove it mathematically\nBegin with the reflected integral\nI=∫abf(a+b−x)dx.\nI=\\int_a^b f(a+b-x)\\,dx.\n\nNow use the substitution\nu=a+b−x,du=−dx.\nu=a+b-x,\\qquad du=-dx.\n\nThe limits reverse:\nx=a⇒u=b,x=b⇒u=a.\nx=a\\Longrightarrow u=b,\n\\qquad\nx=b\\Longrightarrow u=a.\n\nTherefore\nI=∫baf(u)(−du)=∫abf(u)du=∫abf(x)dx.\n\\begin{aligned}\nI\n&=\\int_b^a f(u)(-du)\\\\\n&=\\int_a^b f(u)\\,du\\\\\n&=\\int_a^b f(x)\\,dx.\n\\end{aligned}\n\nIn the last line, the dummy variable uu has simply been renamed as xx. This proves King’s property."
+  },
+  {
+    "objectID": "index.html#now-let-us-see-the-graphical-proof",
+    "href": "index.html#now-let-us-see-the-graphical-proof",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Now let us see the graphical proof",
+    "text": "Now let us see the graphical proof\nFocus on the transformation\nx↦a+b−x.\nx\\longmapsto a+b-x.\n\nIt reflects every point across the midpoint m=(a+b)/2m=(a+b)/2. Imagine a very narrow strip at x=tx=t under y=f(x)y=f(x). Its approximate signed area is\nf(t)Δx.\nf(t)\\,\\Delta x.\n\nAfter reflection, its partner lies at x=a+b−tx=a+b-t. The reflected curve has height\nf(a+b−(a+b−t))=f(t).\nf\\bigl(a+b-(a+b-t)\\bigr)=f(t).\n\nReflection also preserves the width Δx\\Delta x. Therefore, the two strips have exactly the same signed area. Pairing every strip in this way shows that the two complete integrals must be equal."
+  },
+  {
+    "objectID": "index.html#interactive-area-proof",
+    "href": "index.html#interactive-area-proof",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Interactive area proof",
+    "text": "Interactive area proof\nNow try the idea yourself. Drag directly across the graph, or use the slider. The blue strip is at tt under f(x)f(x); the gold strip is at its reflected position a+b−ta+b-t under f(a+b−x)f(a+b-x). Watch how the shaded regions accumulate equal signed areas.\n\n\nReflection position\n\nt = 1.50\n\n \n\n\n\n\n\n\nOriginal strip: x = 1.50\n\n\nReflected strip: x = 4.50\n\n\nPaired height: —\n\n\nAccumulated areas: —\n\n\n\nAt the midpoint, the paired strips meet. Continue moving the slider to see them exchange sides while preserving their correspondence.\n\n\nThe applet uses [a,b]=[0,6][a,b]=[0,6] and a deliberately asymmetric function. This makes it clear that the equality comes from reflection—not from the original graph already being symmetric.\n\nSee the applet code\nThe complete code behind the interactive graph is included below. Expand the block to study, copy, or adapt it.\n\n\n\n\n\n\nNoteComplete JavaScript source\n\n\n\n\n\n{{&lt; include king-property.js &gt;}}"
+  },
+  {
+    "objectID": "index.html#computational-exploration",
+    "href": "index.html#computational-exploration",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Computational Exploration",
+    "text": "Computational Exploration\nThe same asymmetric function can be plotted and integrated numerically with Python. This gives an independent computational check of the graphical argument.\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nplt.style.use(\"dark_background\")\n\na, b = 0, 6\nx = np.linspace(a, b, 1000)\n\ndef f(x):\n    return 1.35 + 0.42 * np.sin(1.55 * x) + 0.16 * x\n\ny_original = f(x)\ny_reflected = f(a + b - x)\n\narea_original = np.trapezoid(y_original, x)\narea_reflected = np.trapezoid(y_reflected, x)\n\nprint(f\"Area under f(x):       {area_original:.8f}\")\nprint(f\"Area after reflection: {area_reflected:.8f}\")\n\nfig, ax = plt.subplots(figsize=(9, 5), facecolor=\"#0c1521\")\nax.set_facecolor(\"#0c1521\")\nplt.plot(x, y_original, label=r\"$f(x)$\", linewidth=2.5)\nplt.plot(x, y_reflected, label=r\"$f(a+b-x)$\", linewidth=2.5)\nplt.fill_between(x, y_original, alpha=0.18)\nplt.axvline((a + b) / 2, color=\"gray\", linestyle=\"--\", label=\"midpoint\")\nplt.xlabel(\"x\")\nplt.ylabel(\"y\")\nplt.title(\"A function and its reflection\")\nplt.legend()\nplt.grid(alpha=0.2)\nplt.tight_layout()\nplt.show()\nThe two printed values agree up to numerical rounding. Python confirms what the substitution already proved exactly."
+  },
+  {
+    "objectID": "index.html#why-the-averaged-form-is-powerful",
+    "href": "index.html#why-the-averaged-form-is-powerful",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Why the averaged form is powerful",
+    "text": "Why the averaged form is powerful\nLet\nI=∫abf(x)dx.\nI=\\int_a^b f(x)\\,dx.\n\nKing’s property gives another expression for the same number:\nI=∫abf(a+b−x)dx.\nI=\\int_a^b f(a+b-x)\\,dx.\n\nAdding and dividing by 22 gives\nI=12∫ab[f(x)+f(a+b−x)]dx.\nI=\\frac12\\int_a^b\\left[f(x)+f(a+b-x)\\right]dx.\n\nThis is most useful when the sum inside the brackets simplifies."
+  },
+  {
+    "objectID": "index.html#let-me-work-through-an-example",
+    "href": "index.html#let-me-work-through-an-example",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Let me work through an example",
+    "text": "Let me work through an example\nEvaluate\nI=∫0π/2sin⁡xsin⁡x+cos⁡xdx.\nI=\\int_0^{\\pi/2}\\frac{\\sin x}{\\sin x+\\cos x}\\,dx.\n\nHere a+b=π/2a+b=\\pi/2. King’s property gives\nI=∫0π/2cos⁡xcos⁡x+sin⁡xdx.\nI=\\int_0^{\\pi/2}\n\\frac{\\cos x}{\\cos x+\\sin x}\\,dx.\n\nAdding the two equations,\n2I=∫0π/21dx=π2.\n2I=\\int_0^{\\pi/2}1\\,dx=\\frac{\\pi}{2}.\n\nHence\nI=π4.\n\\boxed{I=\\frac{\\pi}{4}}."
+  },
+  {
+    "objectID": "index.html#a-more-powerful-jee-style-example",
+    "href": "index.html#a-more-powerful-jee-style-example",
+    "title": "King’s Property for Definite Integrals",
+    "section": "A more powerful JEE-style example",
+    "text": "A more powerful JEE-style example\nEvaluate\nJ=∫0πx1+sin⁡xdx.\nJ=\\int_0^\\pi \\frac{x}{1+\\sin x}\\,dx.\n\nThe factor xx makes direct integration look unpleasant. Reflecting xx across [0,π][0,\\pi] replaces it by π−x\\pi-x, while sin⁡(π−x)=sin⁡x\\sin(\\pi-x)=\\sin x. Thus\nJ=∫0ππ−x1+sin⁡xdx.\nJ=\\int_0^\\pi \\frac{\\pi-x}{1+\\sin x}\\,dx.\n\nAdding this to the original form gives\n2J=π∫0πdx1+sin⁡x.\n2J=\\pi\\int_0^\\pi\\frac{dx}{1+\\sin x}.\n\nNow rationalise the denominator:\n11+sin⁡x=1−sin⁡xcos⁡2x=sec⁡2x−sec⁡xtan⁡x.\n\\frac{1}{1+\\sin x}\n=\\frac{1-\\sin x}{\\cos^2x}\n=\\sec^2x-\\sec x\\tan x.\n\nAlthough the two terms are individually improper at x=π/2x=\\pi/2, their difference has a finite continuous limit there. An antiderivative on each side is tan⁡x−sec⁡x\\tan x-\\sec x, and the combined definite integral equals 22. Therefore\n2J=2π⇒J=π.\n2J=2\\pi\n\\qquad\\Longrightarrow\\qquad\n\\boxed{J=\\pi}.\n\nThe important move was not the final integration. King’s property first removed the troublesome factor xx."
+  },
+  {
+    "objectID": "index.html#takeaway",
+    "href": "index.html#takeaway",
+    "title": "King’s Property for Definite Integrals",
+    "section": "Takeaway",
+    "text": "Takeaway\nKing’s property tells us that a definite integral is unchanged when its interval is reflected. Algebraically, reversing the limits cancels the minus sign in du=−dxdu=-dx. Geometrically, every signed-area strip has an equal reflected partner. The slider makes these two descriptions visible as the same idea."
   }
 ]

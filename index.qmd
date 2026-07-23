@@ -3,6 +3,7 @@ title: "PyMathon"
 description: "Carefully written mathematics: proofs, problem solving, worked examples, and computational exploration where it adds insight."
 author: "Ashish K. Srivastava"
 comments: false
+toc: false
 listing:
   contents: posts
   feed: true
@@ -12,30 +13,63 @@ listing:
   sort-ui: false
   filter-ui: false
 page-layout: full
-title-block-banner: true
+title-block-banner: false
 ---
 
-::: {.academic-masthead}
-::: {.academic-kicker}
-PYMATHON · MATHEMATICAL NOTES
+::: {.home-hero}
+::: {.home-hero-copy}
+::: {.home-eyebrow}
+PYMATHON · MATHEMATICAL NOTES BY ASHISH K. SRIVASTAVA
 :::
 
-# Mathematics, carefully explained
+# Ideas first. Proofs made clear.
 
-PyMathon is a collection of rigorous, readable mathematical articles built
-around definitions, proofs, examples, and problems.
+PyMathon develops mathematical ideas from their first definitions to complete
+arguments, worked examples, and deeper connections.
 
-Computation appears only as a secondary tool for exploration, numerical checks,
-or visualisation. The mathematics remains central.
+[Read the latest articles](#articles){.home-primary-link}
 :::
 
-## Scope
+::: {.home-math-panel aria-label="A selection of mathematical ideas explored on PyMathon"}
+::: {.home-math-line}
+$$
+|A+A|\geq 2|A|-1
+$$
+:::
 
-The articles emphasise:
+::: {.home-math-line}
+$$
+\int_a^b f(x)\,dx
+=
+\frac12\int_a^b\!\left[f(x)+f(a+b-x)\right]dx
+$$
+:::
 
-- precise statements and complete arguments;
-- more than one viewpoint when it improves understanding;
-- worked examples and carefully chosen practice problems; and
-- computational experiments only where they illuminate the mathematics.
+::: {.home-math-caption}
+Structure · symmetry · proof
+:::
+:::
+:::
 
-## Articles
+::: {.home-principles}
+::: {.home-principle}
+### Begin with meaning
+
+Definitions and notation are introduced before they are used.
+:::
+
+::: {.home-principle}
+### Show the argument
+
+Important claims are explained through complete, readable reasoning.
+:::
+
+::: {.home-principle}
+### Explore further
+
+Computation is used only when it reveals a pattern, checks a result, or improves
+visual understanding.
+:::
+:::
+
+## Articles {#articles}
