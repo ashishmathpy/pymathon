@@ -1145,6 +1145,35 @@ pre.sourceCode,
   box-shadow: none;
 }
 
+code,
+pre,
+kbd,
+samp,
+.sourceCode,
+.sourceCode span,
+.cell-code,
+.cell-output pre {
+  font-family:
+    ui-monospace,
+    "SFMono-Regular",
+    "SF Mono",
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace !important;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+pre,
+pre code,
+.sourceCode,
+.sourceCode span {
+  letter-spacing: -0.012em;
+}
+
 code.sourceCode > span,
 pre > code.sourceCode > span,
 code span {
