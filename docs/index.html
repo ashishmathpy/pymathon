@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ashish K. Srivastava">
-<meta name="description" content="Learn mathematics through clear proofs, JEE problem solving, Python verification, interactive visualisations, and carefully explained examples.">
+<meta name="description" content="Carefully written mathematics: proofs, problem solving, worked examples, and computational exploration where it adds insight.">
 
 <title>PyMathon</title>
 <style>
@@ -43,10 +43,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-9de9f6925d305bcf5b7eb9351f368d06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-858fa3a77d60bad26bcac1712a2fce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -111,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
   "@type": "WebSite",
   "name": "PyMathon",
   "url": "https://ashishmathpy.github.io/pymathon/",
-  "description": "Mathematics explained through rigorous reasoning, problem solving, Python verification, and visualisation.",
+  "description": "Carefully written mathematics through definitions, proofs, worked examples, problem solving, and selective computational exploration.",
   "inLanguage": "en",
   "publisher": {
     "@type": "Person",
@@ -120,39 +120,10 @@ ul.task-list li input[type="checkbox"] {
 }
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 <link rel="alternate" type="application/rss+xml" title="PyMathon" href="index.xml" data-external="1"><meta property="og:title" content="PyMathon">
-<meta property="og:description" content="Learn mathematics through clear proofs, JEE problem solving, Python verification, interactive visualisations, and carefully explained examples.">
+<meta property="og:description" content="Carefully written mathematics: proofs, problem solving, worked examples, and computational exploration where it adds insight.">
 <meta property="og:image" content="https://ashishmathpy.github.io/pymathon/posts/sumsets-and-arithmetic-progressions/sumset-cover.png">
 <meta property="og:site_name" content="PyMathon">
 <meta property="og:image:height" content="941">
@@ -207,7 +178,7 @@ window.Quarto = {
       <h1 class="title">PyMathon</h1>
                   <div>
         <div class="description">
-          Learn mathematics through clear proofs, JEE problem solving, Python verification, interactive visualisations, and carefully explained examples.
+          Carefully written mathematics: proofs, problem solving, worked examples, and computational exploration where it adds insight.
         </div>
       </div>
                 </div>
@@ -236,15 +207,11 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#featured-article" id="toc-featured-article" class="nav-link active" data-scroll-target="#featured-article">Featured Article</a>
-  <ul class="collapse">
-  <li><a href="#four-ways-to-count-positive-integer-solutions" id="toc-four-ways-to-count-positive-integer-solutions" class="nav-link" data-scroll-target="#four-ways-to-count-positive-integer-solutions">Four Ways to Count Positive Integer Solutions</a></li>
-  </ul></li>
-  <li><a href="#what-you-will-find-here" id="toc-what-you-will-find-here" class="nav-link" data-scroll-target="#what-you-will-find-here">What You Will Find Here</a></li>
-  <li><a href="#latest-articles" id="toc-latest-articles" class="nav-link" data-scroll-target="#latest-articles">Latest Articles</a></li>
+  <li><a href="#scope" id="toc-scope" class="nav-link active" data-scroll-target="#scope">Scope</a></li>
+  <li><a href="#articles" id="toc-articles" class="nav-link" data-scroll-target="#articles">Articles</a></li>
   </ul>
 </nav>
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Q2FsY3VsdXM=">Calculus <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29tYmluYXRvcmljcw==">Combinatorics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="SW50ZXJhY3RpdmUlMjBWaXN1YWxpc2F0aW9u">Interactive Visualisation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SkVFJTIwTWF0aGVtYXRpY3M=">JEE Mathematics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="TWF0aGVtYXRpY3M=">Mathematics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TnVtYmVyJTIwVGhlb3J5">Number Theory <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UHJvYmxlbSUyMFNvbHZpbmc=">Problem Solving <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJvamVjdCUyMEV1bGVy">Project Euler <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHl0aG9uJTIwZm9yJTIwTWF0aGVtYXRpY3M=">Python for Mathematics <span class="quarto-category-count">(2)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Q2FsY3VsdXM=">Calculus <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29tYmluYXRvcmljcw==">Combinatorics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="SW50ZXJhY3RpdmUlMjBWaXN1YWxpc2F0aW9u">Interactive Visualisation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SkVFJTIwTWF0aGVtYXRpY3M=">JEE Mathematics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="TWF0aGVtYXRpY3M=">Mathematics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TnVtYmVyJTIwVGhlb3J5">Number Theory <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UHJvYmxlbSUyMFNvbHZpbmc=">Problem Solving <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJvamVjdCUyMEV1bGVy">Project Euler <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -252,37 +219,28 @@ window.Quarto = {
 
 
 
-<div class="pymathon-home-hero">
-<div class="pymathon-home-kicker">
-<p>MATHEMATICS · PYTHON · VISUAL THINKING</p>
+<div class="academic-masthead">
+<div class="academic-kicker">
+<p>PYMATHON · MATHEMATICAL NOTES</p>
 </div>
-<section id="welcome-to-pymathon" class="level1">
-<h1>Welcome to PyMathon</h1>
-<p>PyMathon brings <strong>Mathematics</strong>, <strong>Python</strong>, and <strong>Problem Solving</strong> together in one place.</p>
-<p>Here you will find concise explanations that move from a clear idea to a complete solution, with computation used to verify rather than replace reasoning.</p>
-<p><a href="./about.html" class="btn btn-primary pymathon-cta">About Ashish K. Srivastava</a></p>
+<section id="mathematics-carefully-explained" class="level1">
+<h1>Mathematics, carefully explained</h1>
+<p>PyMathon is a collection of rigorous, readable mathematical articles built around definitions, proofs, examples, and problems.</p>
+<p>Computation appears only as a secondary tool for exploration, numerical checks, or visualisation. The mathematics remains central.</p>
 </section>
 </div>
-<section id="featured-article" class="level2">
-<h2 class="anchored" data-anchor-id="featured-article">Featured Article</h2>
-<section id="four-ways-to-count-positive-integer-solutions" class="level3 featured-article">
-<h3 class="anchored" data-anchor-id="four-ways-to-count-positive-integer-solutions"><a href="./posts/positive-integer-solutions/index.html">Four Ways to Count Positive Integer Solutions</a></h3>
-<p>Learn how direct counting, non-negative substitutions, floor functions, generating functions, and Python all lead to the same answer.</p>
-<p><a href="./posts/positive-integer-solutions/index.html" class="btn btn-outline-secondary">Read the article</a></p>
-</section>
-</section>
-<section id="what-you-will-find-here" class="level2">
-<h2 class="anchored" data-anchor-id="what-you-will-find-here">What You Will Find Here</h2>
+<section id="scope" class="level2">
+<h2 class="anchored" data-anchor-id="scope">Scope</h2>
+<p>The articles emphasise:</p>
 <ul>
-<li>rigorous mathematical solutions;</li>
-<li>multiple approaches to the same problem;</li>
-<li>Python verification;</li>
-<li>visual explanations; and</li>
-<li>practice problems to extend each idea.</li>
+<li>precise statements and complete arguments;</li>
+<li>more than one viewpoint when it improves understanding;</li>
+<li>worked examples and carefully chosen practice problems; and</li>
+<li>computational experiments only where they illuminate the mathematics.</li>
 </ul>
 </section>
-<section id="latest-articles" class="level2">
-<h2 class="anchored" data-anchor-id="latest-articles">Latest Articles</h2>
+<section id="articles" class="level2">
+<h2 class="anchored" data-anchor-id="articles">Articles</h2>
 
 
 
@@ -290,7 +248,7 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="SkVFJTIwTWF0aGVtYXRpY3MlMkNDb21iaW5hdG9yaWNzJTJDTnVtYmVyJTIwVGhlb3J5JTJDUHl0aG9uJTIwZm9yJTIwTWF0aGVtYXRpY3M=" data-listing-date-sort="1784745000000" data-listing-file-modified-sort="1784830452840" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1873">
+<div class="quarto-post image-right" data-index="0" data-categories="SkVFJTIwTWF0aGVtYXRpY3MlMkNDb21iaW5hdG9yaWNzJTJDTnVtYmVyJTIwVGhlb3J5" data-listing-date-sort="1784745000000" data-listing-file-modified-sort="1784831166734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1856">
 <div class="thumbnail"><a href="./posts/sumsets-and-arithmetic-progressions/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/sumsets-and-arithmetic-progressions/sumset-cover.png" class="thumbnail-image">
@@ -311,11 +269,9 @@ window.Quarto = {
 
 <div class="listing-category" onclick="window.quartoListingCategory('TnVtYmVyJTIwVGhlb3J5'); return false;">Number Theory</div>
 
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9uJTIwZm9yJTIwTWF0aGVtYXRpY3M='); return false;">Python for Mathematics</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/sumsets-and-arithmetic-progressions/index.html" class="no-external">
-<p>A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and a Python exploration leading to a contest problem.</p>
+<p>A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and its application to a JEE Main problem.</p>
 </a></div>
 </div>
 <div class="metadata">
@@ -329,7 +285,7 @@ Ashish K. Srivastava
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="UHl0aG9uJTJDUHJvamVjdCUyMEV1bGVyJTJDTnVtYmVyJTIwVGhlb3J5" data-listing-date-sort="1783794600000" data-listing-file-modified-sort="1783846926433" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1136">
+<div class="quarto-post image-right" data-index="1" data-categories="UHJvamVjdCUyMEV1bGVyJTJDTnVtYmVyJTIwVGhlb3J5" data-listing-date-sort="1783794600000" data-listing-file-modified-sort="1784831219164" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1136">
 <div class="thumbnail"><a href="./posts/longest-collatz-sequence/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/longest-collatz-sequence/index_files/figure-html/cell-5-output-1.svg"  class="thumbnail-image card-img"/></p>
@@ -343,8 +299,6 @@ Ashish K. Srivastava
 <a href="./posts/longest-collatz-sequence/index.html" class="no-external">Project Euler Problem 14</a>
 </div>
 <div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
 
 <div class="listing-category" onclick="window.quartoListingCategory('UHJvamVjdCUyMEV1bGVy'); return false;">Project Euler</div>
 
@@ -366,7 +320,7 @@ Ashish K. Srivastava
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="TWF0aGVtYXRpY3MlMkNDb21iaW5hdG9yaWNzJTJDUHl0aG9uJTIwZm9yJTIwTWF0aGVtYXRpY3MlMkNQcm9ibGVtJTIwU29sdmluZw==" data-listing-date-sort="1783189800000" data-listing-file-modified-sort="1783846926301" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="708">
+<div class="quarto-post image-right" data-index="2" data-categories="TWF0aGVtYXRpY3MlMkNDb21iaW5hdG9yaWNzJTJDUHJvYmxlbSUyMFNvbHZpbmc=" data-listing-date-sort="1783189800000" data-listing-file-modified-sort="1784830965129" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="708">
 <div class="thumbnail"><a href="./posts/positive-integer-solutions/index.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -377,7 +331,7 @@ Ashish K. Srivastava
 <a href="./posts/positive-integer-solutions/index.html" class="no-external">Four Ways to Count Positive Integer Solutions</a>
 </h3>
 <div class="listing-subtitle">
-<a href="./posts/positive-integer-solutions/index.html" class="no-external">Solving x + 2y + 3z = 15 using mathematics and Python</a>
+<a href="./posts/positive-integer-solutions/index.html" class="no-external">Four mathematical approaches to x + 2y + 3z = 15</a>
 </div>
 <div class="listing-categories">
 
@@ -385,13 +339,11 @@ Ashish K. Srivastava
 
 <div class="listing-category" onclick="window.quartoListingCategory('Q29tYmluYXRvcmljcw=='); return false;">Combinatorics</div>
 
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9uJTIwZm9yJTIwTWF0aGVtYXRpY3M='); return false;">Python for Mathematics</div>
-
 <div class="listing-category" onclick="window.quartoListingCategory('UHJvYmxlbSUyMFNvbHZpbmc='); return false;">Problem Solving</div>
 
 </div>
 <div class="delink listing-description"><a href="./posts/positive-integer-solutions/index.html" class="no-external">
-<p>Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, generating functions, and Python verification.</p>
+<p>Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, and generating functions, with a computational check.</p>
 </a></div>
 </div>
 <div class="metadata">
@@ -405,7 +357,7 @@ Ashish K. Srivastava
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="SkVFJTIwTWF0aGVtYXRpY3MlMkNDYWxjdWx1cyUyQ0ludGVyYWN0aXZlJTIwVmlzdWFsaXNhdGlvbg==" data-listing-date-sort="1781980200000" data-listing-file-modified-sort="1783851834265" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="678">
+<div class="quarto-post image-right" data-index="3" data-categories="SkVFJTIwTWF0aGVtYXRpY3MlMkNDYWxjdWx1cyUyQ0ludGVyYWN0aXZlJTIwVmlzdWFsaXNhdGlvbg==" data-listing-date-sort="1781980200000" data-listing-file-modified-sort="1784830965255" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="675">
 <div class="thumbnail"><a href="./posts/kings-property/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/kings-property/index_files/figure-html/cell-2-output-2.svg"  class="thumbnail-image card-img"/></p>
@@ -428,7 +380,7 @@ Ashish K. Srivastava
 
 </div>
 <div class="delink listing-description"><a href="./posts/kings-property/index.html" class="no-external">
-<p>King’s property explained using substitution, graph reflection, Python, and an interactive SVG area applet.</p>
+<p>King’s property explained through substitution, graph reflection, worked examples, and an optional computational exploration.</p>
 </a></div>
 </div>
 <div class="metadata">

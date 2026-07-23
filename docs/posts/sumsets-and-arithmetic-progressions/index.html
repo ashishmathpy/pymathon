@@ -8,7 +8,7 @@
 
 <meta name="author" content="Ashish K. Srivastava">
 <meta name="dcterms.date" content="2026-07-23">
-<meta name="description" content="A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and a Python exploration leading to a contest problem.">
+<meta name="description" content="A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and its application to a JEE Main problem.">
 
 <title>When a Sumset Is as Small as Possible – PyMathon</title>
 <style>
@@ -77,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-9de9f6925d305bcf5b7eb9351f368d06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-858fa3a77d60bad26bcac1712a2fce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "@type": "WebSite",
   "name": "PyMathon",
   "url": "https://ashishmathpy.github.io/pymathon/",
-  "description": "Mathematics explained through rigorous reasoning, problem solving, Python verification, and visualisation.",
+  "description": "Carefully written mathematics through definitions, proofs, worked examples, problem solving, and selective computational exploration.",
   "inLanguage": "en",
   "publisher": {
     "@type": "Person",
@@ -125,39 +125,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="When a Sumset Is as Small as Possible – PyMathon">
-<meta property="og:description" content="A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and a Python exploration leading to a contest problem.">
+<meta property="og:description" content="A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and its application to a JEE Main problem.">
 <meta property="og:image" content="https://ashishmathpy.github.io/pymathon/posts/sumsets-and-arithmetic-progressions/sumset-cover.png">
 <meta property="og:site_name" content="PyMathon">
 <meta property="og:image:height" content="941">
@@ -213,14 +184,13 @@ window.Quarto = {
             <p class="subtitle lead">How ordered sums force an arithmetic progression</p>
                   <div>
         <div class="description">
-          A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and a Python exploration leading to a contest problem.
+          A class-11-friendly introduction to sumsets, the bound |A+A| ≥ 2|A|−1, the equality case, and its application to a JEE Main problem.
         </div>
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">JEE Mathematics</div>
                 <div class="quarto-category">Combinatorics</div>
                 <div class="quarto-category">Number Theory</div>
-                <div class="quarto-category">Python for Mathematics</div>
               </div>
                   </div>
   </div>
@@ -267,7 +237,7 @@ window.Quarto = {
   <li><a href="#the-equality-case-minimum-size-forces-an-ap" id="toc-the-equality-case-minimum-size-forces-an-ap" class="nav-link" data-scroll-target="#the-equality-case-minimum-size-forces-an-ap">4. The equality case: minimum size forces an AP</a>
   <ul class="collapse">
   <li><a href="#step-1-the-master-chain-already-fills-the-sumset" id="toc-step-1-the-master-chain-already-fills-the-sumset" class="nav-link" data-scroll-target="#step-1-the-master-chain-already-fills-the-sumset">Step 1: The master chain already fills the sumset</a></li>
-  <li><a href="#step-2-insert-sums-made-with-x_2" id="toc-step-2-insert-sums-made-with-x_2" class="nav-link" data-scroll-target="#step-2-insert-sums-made-with-x_2">Step 2: Insert sums made with <span class="math inline">\(x_2\)</span></a></li>
+  <li><a href="#step-2-insert-sums-made-with-x_2" id="toc-step-2-insert-sums-made-with-x_2" class="nav-link" data-scroll-target="#step-2-insert-sums-made-with-x_2">Step 2: Insert sums made with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>2</mn></msub><annotation encoding="application/x-tex">x_2</annotation></semantics></math></a></li>
   <li><a href="#the-central-intuition" id="toc-the-central-intuition" class="nav-link" data-scroll-target="#the-central-intuition">The central intuition</a></li>
   </ul></li>
   <li><a href="#solving-the-original-problem" id="toc-solving-the-original-problem" class="nav-link" data-scroll-target="#solving-the-original-problem">5. Solving the original problem</a></li>
@@ -302,21 +272,21 @@ window.Quarto = {
 <section id="the-problem-that-starts-our-investigation" class="level2">
 <h2 class="anchored" data-anchor-id="the-problem-that-starts-our-investigation">The problem that starts our investigation</h2>
 <p>Let</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>a</mi><mn>18</mn></msub><mo>,</mo><mn>77</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">
 A=\{1,a_1,a_2,\ldots,a_{18},77\}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>be a set of integers satisfying</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>&lt;</mo><msub><mi>a</mi><mn>1</mn></msub><mo>&lt;</mo><msub><mi>a</mi><mn>2</mn></msub><mo>&lt;</mo><mi>⋯</mi><mo>&lt;</mo><msub><mi>a</mi><mn>18</mn></msub><mo>&lt;</mo><mn>77</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 1&lt;a_1&lt;a_2&lt;\cdots&lt;a_{18}&lt;77.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Define</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo>:</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>∈</mo><mi>A</mi><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 A+A=\{x+y:x,y\in A\}.
-\]</span></p>
-<p>If <span class="math inline">\(A+A\)</span> contains exactly <span class="math inline">\(39\)</span> elements, find</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math> contains exactly <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>39</mn><annotation encoding="application/x-tex">39</annotation></semantics></math> elements, find</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>a</mi><mn>18</mn></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
 a_1+a_2+\cdots+a_{18}.
-\]</span></p>
+</annotation></semantics></math></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -331,116 +301,109 @@ a_1+a_2+\cdots+a_{18}.
 <a href="https://questions.examside.com/past-years/jee/question/plet-a--1-asub1sub-asub2sub--asub18-jee-main-mathematics-trigonometric-functions-and-equations-gvl4fwlruku9lx4c">View the original-question listing</a></p>
 </div>
 </div>
-<p>At first, the information seems insufficient. We know only the first and last elements of <span class="math inline">\(A\)</span>, not the eighteen integers in between. The number <span class="math inline">\(39\)</span> is the clue: it is the smallest possible size of <span class="math inline">\(A+A\)</span>. A set whose sumset is this small must have a very special structure.</p>
+<p>At first, the information seems insufficient. We know only the first and last elements of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>, not the eighteen integers in between. The number <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>39</mn><annotation encoding="application/x-tex">39</annotation></semantics></math> is the clue: it is the smallest possible size of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math>. A set whose sumset is this small must have a very special structure.</p>
 <p>By the end of the article, we will prove that structure rather than guess it. The final answer will be</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><menclose notation="box"><mn>702</mn></menclose><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \boxed{702}.
-\]</span></p>
+</annotation></semantics></math></p>
 <div class="article-info">
-<p><strong>Difficulty:</strong> Intermediate<br>
-<strong>Prerequisites:</strong> Sets, inequalities, arithmetic progressions, and basic Python<br>
-<strong>Main idea:</strong> Few distinct pairwise sums mean many sums coincide. Those coincidences force equal consecutive gaps.</p>
+<p><strong>Difficulty:</strong> Intermediate<br> <strong>Prerequisites:</strong> Sets, inequalities, and arithmetic progressions<br> <strong>Main idea:</strong> Few distinct pairwise sums mean many sums coincide. Those coincidences force equal consecutive gaps.</p>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="sumset-cover.png" class="img-fluid figure-img" alt="A mathematical illustration showing four evenly spaced points flowing into seven evenly spaced sumset points."></p>
-<figcaption>Four equally spaced source points producing the seven equally spaced points of a minimum-size sumset.</figcaption>
-</figure>
-</div>
+<p><img src="sumset-cover.png" class="article-cover" alt="A mathematical illustration showing four evenly spaced points flowing into seven evenly spaced sumset points."></p>
 </section>
 <section id="what-is-a-sumset" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-a-sumset">1. What is a sumset?</h2>
-<p>If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are sets of numbers, their <strong>sumset</strong> is</p>
-<p><span class="math display">\[
+<p>If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> are sets of numbers, their <strong>sumset</strong> is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>B</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>:</mo><mi>a</mi><mo>∈</mo><mi>A</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>b</mi><mo>∈</mo><mi>B</mi><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 A+B=\{a+b:a\in A,\ b\in B\}.
-\]</span></p>
-<p>The notation <span class="math inline">\(A+A\)</span> means that both addends are chosen from the same set. Repetition is allowed when choosing the two addends: <span class="math inline">\(a+a\)</span> is included. However, the result is a <strong>set</strong>, so a value is written only once even if several pairs produce it.</p>
+</annotation></semantics></math></p>
+<p>The notation <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math> means that both addends are chosen from the same set. Repetition is allowed when choosing the two addends: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>+</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">a+a</annotation></semantics></math> is included. However, the result is a <strong>set</strong>, so a value is written only once even if several pairs produce it.</p>
 <section id="a-small-example" class="level3">
 <h3 class="anchored" data-anchor-id="a-small-example">A small example</h3>
 <p>Take</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>5</mn><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 A=\{1,3,5\}.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>The addition table is</p>
 <div class="responsive-table" role="region" aria-label="Addition table for the set 1, 3, 5" tabindex="0">
 <table class="addition-grid" style="display:table; width:auto; margin:1rem 0 1.5rem; border:2px solid #9fb3c5; border-collapse:collapse;">
 <thead>
 <tr>
 <th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
-<span class="math inline">\(+\)</span>
++
 </th>
 <th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
-<span class="math inline">\(1\)</span>
+1
 </th>
 <th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
-<span class="math inline">\(3\)</span>
+3
 </th>
 <th style="min-width:4.25rem; padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
-<span class="math inline">\(5\)</span>
+5
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
-<span class="math inline">\(1\)</span>
+1
 </th>
 <td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
-<span class="math inline">\(2\)</span>
+2
 </td>
 <td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
-<span class="math inline">\(4\)</span>
+4
 </td>
 <td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
-<span class="math inline">\(6\)</span>
+6
 </td>
 </tr>
 <tr>
 <th style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
-<span class="math inline">\(3\)</span>
+3
 </th>
 <td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
-<span class="math inline">\(4\)</span>
+4
 </td>
 <td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
-<span class="math inline">\(6\)</span>
+6
 </td>
 <td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
-<span class="math inline">\(8\)</span>
+8
 </td>
 </tr>
 <tr>
 <th style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5; background:#142235; color:#f3c56b;">
-<span class="math inline">\(5\)</span>
+5
 </th>
 <td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
-<span class="math inline">\(6\)</span>
+6
 </td>
 <td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
-<span class="math inline">\(8\)</span>
+8
 </td>
 <td style="padding:0.65rem 1rem; text-align:center; border:1px solid #9fb3c5;">
-<span class="math inline">\(10\)</span>
+10
 </td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>Therefore,</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>10</mn><mo stretchy="false" form="postfix">}</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 A+A=\{2,4,6,8,10\},
-\]</span></p>
-<p>and <span class="math inline">\(|A+A|=5\)</span>. The vertical bars mean “number of elements”.</p>
-<p>There are <span class="math inline">\(3^2=9\)</span> ordered choices of two elements, but only five distinct answers. For example,</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">|A+A|=5</annotation></semantics></math>. The vertical bars mean “number of elements”.</p>
+<p>There are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mn>2</mn></msup><mo>=</mo><mn>9</mn></mrow><annotation encoding="application/x-tex">3^2=9</annotation></semantics></math> ordered choices of two elements, but only five distinct answers. For example,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mn>5</mn><mo>=</mo><mn>3</mn><mo>+</mo><mn>3</mn><mo>=</mo><mn>5</mn><mo>+</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 1+5=3+3=5+1.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Such equalities are called <strong>collisions of sums</strong>.</p>
-<p>Now compare this with <span class="math inline">\(B=\{1,3,8\}\)</span>:</p>
-<p><span class="math display">\[
+<p>Now compare this with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>8</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">B=\{1,3,8\}</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>+</mo><mi>B</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>9</mn><mo>,</mo><mn>11</mn><mo>,</mo><mn>16</mn><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 B+B=\{2,4,6,9,11,16\}.
-\]</span></p>
-<p>Thus <span class="math inline">\(|B+B|=6\)</span>. The irregular gap from <span class="math inline">\(3\)</span> to <span class="math inline">\(8\)</span> creates an additional distinct sum. This hints at the principle we will prove:</p>
+</annotation></semantics></math></p>
+<p>Thus <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>B</mi><mo>+</mo><mi>B</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">|B+B|=6</annotation></semantics></math>. The irregular gap from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math> to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>8</mn><annotation encoding="application/x-tex">8</annotation></semantics></math> creates an additional distinct sum. This hints at the principle we will prove:</p>
 <blockquote class="blockquote">
 <p>Equally spaced sets have the smallest possible sumsets.</p>
 </blockquote>
@@ -448,14 +411,14 @@ B+B=\{2,4,6,9,11,16\}.
 </section>
 <section id="ordering-gives-a-guaranteed-chain-of-sums" class="level2">
 <h2 class="anchored" data-anchor-id="ordering-gives-a-guaranteed-chain-of-sums">2. Ordering gives a guaranteed chain of sums</h2>
-<p>Let a set of <span class="math inline">\(n\)</span> distinct real numbers be written in increasing order:</p>
-<p><span class="math display">\[
+<p>Let a set of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> distinct real numbers be written in increasing order:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">}</mo><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>x</mi><mn>1</mn></msub><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>&lt;</mo><mi>⋯</mi><mo>&lt;</mo><msub><mi>x</mi><mi>n</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
 A=\{x_1,x_2,\ldots,x_n\},
 \qquad
 x_1&lt;x_2&lt;\cdots&lt;x_n.
-\]</span></p>
-<p>Every number below belongs to <span class="math inline">\(A+A\)</span>:</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>Every number below belongs to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>&lt;</mo><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><mo>&lt;</mo><mi>⋯</mi><mo>&lt;</mo><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mo>&lt;</mo><msub><mi>x</mi><mn>3</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mo>&lt;</mo><mi>⋯</mi><mo>&lt;</mo><msub><mi>x</mi><mi>n</mi></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
 x_1+x_1
 &amp;&lt;x_1+x_2
@@ -466,15 +429,15 @@ x_1+x_1
 &lt;\cdots
 &lt;x_n+x_n.
 \end{aligned}
-\]</span></p>
-<p>Why is the middle inequality strict? Since <span class="math inline">\(x_1&lt;x_2\)</span>,</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>Why is the middle inequality strict? Since <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_1&lt;x_2</annotation></semantics></math>,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
 x_1+x_n&lt;x_2+x_n.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>The chain contains</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">
 n+(n-1)=2n-1
-\]</span></p>
+</annotation></semantics></math></p>
 <p>different sums. Consequently:</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -486,66 +449,66 @@ n+(n-1)=2n-1
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For every finite set <span class="math inline">\(A\)</span> of <span class="math inline">\(n\)</span> distinct real numbers,</p>
-<p><span class="math display">\[
+<p>For every finite set <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> distinct real numbers,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>≥</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn><mi>.</mi></mrow></menclose><annotation encoding="application/x-tex">
 \boxed{|A+A|\geq 2n-1.}
-\]</span></p>
+</annotation></semantics></math></p>
 </div>
 </div>
 <p>This proof needs only ordering. In particular, it works for sets of integers, rational numbers, or real numbers.</p>
 <section id="what-the-theorem-doesand-does-notsay" class="level3">
 <h3 class="anchored" data-anchor-id="what-the-theorem-doesand-does-notsay">What the theorem does—and does not—say</h3>
-<p>The theorem does not claim that <span class="math inline">\(A+A\)</span> always has exactly <span class="math inline">\(2n-1\)</span> elements. It says that <span class="math inline">\(2n-1\)</span> is the minimum possible.</p>
-<p>For <span class="math inline">\(n=3\)</span>:</p>
-<p><span class="math display">\[
+<p>The theorem does not claim that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math> always has exactly <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2n-1</annotation></semantics></math> elements. It says that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2n-1</annotation></semantics></math> is the minimum possible.</p>
+<p>For <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">n=3</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>5</mn><mo stretchy="false" form="postfix">}</mo><mo>+</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>5</mn><mo stretchy="false" form="postfix">}</mo><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>10</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">
 \{1,3,5\}+\{1,3,5\}
 =\{2,4,6,8,10\}
-\]</span></p>
-<p>has <span class="math inline">\(2(3)-1=5\)</span> elements, while</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>has <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo stretchy="false" form="prefix">(</mo><mn>3</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mn>1</mn><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">2(3)-1=5</annotation></semantics></math> elements, while</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>8</mn><mo stretchy="false" form="postfix">}</mo><mo>+</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>8</mn><mo stretchy="false" form="postfix">}</mo><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>9</mn><mo>,</mo><mn>11</mn><mo>,</mo><mn>16</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">
 \{1,3,8\}+\{1,3,8\}
 =\{2,4,6,9,11,16\}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>has six.</p>
 </section>
 </section>
 <section id="arithmetic-progressions-attain-the-lower-bound" class="level2">
 <h2 class="anchored" data-anchor-id="arithmetic-progressions-attain-the-lower-bound">3. Arithmetic progressions attain the lower bound</h2>
-<p>Suppose <span class="math inline">\(A\)</span> is an arithmetic progression:</p>
-<p><span class="math display">\[
+<p>Suppose <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> is an arithmetic progression:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mi>a</mi><mo>,</mo><mi>a</mi><mo>+</mo><mi>d</mi><mo>,</mo><mi>a</mi><mo>+</mo><mn>2</mn><mi>d</mi><mo>,</mo><mi>…</mi><mo>,</mo><mi>a</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>d</mi><mo stretchy="false" form="postfix">}</mo><mo>,</mo><mspace width="2.0em"></mspace><mi>d</mi><mo>&gt;</mo><mn>0</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 A=\{a,a+d,a+2d,\ldots,a+(n-1)d\},
 \qquad d&gt;0.
-\]</span></p>
-<p>Choose the terms with indices <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, where <span class="math inline">\(0\leq i,j\leq n-1\)</span>. Their sum is</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>Choose the terms with indices <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>, where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo>≤</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0\leq i,j\leq n-1</annotation></semantics></math>. Their sum is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo>+</mo><mi>i</mi><mi>d</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo>+</mo><mi>j</mi><mi>d</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>2</mn><mi>a</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo>+</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo><mi>d</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
 (a+id)+(a+jd)=2a+(i+j)d.
-\]</span></p>
-<p>Only the value of <span class="math inline">\(i+j\)</span> matters. Its possible values are</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>Only the value of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>+</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i+j</annotation></semantics></math> matters. Its possible values are</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>2</mn><mo>,</mo></mrow><annotation encoding="application/x-tex">
 0,1,2,\ldots,2n-2,
-\]</span></p>
-<p>which gives exactly <span class="math inline">\(2n-1\)</span> distinct sums. In fact,</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>which gives exactly <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2n-1</annotation></semantics></math> distinct sums. In fact,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>2</mn><mi>a</mi><mo>,</mo><mn>2</mn><mi>a</mi><mo>+</mo><mi>d</mi><mo>,</mo><mn>2</mn><mi>a</mi><mo>+</mo><mn>2</mn><mi>d</mi><mo>,</mo><mi>…</mi><mo>,</mo><mn>2</mn><mi>a</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mi>d</mi><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 A+A
 =\{2a,2a+d,2a+2d,\ldots,2a+(2n-2)d\}.
-\]</span></p>
-<p>So <span class="math inline">\(A+A\)</span> is itself an arithmetic progression, with the same common difference.</p>
+</annotation></semantics></math></p>
+<p>So <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math> is itself an arithmetic progression, with the same common difference.</p>
 <p>For example,</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>9</mn><mo>,</mo><mn>13</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">
 A=\{1,5,9,13\}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>gives</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>2</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>10</mn><mo>,</mo><mn>14</mn><mo>,</mo><mn>18</mn><mo>,</mo><mn>22</mn><mo>,</mo><mn>26</mn><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 A+A=\{2,6,10,14,18,22,26\}.
-\]</span></p>
-<p>Here <span class="math inline">\(|A|=4\)</span> and <span class="math inline">\(|A+A|=7=2(4)-1\)</span>.</p>
+</annotation></semantics></math></p>
+<p>Here <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">|A|=4</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>7</mn><mo>=</mo><mn>2</mn><mo stretchy="false" form="prefix">(</mo><mn>4</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">|A+A|=7=2(4)-1</annotation></semantics></math>.</p>
 </section>
 <section id="the-equality-case-minimum-size-forces-an-ap" class="level2">
 <h2 class="anchored" data-anchor-id="the-equality-case-minimum-size-forces-an-ap">4. The equality case: minimum size forces an AP</h2>
 <p>We have shown one direction:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> is an AP</mtext></mrow><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 A\text{ is an AP}\quad\Longrightarrow\quad |A+A|=2n-1.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>The surprising part is the converse.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -557,130 +520,130 @@ A\text{ is an AP}\quad\Longrightarrow\quad |A+A|=2n-1.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For a finite set <span class="math inline">\(A=\{x_1&lt;x_2&lt;\cdots&lt;x_n\}\)</span> of real numbers, with <span class="math inline">\(n\geq2\)</span>,</p>
-<p><span class="math display">\[
+<p>For a finite set <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>x</mi><mn>1</mn></msub><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>&lt;</mo><mi>⋯</mi><mo>&lt;</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">A=\{x_1&lt;x_2&lt;\cdots&lt;x_n\}</annotation></semantics></math> of real numbers, with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n\geq2</annotation></semantics></math>,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn><mspace width="1.0em"></mspace><mo>⇔</mo><mspace width="1.0em"></mspace><mi>A</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> is an arithmetic progression</mtext></mrow><mi>.</mi></mrow></menclose><annotation encoding="application/x-tex">
 \boxed{|A+A|=2n-1
 \quad\Longleftrightarrow\quad
 A\text{ is an arithmetic progression}.}
-\]</span></p>
+</annotation></semantics></math></p>
 </div>
 </div>
 <p>We now prove the difficult direction in small steps.</p>
 <section id="step-1-the-master-chain-already-fills-the-sumset" class="level3">
 <h3 class="anchored" data-anchor-id="step-1-the-master-chain-already-fills-the-sumset">Step 1: The master chain already fills the sumset</h3>
-<p>Recall the <span class="math inline">\(2n-1\)</span> sums</p>
-<p><span class="math display">\[
+<p>Recall the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2n-1</annotation></semantics></math> sums</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>&lt;</mo><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><mo>&lt;</mo><mi>⋯</mi><mo>&lt;</mo><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mo>&lt;</mo><msub><mi>x</mi><mn>3</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mo>&lt;</mo><mi>⋯</mi><mo>&lt;</mo><msub><mi>x</mi><mi>n</mi></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
 x_1+x_1
 &amp;&lt;x_1+x_2&lt;\cdots&lt;x_1+x_n\\
 &amp;&lt;x_2+x_n&lt;x_3+x_n&lt;\cdots&lt;x_n+x_n.
 \end{aligned}
 \tag{1}
-\]</span></p>
-<p>If <span class="math inline">\(|A+A|=2n-1\)</span>, there is no room for any additional value. Therefore every sum <span class="math inline">\(x_i+x_j\)</span> must equal one of the values in this master chain.</p>
+</annotation></semantics></math></p>
+<p>If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">|A+A|=2n-1</annotation></semantics></math>, there is no room for any additional value. Therefore every sum <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><msub><mi>x</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">x_i+x_j</annotation></semantics></math> must equal one of the values in this master chain.</p>
 </section>
 <section id="step-2-insert-sums-made-with-x_2" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-insert-sums-made-with-x_2">Step 2: Insert sums made with <span class="math inline">\(x_2\)</span></h3>
+<h3 class="anchored" data-anchor-id="step-2-insert-sums-made-with-x_2">Step 2: Insert sums made with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>2</mn></msub><annotation encoding="application/x-tex">x_2</annotation></semantics></math></h3>
 <p>Consider</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>1</mn></msub><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><mo>&lt;</mo><mi>⋯</mi><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
 x_2+x_1&lt;x_2+x_2&lt;\cdots&lt;x_2+x_n.
 \tag{2}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Its endpoints are already in the master chain:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">
 x_2+x_1=x_1+x_2
-\]</span></p>
-<p>and <span class="math inline">\(x_2+x_n\)</span> is the value immediately after <span class="math inline">\(x_1+x_n\)</span>.</p>
+</annotation></semantics></math></p>
+<p>and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_2+x_n</annotation></semantics></math> is the value immediately after <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1+x_n</annotation></semantics></math>.</p>
 <p>Between these endpoints, the master chain contains exactly</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">
 x_1+x_3,\ x_1+x_4,\ldots,x_1+x_n,
-\]</span></p>
-<p>which are <span class="math inline">\(n-2\)</span> values. The second chain also contains exactly <span class="math inline">\(n-2\)</span> interior values:</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>which are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n-2</annotation></semantics></math> values. The second chain also contains exactly <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n-2</annotation></semantics></math> interior values:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
 x_2+x_2,\ x_2+x_3,\ldots,x_2+x_{n-1}.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>There are no other sumset values available. Both lists are strictly increasing, so their terms must match in order:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>,</mo><mspace width="2.0em"></mspace><mi>i</mi><mo>=</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>n</mi><mo>−</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 x_2+x_i=x_1+x_{i+1},
 \qquad i=2,3,\ldots,n-1.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Rearranging gives</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mspace width="2.0em"></mspace><mi>i</mi><mo>=</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>n</mi><mo>−</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 x_{i+1}-x_i=x_2-x_1,
 \qquad i=2,3,\ldots,n-1.
-\]</span></p>
-<p>The same equality is automatically true for <span class="math inline">\(i=1\)</span>. Thus</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>The same equality is automatically true for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i=1</annotation></semantics></math>. Thus</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>3</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mi>⋯</mi><mo>=</mo><msub><mi>x</mi><mi>n</mi></msub><mo>−</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
 x_2-x_1=x_3-x_2=\cdots=x_n-x_{n-1}.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>All consecutive gaps are equal, which is precisely the definition of an arithmetic progression. This completes the proof.</p>
 </section>
 <section id="the-central-intuition" class="level3">
 <h3 class="anchored" data-anchor-id="the-central-intuition">The central intuition</h3>
-<p>A randomly spaced set creates many distinct sums. To reach the absolute minimum <span class="math inline">\(2n-1\)</span>, every sum outside the guaranteed master chain must collide with a sum already in it. The first row of necessary collisions forces</p>
-<p><span class="math display">\[
+<p>A randomly spaced set creates many distinct sums. To reach the absolute minimum <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2n-1</annotation></semantics></math>, every sum outside the guaranteed master chain must collide with a sum already in it. The first row of necessary collisions forces</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">
 x_2+x_i=x_1+x_{i+1},
-\]</span></p>
+</annotation></semantics></math></p>
 <p>and therefore forces every consecutive gap to be the same.</p>
 </section>
 </section>
 <section id="solving-the-original-problem" class="level2">
 <h2 class="anchored" data-anchor-id="solving-the-original-problem">5. Solving the original problem</h2>
 <p>The set</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>a</mi><mn>18</mn></msub><mo>,</mo><mn>77</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">
 A=\{1,a_1,a_2,\ldots,a_{18},77\}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>contains</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mn>18</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">
 1+18+1=20
-\]</span></p>
+</annotation></semantics></math></p>
 <p>elements. Hence the general lower bound is</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>≥</mo><mn>2</mn><mo stretchy="false" form="prefix">(</mo><mn>20</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mn>1</mn><mo>=</mo><mn>39</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 |A+A|\geq2(20)-1=39.
-\]</span></p>
-<p>We are told that <span class="math inline">\(|A+A|=39\)</span>, so equality occurs. By the minimal-sumset theorem, <span class="math inline">\(A\)</span> must be an arithmetic progression.</p>
-<p>Let its common difference be <span class="math inline">\(d\)</span>. There are <span class="math inline">\(19\)</span> equal gaps from the first term to the twentieth term, so</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>We are told that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>39</mn></mrow><annotation encoding="application/x-tex">|A+A|=39</annotation></semantics></math>, so equality occurs. By the minimal-sumset theorem, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> must be an arithmetic progression.</p>
+<p>Let its common difference be <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>d</mi><annotation encoding="application/x-tex">d</annotation></semantics></math>. There are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>19</mn><annotation encoding="application/x-tex">19</annotation></semantics></math> equal gaps from the first term to the twentieth term, so</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>77</mn><mo>=</mo><mn>1</mn><mo>+</mo><mn>19</mn><mi>d</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
 77=1+19d.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Therefore,</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>19</mn><mi>d</mi><mo>=</mo><mn>76</mn><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mi>d</mi><mo>=</mo><mn>4</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 19d=76
 \quad\Longrightarrow\quad
 d=4.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Thus</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>9</mn><mo>,</mo><mn>13</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>73</mn><mo>,</mo><mn>77</mn><mo stretchy="false" form="postfix">}</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 A=\{1,5,9,13,\ldots,73,77\},
-\]</span></p>
+</annotation></semantics></math></p>
 <p>and the requested terms are</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>a</mi><mn>18</mn></msub><mo>=</mo><mn>5</mn><mo>,</mo><mn>9</mn><mo>,</mo><mn>13</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>73</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 a_1,a_2,\ldots,a_{18}=5,9,13,\ldots,73.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Their sum is</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>18</mn></munderover><msub><mi>a</mi><mi>i</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>18</mn><mn>2</mn></mfrac><mo stretchy="false" form="prefix">(</mo><mn>5</mn><mo>+</mo><mn>73</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>9</mn><mo>⋅</mo><mn>78</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><menclose notation="box"><mn>702</mn></menclose><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
 \sum_{i=1}^{18}a_i
 &amp;=\frac{18}{2}(5+73)\\
 &amp;=9\cdot78\\
 &amp;=\boxed{702}.
 \end{aligned}
-\]</span></p>
-<p>There is also a quick symmetry check. The sum of all <span class="math inline">\(20\)</span> terms is</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>There is also a quick symmetry check. The sum of all <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>20</mn><annotation encoding="application/x-tex">20</annotation></semantics></math> terms is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>20</mn><mn>2</mn></mfrac><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mn>77</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>780</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \frac{20}{2}(1+77)=780.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Removing the two endpoints gives</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>780</mn><mo>−</mo><mn>1</mn><mo>−</mo><mn>77</mn><mo>=</mo><menclose notation="box"><mn>702</mn></menclose><mi>.</mi></mrow><annotation encoding="application/x-tex">
 780-1-77=\boxed{702}.
-\]</span></p>
+</annotation></semantics></math></p>
 </section>
 <section id="explore-sumsets-with-python" class="level2">
 <h2 class="anchored" data-anchor-id="explore-sumsets-with-python">6. Explore sumsets with Python</h2>
 <p>The mathematics proves the result for every valid set. Python is useful for experimenting with examples, seeing collisions, and checking conjectures.</p>
 <section id="a-basic-sumset-tool" class="level3">
 <h3 class="anchored" data-anchor-id="a-basic-sumset-tool">A basic sumset tool</h3>
-<div id="5f72a298" class="cell" data-execution_count="1">
+<div id="a837445c" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sumset(A, B<span class="op">=</span><span class="va">None</span>):</span>
@@ -709,7 +672,7 @@ B + B = [2, 4, 4, 6, 9, 9, 11, 11, 16]
 </section>
 <section id="find-which-pairs-collide" class="level3">
 <h3 class="anchored" data-anchor-id="find-which-pairs-collide">Find which pairs collide</h3>
-<div id="c6ea077b" class="cell" data-execution_count="2">
+<div id="1a62b0b8" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
@@ -740,11 +703,11 @@ B + B = [2, 4, 4, 6, 9, 9, 11, 11, 16]
 </div>
 <p>This prints, among other lines,</p>
 <pre class="text"><code> 6 can be made by [(1, 5), (3, 3)]</code></pre>
-<p>The ordered pair <span class="math inline">\((5,1)\)</span> is not printed separately because addition is commutative.</p>
+<p>The ordered pair <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>5</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(5,1)</annotation></semantics></math> is not printed separately because addition is commutative.</p>
 </section>
 <section id="test-the-theorem-on-examples" class="level3">
 <h3 class="anchored" data-anchor-id="test-the-theorem-on-examples">Test the theorem on examples</h3>
-<div id="a94cf10a" class="cell" data-execution_count="3">
+<div id="06a260d7" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_arithmetic_progression(A):</span>
@@ -782,12 +745,12 @@ A = [1, 5, 9, 14]
 Arithmetic progression? False</code></pre>
 </div>
 </div>
-<p>Changing the last element from <span class="math inline">\(13\)</span> to <span class="math inline">\(14\)</span> breaks the equal spacing and makes the sumset larger.</p>
+<p>Changing the last element from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>13</mn><annotation encoding="application/x-tex">13</annotation></semantics></math> to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>14</mn><annotation encoding="application/x-tex">14</annotation></semantics></math> breaks the equal spacing and makes the sumset larger.</p>
 </section>
 <section id="search-all-small-sets" class="level3">
 <h3 class="anchored" data-anchor-id="search-all-small-sets">Search all small sets</h3>
-<p>The next experiment lists every four-element subset of <span class="math inline">\(\{0,1,\ldots,8\}\)</span> whose sumset has the minimum size <span class="math inline">\(7\)</span>.</p>
-<div id="7c477076" class="cell" data-execution_count="4">
+<p>The next experiment lists every four-element subset of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>8</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{0,1,\ldots,8\}</annotation></semantics></math> whose sumset has the minimum size <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7</mn><annotation encoding="application/x-tex">7</annotation></semantics></math>.</p>
+<div id="e78e61e7" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
@@ -818,7 +781,7 @@ Every result is an AP: True</code></pre>
 </section>
 <section id="verify-the-contest-problem-directly" class="level3">
 <h3 class="anchored" data-anchor-id="verify-the-contest-problem-directly">Verify the contest problem directly</h3>
-<div id="5847d406" class="cell" data-execution_count="5">
+<div id="2d444765" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">78</span>, <span class="dv">4</span>))</span>
@@ -838,20 +801,20 @@ A+A = [2, 6, 6, 10, 10, 10, 14, 14, 14, 14, 18, 18, 18, 18, 18, 22, 22, 22, 22, 
 Sum of the 18 interior terms = 702</code></pre>
 </div>
 </div>
-<p>The program produces <span class="math inline">\(20\)</span> elements in <span class="math inline">\(A\)</span>, <span class="math inline">\(39\)</span> elements in <span class="math inline">\(A+A\)</span>, and an interior sum of <span class="math inline">\(702\)</span>.</p>
+<p>The program produces <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>20</mn><annotation encoding="application/x-tex">20</annotation></semantics></math> elements in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>39</mn><annotation encoding="application/x-tex">39</annotation></semantics></math> elements in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math>, and an interior sum of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>702</mn><annotation encoding="application/x-tex">702</annotation></semantics></math>.</p>
 </section>
 </section>
 <section id="a-broader-viewpoint" class="level2">
 <h2 class="anchored" data-anchor-id="a-broader-viewpoint">7. A broader viewpoint</h2>
-<p>This problem is a first glimpse of <strong>additive combinatorics</strong>, the study of how the arithmetic structure of a set is reflected in sets such as <span class="math inline">\(A+A\)</span> and <span class="math inline">\(A-A\)</span>.</p>
+<p>This problem is a first glimpse of <strong>additive combinatorics</strong>, the study of how the arithmetic structure of a set is reflected in sets such as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>−</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A-A</annotation></semantics></math>.</p>
 <p>The quantity</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo></mrow><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo></mrow></mfrac><annotation encoding="application/x-tex">
 \frac{|A+A|}{|A|}
-\]</span></p>
-<p>is called the <strong>doubling constant</strong> of <span class="math inline">\(A\)</span>. A small doubling constant suggests that <span class="math inline">\(A\)</span> is highly structured. In our extreme one-dimensional case,</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>is called the <strong>doubling constant</strong> of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>. A small doubling constant suggests that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> is highly structured. In our extreme one-dimensional case,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>2</mn><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mi>−</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">
 |A+A|=2|A|-1
-\]</span></p>
+</annotation></semantics></math></p>
 <p>forces the strongest possible structure: an arithmetic progression.</p>
 <p>You do not need additive combinatorics to solve the original question. Still, it is useful to see the larger mathematical theme:</p>
 <blockquote class="blockquote">
@@ -862,32 +825,32 @@ Sum of the 18 interior terms = 702</code></pre>
 <h2 class="anchored" data-anchor-id="common-mistakes">8. Common mistakes</h2>
 <section id="counting-pairs-instead-of-distinct-sums" class="level3">
 <h3 class="anchored" data-anchor-id="counting-pairs-instead-of-distinct-sums">Counting pairs instead of distinct sums</h3>
-<p><span class="math inline">\(A+A\)</span> is a set of values, not a list of pairs. Although there are <span class="math inline">\(n^2\)</span> ordered pairs <span class="math inline">\((x,y)\)</span>, different pairs may give the same sum.</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math> is a set of values, not a list of pairs. Although there are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>n</mi><mn>2</mn></msup><annotation encoding="application/x-tex">n^2</annotation></semantics></math> ordered pairs <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(x,y)</annotation></semantics></math>, different pairs may give the same sum.</p>
 </section>
 <section id="forgetting-that-an-element-may-be-used-twice" class="level3">
 <h3 class="anchored" data-anchor-id="forgetting-that-an-element-may-be-used-twice">Forgetting that an element may be used twice</h3>
-<p>Because <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are independently chosen from <span class="math inline">\(A\)</span>, sums such as <span class="math inline">\(2x=x+x\)</span> are allowed.</p>
+<p>Because <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math> are independently chosen from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>, sums such as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>x</mi><mo>=</mo><mi>x</mi><mo>+</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">2x=x+x</annotation></semantics></math> are allowed.</p>
 </section>
 <section id="assuming-the-ap-structure-without-proving-equality" class="level3">
 <h3 class="anchored" data-anchor-id="assuming-the-ap-structure-without-proving-equality">Assuming the AP structure without proving equality</h3>
-<p>The lower bound <span class="math inline">\(|A+A|\geq2n-1\)</span> alone does not make <span class="math inline">\(A\)</span> an AP. We need the given equality <span class="math inline">\(|A+A|=2n-1\)</span> and the equality-case theorem.</p>
+<p>The lower bound <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>≥</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">|A+A|\geq2n-1</annotation></semantics></math> alone does not make <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> an AP. We need the given equality <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">|A+A|=2n-1</annotation></semantics></math> and the equality-case theorem.</p>
 </section>
 <section id="miscounting-the-number-of-terms" class="level3">
 <h3 class="anchored" data-anchor-id="miscounting-the-number-of-terms">Miscounting the number of terms</h3>
-<p>The set in the problem has <span class="math inline">\(20\)</span> terms:</p>
-<p><span class="math display">\[
+<p>The set in the problem has <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>20</mn><annotation encoding="application/x-tex">20</annotation></semantics></math> terms:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>,</mo><mspace width="1.0em"></mspace><mn>18</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> intermediate terms</mtext></mrow><mo>,</mo><mspace width="1.0em"></mspace><mn>77</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 1,\quad 18\text{ intermediate terms},\quad 77.
-\]</span></p>
-<p>Therefore it has <span class="math inline">\(19\)</span> consecutive gaps, not <span class="math inline">\(20\)</span>.</p>
+</annotation></semantics></math></p>
+<p>Therefore it has <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>19</mn><annotation encoding="application/x-tex">19</annotation></semantics></math> consecutive gaps, not <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>20</mn><annotation encoding="application/x-tex">20</annotation></semantics></math>.</p>
 </section>
 </section>
 <section id="try-it-yourself" class="level2">
 <h2 class="anchored" data-anchor-id="try-it-yourself">9. Try it yourself</h2>
 <ol type="1">
-<li>Find <span class="math inline">\(A+A\)</span> when <span class="math inline">\(A=\{2,5,8,11\}\)</span>. Verify that its size is <span class="math inline">\(2|A|-1\)</span>.</li>
-<li>If <span class="math inline">\(A\)</span> has <span class="math inline">\(12\)</span> distinct real elements, what is the smallest possible value of <span class="math inline">\(|A+A|\)</span>?</li>
-<li>Let <span class="math inline">\(A=\{4,b_1,b_2,b_3,b_4,34\}\)</span> be a set of integers with <span class="math inline">\(|A+A|=11\)</span>. Find <span class="math inline">\(b_1+b_2+b_3+b_4\)</span>.</li>
-<li>Compare the sumset sizes of <span class="math inline">\(\{0,1,2,3,4\}\)</span> and <span class="math inline">\(\{0,1,2,3,5\}\)</span>. Which new sums appear after the last term is changed?</li>
+<li>Find <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A+A</annotation></semantics></math> when <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>2</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>11</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">A=\{2,5,8,11\}</annotation></semantics></math>. Verify that its size is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mi>−</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">2|A|-1</annotation></semantics></math>.</li>
+<li>If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> has <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>12</mn><annotation encoding="application/x-tex">12</annotation></semantics></math> distinct real elements, what is the smallest possible value of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|A+A|</annotation></semantics></math>?</li>
+<li>Let <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>4</mn><mo>,</mo><msub><mi>b</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mn>3</mn></msub><mo>,</mo><msub><mi>b</mi><mn>4</mn></msub><mo>,</mo><mn>34</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">A=\{4,b_1,b_2,b_3,b_4,34\}</annotation></semantics></math> be a set of integers with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>11</mn></mrow><annotation encoding="application/x-tex">|A+A|=11</annotation></semantics></math>. Find <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mn>1</mn></msub><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub><mo>+</mo><msub><mi>b</mi><mn>3</mn></msub><mo>+</mo><msub><mi>b</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">b_1+b_2+b_3+b_4</annotation></semantics></math>.</li>
+<li>Compare the sumset sizes of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{0,1,2,3,4\}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>5</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{0,1,2,3,5\}</annotation></semantics></math>. Which new sums appear after the last term is changed?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
@@ -903,8 +866,8 @@ Sum of the 18 interior terms = 702</code></pre>
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Write the sums in increasing order; the answer is also an AP.</li>
-<li>Use <span class="math inline">\(2n-1\)</span>.</li>
-<li>There are six elements, and <span class="math inline">\(11=2(6)-1\)</span>.</li>
+<li>Use <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2n-1</annotation></semantics></math>.</li>
+<li>There are six elements, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>11</mn><mo>=</mo><mn>2</mn><mo stretchy="false" form="prefix">(</mo><mn>6</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">11=2(6)-1</annotation></semantics></math>.</li>
 <li>Use the Python <code>sumset</code> function or construct two addition tables.</li>
 </ol>
 </div>
@@ -923,10 +886,10 @@ Sum of the 18 interior terms = 702</code></pre>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><span class="math inline">\(A+A=\{4,7,10,13,16,19,22\}\)</span>, so <span class="math inline">\(|A+A|=7\)</span>.</li>
-<li><span class="math inline">\(2(12)-1=\boxed{23}\)</span>.</li>
-<li>Equality forces an AP. Its common difference is <span class="math inline">\((34-4)/5=6\)</span>, so the interior terms are <span class="math inline">\(10,16,22,28\)</span> and their sum is <span class="math inline">\(\boxed{76}\)</span>.</li>
-<li>The sizes are <span class="math inline">\(9\)</span> and <span class="math inline">\(10\)</span>, respectively. The first sumset is <span class="math inline">\(\{0,1,\ldots,8\}\)</span>; the second is <span class="math inline">\(\{0,1,2,3,4,5,6,7,8,10\}\)</span>.</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>+</mo><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>4</mn><mo>,</mo><mn>7</mn><mo>,</mo><mn>10</mn><mo>,</mo><mn>13</mn><mo>,</mo><mn>16</mn><mo>,</mo><mn>19</mn><mo>,</mo><mn>22</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">A+A=\{4,7,10,13,16,19,22\}</annotation></semantics></math>, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">|A+A|=7</annotation></semantics></math>.</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo stretchy="false" form="prefix">(</mo><mn>12</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mn>1</mn><mo>=</mo><menclose notation="box"><mn>23</mn></menclose></mrow><annotation encoding="application/x-tex">2(12)-1=\boxed{23}</annotation></semantics></math>.</li>
+<li>Equality forces an AP. Its common difference is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>34</mn><mo>−</mo><mn>4</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>5</mn><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">(34-4)/5=6</annotation></semantics></math>, so the interior terms are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mo>,</mo><mn>16</mn><mo>,</mo><mn>22</mn><mo>,</mo><mn>28</mn></mrow><annotation encoding="application/x-tex">10,16,22,28</annotation></semantics></math> and their sum is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mn>76</mn></menclose><annotation encoding="application/x-tex">\boxed{76}</annotation></semantics></math>.</li>
+<li>The sizes are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>9</mn><annotation encoding="application/x-tex">9</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>10</mn><annotation encoding="application/x-tex">10</annotation></semantics></math>, respectively. The first sumset is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>8</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{0,1,\ldots,8\}</annotation></semantics></math>; the second is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>7</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>10</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{0,1,2,3,4,5,6,7,8,10\}</annotation></semantics></math>.</li>
 </ol>
 </div>
 </div>
@@ -934,15 +897,15 @@ Sum of the 18 interior terms = 702</code></pre>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>For a set of <span class="math inline">\(n\)</span> distinct ordered numbers, the chain formed from the smallest and largest elements guarantees at least <span class="math inline">\(2n-1\)</span> distinct pairwise sums. Arithmetic progressions attain this bound, and attaining the bound forces all consecutive gaps to be equal.</p>
-<p>In the original problem, <span class="math inline">\(|A|=20\)</span> and <span class="math inline">\(|A+A|=39=2|A|-1\)</span>. Hence <span class="math inline">\(A\)</span> must be</p>
-<p><span class="math display">\[
+<p>For a set of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> distinct ordered numbers, the chain formed from the smallest and largest elements guarantees at least <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2n-1</annotation></semantics></math> distinct pairwise sums. Arithmetic progressions attain this bound, and attaining the bound forces all consecutive gaps to be equal.</p>
+<p>In the original problem, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">|A|=20</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo>+</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mn>39</mn><mo>=</mo><mn>2</mn><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mi>−</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">|A+A|=39=2|A|-1</annotation></semantics></math>. Hence <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> must be</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>9</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>73</mn><mo>,</mo><mn>77</mn><mo stretchy="false" form="postfix">}</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \{1,5,9,\ldots,73,77\},
-\]</span></p>
+</annotation></semantics></math></p>
 <p>so</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><menclose notation="box"><mrow><msub><mi>a</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>a</mi><mn>18</mn></msub><mo>=</mo><mn>702</mn></mrow></menclose><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \boxed{a_1+a_2+\cdots+a_{18}=702}.
-\]</span></p>
+</annotation></semantics></math></p>
 
 
 </section>

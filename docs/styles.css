@@ -1,4 +1,12 @@
 /* Restrained, readable styling for PyMathon. */
+@font-face {
+  font-family: "Euler Math";
+  src: url("fonts/Euler-Math.woff2") format("woff2");
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}
+
 :root {
   --pymathon-ink: #e7edf4;
   --pymathon-muted: #aebdcb;
@@ -737,5 +745,365 @@ pre,
 
   .share-controls {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Academic visual system */
+:root {
+  --pymathon-ink: #e8e6df;
+  --pymathon-muted: #aaa9a4;
+  --pymathon-accent: #c9a86a;
+  --pymathon-border: #343a42;
+  --pymathon-soft: #151b22;
+  --pymathon-page: #0e1319;
+  --pymathon-surface: #121820;
+  --pymathon-code: #0b1015;
+}
+
+body {
+  color: var(--pymathon-ink);
+  background: var(--pymathon-page);
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: 1.08rem;
+  line-height: 1.78;
+}
+
+.navbar,
+.quarto-title-meta,
+.quarto-title-meta-heading,
+.description,
+.listing-date,
+.listing-author,
+.listing-category,
+#TOC,
+.sidebar,
+.page-navigation,
+button,
+.btn,
+code,
+pre {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.navbar {
+  min-height: 4.5rem;
+  background: #10161d;
+  border-bottom: 1px solid #303740;
+  box-shadow: none;
+}
+
+.navbar-brand img {
+  width: min(8.2rem, 40vw);
+  height: 2.3rem;
+}
+
+.navbar .nav-link {
+  color: #d7d6d1;
+  letter-spacing: 0.015em;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: #e2c48b;
+}
+
+main.content {
+  max-width: 980px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: #f0eee8;
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+}
+
+h2 {
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #3a4048;
+}
+
+h3 {
+  color: #e4d4b7;
+}
+
+a,
+a:hover,
+a:focus {
+  color: #d7b878;
+}
+
+.quarto-title-banner {
+  color: var(--pymathon-ink);
+  background: #121820;
+  border-bottom: 1px solid #343a42;
+  box-shadow: none;
+}
+
+.quarto-title-banner .quarto-title .title {
+  color: #f1efe9;
+}
+
+.academic-masthead {
+  max-width: 920px;
+  margin: 1rem 0 3.25rem;
+  padding: clamp(2rem, 6vw, 4.5rem) 0;
+  border-top: 1px solid #414852;
+  border-bottom: 1px solid #414852;
+}
+
+.academic-masthead h1 {
+  max-width: 18ch;
+  margin: 0.4rem 0 1.25rem;
+}
+
+.academic-masthead p {
+  max-width: 66ch;
+  color: #c7c6c0;
+  font-size: 1.16rem;
+}
+
+.academic-kicker {
+  color: #c9a86a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+}
+
+.article-cover {
+  display: block;
+  width: 100%;
+  margin: 2rem 0 2.75rem;
+  border: 1px solid #343a42;
+}
+
+.article-info,
+.topic-card,
+.about-hero,
+.article-share,
+.king-applet {
+  background: #141a21;
+  border: 1px solid #343a42;
+  border-radius: 0.15rem;
+  box-shadow: none;
+}
+
+.article-info {
+  border-left: 3px solid #b9985e;
+}
+
+.article-info strong {
+  color: #e2c48b;
+}
+
+.about-portrait {
+  border: 2px solid #aaa79f;
+  border-radius: 0.15rem;
+  box-shadow: none;
+}
+
+.about-logo {
+  border-radius: 0.15rem;
+  box-shadow: none;
+}
+
+.quarto-listing .quarto-post {
+  margin: 0;
+  padding: 1.75rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #343a42;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.quarto-listing .quarto-post:first-child {
+  border-top: 1px solid #343a42;
+}
+
+.quarto-listing .listing-title {
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+}
+
+math {
+  font-family: "Euler Math", serif;
+  font-size: 1.08em;
+}
+
+math[display="block"] {
+  margin-block: 0.8em;
+}
+
+.quarto-listing .listing-title a {
+  color: #efede7;
+}
+
+.quarto-listing .listing-title a:hover {
+  color: #d7b878;
+}
+
+.quarto-listing .listing-subtitle,
+.quarto-listing .listing-subtitle a,
+.quarto-listing .listing-description,
+.quarto-listing .listing-description a {
+  color: #bbb9b3;
+}
+
+.quarto-listing .listing-category {
+  padding: 0.18rem 0.42rem;
+  color: #c8c6c0;
+  background: transparent;
+  border: 1px solid #464d56;
+  border-radius: 0.1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.quarto-listing .listing-category:hover {
+  color: #f0eee8;
+  background: #252b32;
+  border-color: #686e75;
+}
+
+.quarto-listing .thumbnail-image {
+  border: 1px solid #343a42;
+  border-radius: 0;
+}
+
+.callout {
+  border-radius: 0.1rem;
+  box-shadow: none;
+}
+
+pre,
+.sourceCode,
+div.sourceCode,
+div.sourceCode pre.sourceCode,
+pre.sourceCode,
+.cell-output,
+.cell-output pre {
+  color: #f8f8f2 !important;
+  background: #0d1117 !important;
+  border-color: #3a414a;
+  border-radius: 0.1rem;
+  box-shadow: none;
+}
+
+code.sourceCode > span,
+pre > code.sourceCode > span,
+code span {
+  color: #f8f8f2 !important;
+}
+
+code span.kw,
+code span.cf,
+code span.ot {
+  color: #66d9ef !important;
+}
+
+code span.fu {
+  color: #a6e22e !important;
+}
+
+code span.im,
+code span.op {
+  color: #f92672 !important;
+}
+
+code span.st,
+code span.ch,
+code span.ss,
+code span.vs {
+  color: #e6db74 !important;
+}
+
+code span.dv,
+code span.fl,
+code span.bn,
+code span.cn {
+  color: #ae81ff !important;
+}
+
+code span.bu,
+code span.ex,
+code span.dt {
+  color: #fd971f !important;
+}
+
+code span.va {
+  color: #f8f8f2 !important;
+}
+
+code span.co,
+code span.an,
+code span.cv,
+code span.do,
+code span.in {
+  color: #8b949e !important;
+  font-style: italic;
+}
+
+.table,
+table {
+  --bs-table-color: #e4e1da;
+  --bs-table-border-color: #4a5058;
+  --bs-table-hover-bg: rgb(201 168 106 / 7%);
+}
+
+#TOC a,
+.sidebar a,
+.page-navigation a {
+  color: #aaa9a4;
+}
+
+#TOC a:hover,
+#TOC a.active,
+.sidebar a:hover,
+.page-navigation a:hover {
+  color: #d7b878;
+}
+
+.share-button {
+  color: #d8d5ce;
+  background: transparent;
+  border-color: #565d65;
+  border-radius: 0.1rem;
+}
+
+.share-button:hover,
+.share-button:focus-visible {
+  color: #11161c;
+  background: #d7b878;
+  border-color: #d7b878;
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .academic-masthead {
+    margin-top: 0.5rem;
+    margin-bottom: 2.25rem;
+    padding: 2.25rem 0;
+  }
+
+  .academic-masthead p {
+    font-size: 1.05rem;
+  }
+
+  .article-cover {
+    margin: 1.5rem 0 2rem;
   }
 }

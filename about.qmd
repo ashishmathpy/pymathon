@@ -16,7 +16,7 @@ page-layout: article
 
 I am a mathematics enthusiast and curious problem solver who enjoys exploring ideas with clarity, structure, and creativity.
 
-Through PyMathon, I combine classical reasoning with modern computational tools such as Python, SymPy, NumPy, Matplotlib, and Manim. My aim is to explain ideas clearly, rigorously, and visually while preserving the discipline of traditional step-by-step problem solving.
+Through PyMathon, I write about mathematics through definitions, proofs, examples, and carefully structured problem solving. Computational tools are used only when they offer a useful experiment, numerical check, or visualisation.
 :::
 :::
 
@@ -28,15 +28,15 @@ Through PyMathon, I combine classical reasoning with modern computational tools 
 - Coordinate Geometry
 - Combinatorics
 - Number Theory
-- Python for Problem Solving
+- Sequences and Dynamical Systems
 - Visualisation
 - Manim
 
 ## Why I Created PyMathon
 
-I created PyMathon as a place where problem solving and Python can strengthen one another. Here, I want to:
+I created PyMathon as a place for serious but accessible mathematical exposition. Here, I want to:
 
-- connect ideas with Python;
+- use computation selectively to explore mathematical ideas;
 - present multiple approaches to a problem;
 - verify results computationally;
 - produce clear visual explanations; and

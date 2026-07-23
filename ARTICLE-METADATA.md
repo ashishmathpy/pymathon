@@ -18,3 +18,11 @@ Use these YAML fields for new blog posts. Keep title, description, author, date,
     ---
 
 Use draft: true while an article is unfinished. Add an article-information box near the beginning when those details are useful to readers.
+
+## Editorial rule
+
+PyMathon is a mathematics publication. Categories and prerequisites should
+describe the mathematics itself. Do not use `Python for Mathematics` as a
+category, and do not list Python as a prerequisite for a mathematical article.
+Python may appear later as an optional tool for exploration, visualisation, or
+verification, but it must not be presented as part of the mathematical proof.

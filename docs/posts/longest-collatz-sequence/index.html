@@ -77,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-9de9f6925d305bcf5b7eb9351f368d06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-858fa3a77d60bad26bcac1712a2fce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "@type": "WebSite",
   "name": "PyMathon",
   "url": "https://ashishmathpy.github.io/pymathon/",
-  "description": "Mathematics explained through rigorous reasoning, problem solving, Python verification, and visualisation.",
+  "description": "Carefully written mathematics through definitions, proofs, worked examples, problem solving, and selective computational exploration.",
   "inLanguage": "en",
   "publisher": {
     "@type": "Person",
@@ -125,35 +125,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Longest Collatz Sequence – PyMathon">
@@ -215,7 +186,6 @@ window.Quarto = {
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Python</div>
                 <div class="quarto-category">Project Euler</div>
                 <div class="quarto-category">Number Theory</div>
               </div>
@@ -255,11 +225,11 @@ window.Quarto = {
   <li><a href="#the-collatz-conjecture" id="toc-the-collatz-conjecture" class="nav-link" data-scroll-target="#the-collatz-conjecture">The Collatz Conjecture</a>
   <ul class="collapse">
   <li><a href="#why-this-is-still-a-conjecture" id="toc-why-this-is-still-a-conjecture" class="nav-link" data-scroll-target="#why-this-is-still-a-conjecture">Why this is still a conjecture</a></li>
-  <li><a href="#a-first-example-n13" id="toc-a-first-example-n13" class="nav-link" data-scroll-target="#a-first-example-n13">A first example: <span class="math inline">\(n=13\)</span></a></li>
+  <li><a href="#a-first-example-n13" id="toc-a-first-example-n13" class="nav-link" data-scroll-target="#a-first-example-n13">A first example: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>13</mn></mrow><annotation encoding="application/x-tex">n=13</annotation></semantics></math></a></li>
   </ul></li>
   <li><a href="#generating-collatz-sequences-with-python" id="toc-generating-collatz-sequences-with-python" class="nav-link" data-scroll-target="#generating-collatz-sequences-with-python">Generating Collatz Sequences with Python</a>
   <ul class="collapse">
-  <li><a href="#trajectory-for-n27" id="toc-trajectory-for-n27" class="nav-link" data-scroll-target="#trajectory-for-n27">Trajectory for <span class="math inline">\(n=27\)</span></a></li>
+  <li><a href="#trajectory-for-n27" id="toc-trajectory-for-n27" class="nav-link" data-scroll-target="#trajectory-for-n27">Trajectory for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>27</mn></mrow><annotation encoding="application/x-tex">n=27</annotation></semantics></math></a></li>
   </ul></li>
   <li><a href="#project-euler-problem-14" id="toc-project-euler-problem-14" class="nav-link" data-scroll-target="#project-euler-problem-14">Project Euler Problem 14</a></li>
   <li><a href="#the-mathematical-structure-of-the-search" id="toc-the-mathematical-structure-of-the-search" class="nav-link" data-scroll-target="#the-mathematical-structure-of-the-search">The Mathematical Structure of the Search</a></li>
@@ -283,61 +253,61 @@ window.Quarto = {
 <section id="the-collatz-process" class="level2">
 <h2 class="anchored" data-anchor-id="the-collatz-process">The Collatz Process</h2>
 <p>For a positive integer, apply one of two operations: halve an even number, and replace an odd number by three times the number plus one. Repeating this instruction produces a Collatz sequence, also called an orbit.</p>
-<p>Let <span class="math inline">\(\mathbb{N}=\{1,2,3,\ldots\}\)</span>. The Collatz map is</p>
-<p><span class="math display">\[
+<p>Let <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℕ</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mi>…</mi><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\mathbb{N}=\{1,2,3,\ldots\}</annotation></semantics></math>. The Collatz map is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><mstyle displaystyle="true"><mfrac><mi>n</mi><mn>2</mn></mfrac></mstyle><mo>,</mo></mtd><mtd columnalign="left" style="text-align: left"><mrow><mtext mathvariant="normal">if </mtext><mspace width="0.333em"></mspace></mrow><mi>n</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> is even</mtext></mrow><mo>,</mo></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mn>3</mn><mi>n</mi><mo>+</mo><mn>1</mn><mo>,</mo></mtd><mtd columnalign="left" style="text-align: left"><mrow><mtext mathvariant="normal">if </mtext><mspace width="0.333em"></mspace></mrow><mi>n</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> is odd</mtext></mrow><mi>.</mi></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">
 T(n)=
 \begin{cases}
 \dfrac{n}{2}, &amp; \text{if } n \text{ is even},\\[6pt]
 3n+1, &amp; \text{if } n \text{ is odd}.
 \end{cases}
-\]</span></p>
-<p>Starting at <span class="math inline">\(n\)</span>, the successive values are <span class="math inline">\(n,T(n),T^2(n),\ldots\)</span>. Here <span class="math inline">\(T^k(n)\)</span> means that the map has been applied <span class="math inline">\(k\)</span> times.</p>
+</annotation></semantics></math></p>
+<p>Starting at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>, the successive values are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>,</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><msup><mi>T</mi><mn>2</mn></msup><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>…</mi></mrow><annotation encoding="application/x-tex">n,T(n),T^2(n),\ldots</annotation></semantics></math>. Here <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mi>k</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">T^k(n)</annotation></semantics></math> means that the map has been applied <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> times.</p>
 </section>
 <section id="the-collatz-conjecture" class="level2">
 <h2 class="anchored" data-anchor-id="the-collatz-conjecture">The Collatz Conjecture</h2>
-<p>The conjecture states that every positive starting value eventually reaches <span class="math inline">\(1\)</span>:</p>
-<p><span class="math display">\[
+<p>The conjecture states that every positive starting value eventually reaches <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∀</mo><mi>n</mi><mo>∈</mo><mi>ℕ</mi><mo>,</mo><mspace width="1.0em"></mspace><mo>∃</mo><mi>k</mi><mo>≥</mo><mn>0</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> such that </mtext><mspace width="0.333em"></mspace></mrow><msup><mi>T</mi><mi>k</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \forall n\in\mathbb{N},\quad
 \exists k\geq 0
 \text{ such that }
 T^k(n)=1.
-\]</span></p>
-<p>Once the value <span class="math inline">\(1\)</span> is reached, iteration continues around the familiar cycle</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>Once the value <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math> is reached, iteration continues around the familiar cycle</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>→</mo><mn>4</mn><mo>→</mo><mn>2</mn><mo>→</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 1\rightarrow4\rightarrow2\rightarrow1.
-\]</span></p>
-<p>For chain lengths, we stop at the first occurrence of <span class="math inline">\(1\)</span>.</p>
+</annotation></semantics></math></p>
+<p>For chain lengths, we stop at the first occurrence of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.</p>
 <section id="why-this-is-still-a-conjecture" class="level3">
 <h3 class="anchored" data-anchor-id="why-this-is-still-a-conjecture">Why this is still a conjecture</h3>
 <p>Computers have checked the rule for extraordinarily many starting values. That is convincing evidence, but it is not a proof. A finite computation can only check finitely many integers; the statement concerns every positive integer.</p>
-<p>A proof would have to rule out both an orbit that grows without bound and a non-trivial cycle other than <span class="math inline">\(1\to4\to2\to1\)</span>. Neither has been ruled out for all positive integers. The original Collatz conjecture therefore remains a conjecture, not a theorem.</p>
+<p>A proof would have to rule out both an orbit that grows without bound and a non-trivial cycle other than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>→</mo><mn>4</mn><mo>→</mo><mn>2</mn><mo>→</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\to4\to2\to1</annotation></semantics></math>. Neither has been ruled out for all positive integers. The original Collatz conjecture therefore remains a conjecture, not a theorem.</p>
 </section>
 <section id="a-first-example-n13" class="level3">
-<h3 class="anchored" data-anchor-id="a-first-example-n13">A first example: <span class="math inline">\(n=13\)</span></h3>
+<h3 class="anchored" data-anchor-id="a-first-example-n13">A first example: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>13</mn></mrow><annotation encoding="application/x-tex">n=13</annotation></semantics></math></h3>
 <p>Applying the rule carefully gives</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>13</mn><mo>→</mo><mn>40</mn><mo>→</mo><mn>20</mn><mo>→</mo><mn>10</mn><mo>→</mo><mn>5</mn><mo>→</mo><mn>16</mn><mo>→</mo><mn>8</mn><mo>→</mo><mn>4</mn><mo>→</mo><mn>2</mn><mo>→</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 13\rightarrow40\rightarrow20\rightarrow10\rightarrow5
 \rightarrow16\rightarrow8\rightarrow4\rightarrow2\rightarrow1.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>This sequence contains</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> terms</mtext></mrow></mrow><annotation encoding="application/x-tex">
 10\text{ terms}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>and takes</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>9</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> steps</mtext></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
 9\text{ steps}.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>The distinction matters throughout this article:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">number of steps</mtext><mo>=</mo><mtext mathvariant="normal">number of terms</mtext><mo>−</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \text{number of steps}
 =
 \text{number of terms}-1.
-\]</span></p>
+</annotation></semantics></math></p>
 </section>
 </section>
 <section id="generating-collatz-sequences-with-python" class="level2">
 <h2 class="anchored" data-anchor-id="generating-collatz-sequences-with-python">Generating Collatz Sequences with Python</h2>
-<p>Before writing a search program, we should be able to generate one orbit correctly. The function below checks that its input is a positive integer and returns the sequence up to the first <span class="math inline">\(1\)</span>.</p>
+<p>Before writing a search program, we should be able to generate one orbit correctly. The function below checks that its input is a positive integer and returns the sequence up to the first <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.</p>
 <div id="5d3ba664" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.396416Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.396313Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.401273Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.401046Z&quot;}}" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
@@ -367,7 +337,7 @@ Terms: 10
 Steps: 9</code></pre>
 </div>
 </div>
-<p>The output agrees with the hand calculation: <span class="math inline">\(13\)</span> has ten terms and nine steps.</p>
+<p>The output agrees with the hand calculation: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>13</mn><annotation encoding="application/x-tex">13</annotation></semantics></math> has ten terms and nine steps.</p>
 <p>For a few selected values, it is useful to record the chain length and the largest value reached. This is experimental verification of particular cases, not a proof of the conjecture.</p>
 <div id="85b42dd4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.402378Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.402303Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.404421Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.404192Z&quot;}}" data-execution_count="2">
 <details open="" class="code-fold">
@@ -445,7 +415,7 @@ Steps: 9</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The chain beginning at <span class="math inline">\(27\)</span> is worth noticing. It starts small, rises as high as <span class="math inline">\(9232\)</span>, and only then returns to <span class="math inline">\(1\)</span>. This is a useful reminder that the rule does not produce a steadily decreasing sequence.</p>
+<p>The chain beginning at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>27</mn><annotation encoding="application/x-tex">27</annotation></semantics></math> is worth noticing. It starts small, rises as high as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>9232</mn><annotation encoding="application/x-tex">9232</annotation></semantics></math>, and only then returns to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>. This is a useful reminder that the rule does not produce a steadily decreasing sequence.</p>
 <div id="601c5dd9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.405505Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.405427Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.407189Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.406966Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
@@ -461,7 +431,7 @@ Maximum value: 9232</code></pre>
 </div>
 </div>
 <section id="trajectory-for-n27" class="level3">
-<h3 class="anchored" data-anchor-id="trajectory-for-n27">Trajectory for <span class="math inline">\(n=27\)</span></h3>
+<h3 class="anchored" data-anchor-id="trajectory-for-n27">Trajectory for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>27</mn></mrow><annotation encoding="application/x-tex">n=27</annotation></semantics></math></h3>
 <p>A plot makes the rise and fall of this orbit easier to see.</p>
 <div id="ca913a71" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.408325Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.408255Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.938188Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.937909Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
@@ -498,29 +468,29 @@ Maximum value: 9232</code></pre>
 <p>The Project Euler question is finite. It asks:</p>
 <blockquote class="blockquote">
 <p>Among all starting integers satisfying</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>&lt;</mo><mn>1</mn><mo>,</mo><mn>000</mn><mo>,</mo><mn>000</mn><mo>,</mo></mrow><annotation encoding="application/x-tex">
 1\leq n&lt;1{,}000{,}000,
-\]</span></p>
-<p>find the starting value that produces the longest Collatz chain before reaching <span class="math inline">\(1\)</span>.</p>
+</annotation></semantics></math></p>
+<p>find the starting value that produces the longest Collatz chain before reaching <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.</p>
 </blockquote>
 <p>Only the starting number must be below one million. Terms later in the chain may be much larger. This is important: the eventual winner rises to more than two billion.</p>
 </section>
 <section id="the-mathematical-structure-of-the-search" class="level2">
 <h2 class="anchored" data-anchor-id="the-mathematical-structure-of-the-search">The Mathematical Structure of the Search</h2>
 <p>Define</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mtext mathvariant="normal">number of terms from </mtext><mspace width="0.333em"></mspace></mrow><mi>n</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> to the first occurrence of </mtext><mspace width="0.333em"></mspace></mrow><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
 L(n)=\text{number of terms from }n\text{ to the first occurrence of }1.
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Then</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">
 L(1)=1
-\]</span></p>
-<p>and, for <span class="math inline">\(n&gt;1\)</span>,</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>and, for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n&gt;1</annotation></semantics></math>,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>+</mo><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 L(n)=1+L(T(n)).
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Equivalently,</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><mn>1</mn><mo>+</mo><mi>L</mi><mrow><mo stretchy="true" form="prefix">(</mo><mstyle displaystyle="true"><mfrac><mi>n</mi><mn>2</mn></mfrac></mstyle><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mtd><mtd columnalign="left" style="text-align: left"><mi>n</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> even</mtext></mrow><mo>,</mo></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mn>1</mn><mo>+</mo><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>3</mn><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mtd><mtd columnalign="left" style="text-align: left"><mi>n</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> odd</mtext></mrow><mi>.</mi></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">
 L(n)=
 \begin{cases}
 1+L\left(\dfrac{n}{2}\right),
@@ -528,29 +498,29 @@ L(n)=
 1+L(3n+1),
 &amp; n\text{ odd}.
 \end{cases}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Thus the required value is</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mi mathvariant="normal">max</mi></msub><mo>=</mo><munder><mi mathvariant="normal">arg max</mi><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>&lt;</mo><mn>1</mn><mo>,</mo><mn>000</mn><mo>,</mo><mn>000</mn></mrow></munder><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 n_{\max}
 =
 \operatorname*{arg\,max}_{1\leq n&lt;1{,}000{,}000}L(n).
-\]</span></p>
-<p>The key observation is that chains share tails. Once a chain reaches a previously studied value, the remaining work is already known. For example, if <span class="math inline">\(L(10)\)</span> is known, then</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>The key observation is that chains share tails. Once a chain reaches a previously studied value, the remaining work is already known. For example, if <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">L(10)</annotation></semantics></math> is known, then</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>20</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>+</mo><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 L(20)=1+L(10),
-\]</span></p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>40</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>+</mo><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>20</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 L(40)=1+L(20),
-\]</span></p>
+</annotation></semantics></math></p>
 <p>and</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>13</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>+</mo><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>40</mn><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 L(13)=1+L(40).
-\]</span></p>
+</annotation></semantics></math></p>
 <p>This recurrence is the mathematical reason that memoization works. Before we write the efficient program, it is useful to see the direct method.</p>
 </section>
 <section id="a-direct-python-solution" class="level2">
 <h2 class="anchored" data-anchor-id="a-direct-python-solution">A Direct Python Solution</h2>
-<p>The direct method constructs a complete chain for every possible starting value. It is correct, but it repeatedly computes common tails such as <span class="math inline">\(40\to20\to10\to\cdots\to1\)</span>.</p>
+<p>The direct method constructs a complete chain for every possible starting value. It is correct, but it repeatedly computes common tails such as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40</mn><mo>→</mo><mn>20</mn><mo>→</mo><mn>10</mn><mo>→</mo><mi>⋯</mi><mo>→</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">40\to20\to10\to\cdots\to1</annotation></semantics></math>.</p>
 <div id="0f81ac89" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.939551Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.939444Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.946015Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.945757Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
@@ -573,11 +543,11 @@ L(13)=1+L(40).
 <pre><code>(871, 179)</code></pre>
 </div>
 </div>
-<p>For a small limit this is perfectly adequate. At one million starts, however, the repeated tails become expensive. The recurrence for <span class="math inline">\(L(n)\)</span> tells us exactly what to store.</p>
+<p>For a small limit this is perfectly adequate. At one million starts, however, the repeated tails become expensive. The recurrence for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">L(n)</annotation></semantics></math> tells us exactly what to store.</p>
 </section>
 <section id="memoization" class="level2">
 <h2 class="anchored" data-anchor-id="memoization">Memoization</h2>
-<p>Start with the known value <span class="math inline">\(L(1)=1\)</span>. When a new path reaches a value already stored in a cache, work backwards through the new part of the path. Each predecessor has a chain one term longer than its successor.</p>
+<p>Start with the known value <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">L(1)=1</annotation></semantics></math>. When a new path reaches a value already stored in a cache, work backwards through the new part of the path. Each predecessor has a chain one term longer than its successor.</p>
 <div id="babbfa1b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:44.947247Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:44.947167Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:44.949607Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:44.949393Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
@@ -641,23 +611,23 @@ Number of steps: 524</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mn>837799</mn></menclose><annotation encoding="application/x-tex">
 \boxed{837799}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>is the starting value below one million with the longest Collatz chain. The chain contains</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mn>525</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> terms</mtext></mrow></mrow></menclose><annotation encoding="application/x-tex">
 \boxed{525\text{ terms}}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>and requires</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><menclose notation="box"><mrow><mn>524</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> steps</mtext></mrow></mrow></menclose><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \boxed{524\text{ steps}}.
-\]</span></p>
+</annotation></semantics></math></p>
 </div>
 </div>
 </section>
 <section id="inspecting-the-winning-sequence" class="level2">
 <h2 class="anchored" data-anchor-id="inspecting-the-winning-sequence">Inspecting the Winning Sequence</h2>
-<p>The winning chain begins with large oscillations but ends in the familiar tail through <span class="math inline">\(40,20,10,5,\ldots,1\)</span>.</p>
+<p>The winning chain begins with large oscillations but ends in the familiar tail through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40</mn><mo>,</mo><mn>20</mn><mo>,</mo><mn>10</mn><mo>,</mo><mn>5</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">40,20,10,5,\ldots,1</annotation></semantics></math>.</p>
 <div id="8243cb04" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-12T06:31:45.611649Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-12T06:31:45.611490Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-12T06:31:45.613767Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-12T06:31:45.613520Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Hide code</summary>
@@ -707,37 +677,37 @@ Maximum value reached: 2,974,984,576</code></pre>
 </div>
 </div>
 </div>
-<p>The logarithmic vertical scale is necessary here: the chain reaches <span class="math inline">\(2{,}974{,}984{,}576\)</span>, far above its starting value.</p>
+<p>The logarithmic vertical scale is necessary here: the chain reaches <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>,</mo><mn>974</mn><mo>,</mo><mn>984</mn><mo>,</mo><mn>576</mn></mrow><annotation encoding="application/x-tex">2{,}974{,}984{,}576</annotation></semantics></math>, far above its starting value.</p>
 </section>
 <section id="mathematical-ideas-connected-with-the-collatz-conjecture" class="level2">
 <h2 class="anchored" data-anchor-id="mathematical-ideas-connected-with-the-collatz-conjecture">Mathematical Ideas Connected with the Collatz Conjecture</h2>
 <p>The Collatz map is a discrete dynamical system: it studies the long-term behaviour of repeatedly applying a function on the positive integers. Questions about iteration include whether an orbit reaches a cycle, whether it escapes, and how long it takes to fall below its starting value.</p>
 <p>The <strong>total stopping time</strong> is</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mi>∞</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mi mathvariant="normal">min</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">{</mo><mi>k</mi><mo>≥</mo><mn>0</mn><mo>:</mo><msup><mi>T</mi><mi>k</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \sigma_\infty(n)=\min\{k\geq0:T^k(n)=1\}.
-\]</span></p>
-<p>When the orbit reaches <span class="math inline">\(1\)</span>, <span class="math inline">\(L(n)=\sigma_\infty(n)+1\)</span>. A related stopping time is the first <span class="math inline">\(k\geq1\)</span> for which <span class="math inline">\(T^k(n)&lt;n\)</span>. Proving that every starting value eventually falls below itself would give a route to the conjecture by strong induction, but that statement is also unproved.</p>
-<p>For odd <span class="math inline">\(n\)</span>, the accelerated Collatz map, often called the Syracuse map, divides all powers of two out of <span class="math inline">\(3n+1\)</span> at once:</p>
-<p><span class="math display">\[
+</annotation></semantics></math></p>
+<p>When the orbit reaches <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>σ</mi><mi>∞</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">L(n)=\sigma_\infty(n)+1</annotation></semantics></math>. A related stopping time is the first <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>≥</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k\geq1</annotation></semantics></math> for which <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mi>k</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>&lt;</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">T^k(n)&lt;n</annotation></semantics></math>. Proving that every starting value eventually falls below itself would give a route to the conjecture by strong induction, but that statement is also unproved.</p>
+<p>For odd <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>, the accelerated Collatz map, often called the Syracuse map, divides all powers of two out of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">3n+1</annotation></semantics></math> at once:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mn>3</mn><mi>n</mi><mo>+</mo><mn>1</mn></mrow><msup><mn>2</mn><mrow><msub><mi>ν</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mn>3</mn><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow></msup></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 S(n)=\frac{3n+1}{2^{\nu_2(3n+1)}}.
-\]</span></p>
-<p>Here <span class="math inline">\(\nu_2(m)\)</span> is the exponent of <span class="math inline">\(2\)</span> in <span class="math inline">\(m\)</span>. The map sends odd integers directly to odd integers. Parity sequences, or parity vectors, record the even and odd decisions along an orbit. Once a finite parity pattern is fixed, the iterate has an affine form involving powers of <span class="math inline">\(3\)</span> and <span class="math inline">\(2\)</span>; the difficulty is that the pattern depends on the orbit itself.</p>
-<p>The directed Collatz graph has an arrow <span class="math inline">\(n\longrightarrow T(n)\)</span> from every positive integer. Reversing the arrows produces inverse Collatz trees, which make shared tails visible. Probabilistic heuristics model the powers of two dividing <span class="math inline">\(3n+1\)</span> as if they were random; they help explain the observed downward tendency, but they are not proofs because actual parity events are deterministic and dependent.</p>
+</annotation></semantics></math></p>
+<p>Here <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ν</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\nu_2(m)</annotation></semantics></math> is the exponent of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math> in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>. The map sends odd integers directly to odd integers. Parity sequences, or parity vectors, record the even and odd decisions along an orbit. Once a finite parity pattern is fixed, the iterate has an affine form involving powers of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math>; the difficulty is that the pattern depends on the orbit itself.</p>
+<p>The directed Collatz graph has an arrow <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>→</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">n\longrightarrow T(n)</annotation></semantics></math> from every positive integer. Reversing the arrows produces inverse Collatz trees, which make shared tails visible. Probabilistic heuristics model the powers of two dividing <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">3n+1</annotation></semantics></math> as if they were random; they help explain the observed downward tendency, but they are not proofs because actual parity events are deterministic and dependent.</p>
 <p>There are important partial results. Terence Tao proved that, in a precise logarithmic-density sense, almost all orbits attain values below any function that tends to infinity. “Almost all” is not “all”, so this does not settle the original conjecture. Generalized Collatz problems can even be undecidable in some settings. That result concerns generalized systems; it does not show that the original Collatz conjecture is undecidable.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>The Collatz conjecture remains open. Project Euler Problem 14 is nevertheless a finite problem, and the recurrence</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>+</mo><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 L(n)=1+L(T(n))
-\]</span></p>
-<p>turns its repeated tails into a practical memoized computation. The longest chain below one million starts at <span class="math inline">\(837799\)</span> and has <span class="math inline">\(525\)</span> terms.</p>
+</annotation></semantics></math></p>
+<p>turns its repeated tails into a practical memoized computation. The longest chain below one million starts at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>837799</mn><annotation encoding="application/x-tex">837799</annotation></semantics></math> and has <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>525</mn><annotation encoding="application/x-tex">525</annotation></semantics></math> terms.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ol type="1">
 <li><a href="https://projecteuler.net/problem=14">Project Euler, Problem 14: Longest Collatz Sequence</a></li>
-<li>Jeffrey C. Lagarias, <a href="https://arxiv.org/abs/2111.02635">The <span class="math inline">\(3x+1\)</span> Problem: An Overview</a></li>
+<li>Jeffrey C. Lagarias, <a href="https://arxiv.org/abs/2111.02635">The <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">3x+1</annotation></semantics></math> Problem: An Overview</a></li>
 <li>Terence Tao, <a href="https://arxiv.org/abs/1909.03562">Almost All Orbits of the Collatz Map Attain Almost Bounded Values</a></li>
 <li>Terence Tao, <a href="https://terrytao.wordpress.com/2019/09/10/almost-all-collatz-orbits-attain-almost-bounded-values/">expository discussion of the result</a></li>
 <li>Stuart A. Kurtz and Janos Simon, <a href="https://link.springer.com/chapter/10.1007/978-3-540-72504-6_49">The Undecidability of the Generalized Collatz Problem</a></li>

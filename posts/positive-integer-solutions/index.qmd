@@ -1,13 +1,12 @@
 ---
 title: "Four Ways to Count Positive Integer Solutions"
-subtitle: "Solving x + 2y + 3z = 15 using mathematics and Python"
+subtitle: "Four mathematical approaches to x + 2y + 3z = 15"
 author: "Ashish K. Srivastava"
 date: "2026-07-05"
-description: "Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, generating functions, and Python verification."
+description: "Count the positive integer solutions of x + 2y + 3z = 15 through direct counting, substitutions, floor functions, and generating functions, with a computational check."
 categories:
 - Mathematics
 - Combinatorics
-- Python for Mathematics
 - Problem Solving
 difficulty: "Intermediate"
 prerequisites: "Basic algebra, inequalities, and elementary counting"
@@ -179,7 +178,7 @@ $$
 
 That coefficient is $12$, in agreement with the direct counts.
 
-## Python Verification
+## Computational Exploration
 
 The following program uses the equation to compute $x$ after choosing positive $y$ and $z$. It prints the triples in the same order as the hand-counting method.
 

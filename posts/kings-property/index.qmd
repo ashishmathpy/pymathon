@@ -3,7 +3,7 @@ title: "King's Property for Definite Integrals"
 subtitle: "Let me show you the algebra, the geometry, and an interactive area proof"
 author: "Ashish K. Srivastava"
 date: "2026-06-21"
-description: "King's property explained using substitution, graph reflection, Python, and an interactive SVG area applet."
+description: "King's property explained through substitution, graph reflection, worked examples, and an optional computational exploration."
 categories:
 - JEE Mathematics
 - Calculus
@@ -135,7 +135,7 @@ The complete code behind the interactive graph is included below. Expand the blo
 ```
 :::
 
-## Verifying the picture with Python
+## Computational Exploration
 
 The same asymmetric function can be plotted and integrated numerically with Python. This gives an independent computational check of the graphical argument.
 

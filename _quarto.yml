@@ -11,6 +11,7 @@ project:
     - source-notebooks/positive-integer-solutions.ipynb
   resources:
     - share.js
+    - fonts/**
     - source-notebooks/positive-integer-solutions.ipynb
     # Place a Google Search Console HTML verification file in the project root.
     # Quarto will copy a file named google*.html into docs unchanged.
@@ -18,7 +19,7 @@ project:
 
 website:
   title: "PyMathon"
-  description: "PyMathon explores mathematics through rigorous reasoning, multiple solution methods, Python verification, and visualisation."
+  description: "PyMathon presents carefully written mathematics through definitions, proofs, worked examples, problem solving, and selective computational exploration."
   site-url: https://ashishmathpy.github.io/pymathon/
   open-graph: true
   search: true
@@ -36,6 +37,8 @@ website:
 format:
   html:
     theme: cosmo
+    html-math-method: mathml
+    highlight-style: monokai
     canonical-url: true
     toc: true
     css: styles.css
