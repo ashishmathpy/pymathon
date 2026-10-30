@@ -21,88 +21,142 @@
 
 
 
-<p>You are waiting to bring your first piece onto the Ludo board. You have three attempts to roll a six. Surely that gives you a decent chance of getting started?</p>
-<p>It does. But there is a catch: if three consecutive sixes cancel your entire turn, the six that brought your piece out might not count after all.</p>
-<p>That small rule changes the question. We need to find the probability that <strong>a piece remains out at the end of the opening turn</strong>.</p>
-<p>For the rules below, the answer is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>≈</mo><mn>40.96</mn><mi>%</mi><mi>.</mi></mrow></menclose><annotation encoding="application/x-tex">
-\boxed{\frac{3185}{7776}\approx 40.96\%.}
-</annotation></semantics></math></p>
-<p>Let’s work out why, then ask Python to play one million opening turns.</p>
-<section id="first-agree-on-the-rules" class="level2">
-<h2 class="anchored" data-anchor-id="first-agree-on-the-rules">First, agree on the rules</h2>
-<p>Ludo has different rule variations. This article uses the following precise version:</p>
-<ol type="1">
-<li>You begin with no piece outside the starting area and get up to three attempts to obtain your first six.</li>
-<li>If all three attempts are non-sixes, your turn ends without bringing a piece out.</li>
-<li>Your first six brings a piece out and gives you an extra roll. A second consecutive six gives you another extra roll.</li>
-<li>A non-six after one or two consecutive sixes ends the turn successfully: a piece remains out.</li>
-<li>Three consecutive sixes cancel the <strong>entire turn</strong>, including bringing the piece out.</li>
-</ol>
-<p>We assume a fair die, independent rolls, and that you choose to bring a piece out when permitted. We only track whether a piece remains out; later movement around the board is outside this experiment.</p>
-<p>An opening turn can therefore last more than three rolls. For example, <code>2, 4, 6, 6, 3</code> is a successful five-roll turn. The first two rolls use up unsuccessful starting attempts; the sixes then earn extra rolls. In contrast, <code>2, 4, 6, 6, 6</code> cancels the turn.</p>
-</section>
-<section id="why-three-attempts-do-not-give-a-probability-of-one-half" class="level2">
-<h2 class="anchored" data-anchor-id="why-three-attempts-do-not-give-a-probability-of-one-half">Why three attempts do not give a probability of one-half</h2>
-<p>A tempting calculation is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-3\times\frac16=\frac12.
-</annotation></semantics></math></p>
-<p>However, the events “a six on roll one”, “a six on roll two”, and “a six on roll three” overlap when we imagine three pre-generated rolls. Adding their probabilities counts some outcomes more than once.</p>
-<p>The easier calculation uses the opposite event. The probability of no six in three rolls is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>3</mn></msup><mo>=</mo><mfrac><mn>125</mn><mn>216</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\left(\frac56\right)^3=\frac{125}{216}.
-</annotation></semantics></math></p>
-<p>Therefore, the probability of reaching the first six within your starting allowance is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>3</mn></msup><mo>=</mo><mfrac><mn>91</mn><mn>216</mn></mfrac><mo>≈</mo><mn>42.13</mn><mi>%</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
-1-\left(\frac56\right)^3=\frac{91}{216}\approx42.13\%.
-</annotation></semantics></math></p>
-<p>This answers the first part of the problem. We still have to account for a possible cancellation.</p>
-</section>
-<section id="getting-out-then-staying-out" class="level2">
-<h2 class="anchored" data-anchor-id="getting-out-then-staying-out">Getting out, then staying out</h2>
-<p>Once your first six appears, there are three possible endings:</p>
+<p>In Ludo, we need a six to bring a piece out. If we get three chances, what is the probability of getting a piece out in that turn?</p>
+<p>Before calculating, we need to settle one rule. What happens if we roll three sixes in a row?</p>
+<p>Here I am considering the version in which <strong>three consecutive sixes cancel the whole turn</strong>, including the move that brought the piece out. With this rule, getting a six is only part of the problem. We have to see whether the piece is still out when the turn ends.</p>
+<p>Let us work through it.</p>
+<section id="the-rules-we-will-use" class="level2">
+<h2 class="anchored" data-anchor-id="the-rules-we-will-use">The rules we will use</h2>
+<p>Suppose all our pieces are still in the starting area.</p>
 <ul>
-<li>The next roll is a non-six: the piece remains out.</li>
-<li>The next roll is a six, followed by a non-six: the piece remains out.</li>
-<li>The next two rolls are both sixes: three consecutive sixes cancel the turn.</li>
+<li>We get up to three attempts to roll the first six. If none is a six, the turn is over.</li>
+<li>On getting a six, we bring a piece out and roll again.</li>
+<li>A second consecutive six gives one more roll.</li>
+<li>If the next roll is anything other than six, the turn ends and the piece remains out.</li>
+<li>If we get three consecutive sixes, the whole turn is cancelled. No piece remains out.</li>
 </ul>
-<p>Given that the first six has occurred, cancellation requires two more sixes. Its probability is</p>
+<p>We will use a fair die: each face has probability <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">1/6</annotation></semantics></math>, and one roll does not affect the next. We also assume that we bring a piece out whenever we get the first six.</p>
+<p>These rules may differ from the version you play. The answer below depends on them.</p>
+<p>Look at these examples before going to the calculation:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rolls in the turn</th>
+<th>What happens?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">2,4,3</annotation></semantics></math></td>
+<td>No six in three attempts. No piece comes out.</td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">2,6,3</annotation></semantics></math></td>
+<td>The six brings a piece out. The turn ends on 3, and the piece stays out.</td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">2,4,6,6,3</annotation></semantics></math></td>
+<td>The sixes give extra rolls. The turn ends on 3, and a piece stays out.</td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">2,4,6,6,6</annotation></semantics></math></td>
+<td>Three consecutive sixes cancel the whole turn. No piece remains out.</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that a <strong>turn</strong> can contain five rolls. The three-attempt limit is for getting the first six; extra rolls can follow it.</p>
+</section>
+<section id="first-what-is-the-chance-of-getting-a-six" class="level2">
+<h2 class="anchored" data-anchor-id="first-what-is-the-chance-of-getting-a-six">First, what is the chance of getting a six?</h2>
+<p>On one roll, five of the six faces are not six. So</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">no six on one roll</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(\text{no six on one roll})=\frac56.
+</annotation></semantics></math></p>
+<p>To get no six in all three attempts, this must happen three times:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">no six in three attempts</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo>×</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo>×</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>125</mn><mn>216</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(\text{no six in three attempts})
+=\frac56\times\frac56\times\frac56
+=\frac{125}{216}.
+</annotation></semantics></math></p>
+<p>Either we get a six within the three attempts, or we do not. Their probabilities add to 1. Therefore,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">get the first six</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mn>125</mn><mn>216</mn></mfrac><mo>=</mo><mfrac><mn>91</mn><mn>216</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(\text{get the first six})
+=1-\frac{125}{216}
+=\frac{91}{216}.
+</annotation></semantics></math></p>
+<p>This is about <strong>42.13%</strong>.</p>
+<p>Why not simply use <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">3\times\frac16=\frac12</annotation></semantics></math>? Because the three possible positions of the <strong>first</strong> six do not each have probability <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">1/6</annotation></semantics></math>. For the first six to appear on the second attempt, the first attempt must fail. For it to appear on the third, both earlier attempts must fail. The correct addition would be</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>+</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo>⋅</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>+</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo>⋅</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo>⋅</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>91</mn><mn>216</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\frac16+\frac56\cdot\frac16
++\frac56\cdot\frac56\cdot\frac16
+=\frac{91}{216}.
+</annotation></semantics></math></p>
+<p>Both methods give the same answer.</p>
+</section>
+<section id="now-can-that-six-be-cancelled" class="level2">
+<h2 class="anchored" data-anchor-id="now-can-that-six-be-cancelled">Now, can that six be cancelled?</h2>
+<p>Yes. Suppose we have just rolled our first six and brought a piece out.</p>
+<p>For the turn to be cancelled, the next <strong>two</strong> rolls must both be sixes. The chance of that is</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>×</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>36</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \frac16\times\frac16=\frac1{36}.
 </annotation></semantics></math></p>
-<p>The probability of avoiding cancellation from that point is consequently</p>
+<p>So, after getting the first six, the chance that our piece stays out is</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><mn>36</mn></mfrac><mo>=</mo><mfrac><mn>35</mn><mn>36</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 1-\frac1{36}=\frac{35}{36}.
 </annotation></semantics></math></p>
-<p>Future rolls are independent of the rolls that led to the first six. This remaining chance is the same whether the first six appeared on attempt one, two, or three. Multiplying gives</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">piece remains out</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">first six within three attempts</mtext><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mspace width="1.0em"></mspace><mo>×</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">avoid cancellation</mtext><mo>∣</mo><mtext mathvariant="normal">first six reached</mtext><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>91</mn><mn>216</mn></mfrac><mo>×</mo><mfrac><mn>35</mn><mn>36</mn></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><menclose notation="box"><mrow><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>≈</mo><mn>40.959362</mn><mi>%</mi><mi>.</mi></mrow></menclose></mtd></mtr></mtable><annotation encoding="application/x-tex">
+<p>This includes both acceptable endings: a non-six immediately after the first six, or one more six followed by a non-six.</p>
+<p>It does not matter whether our first six came on attempt one, two, or three. The rolls after it have the same probabilities in every case.</p>
+<p>We can now put the two parts together. We must get the first six <strong>and then</strong> avoid cancellation:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">piece stays out</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>91</mn><mn>216</mn></mfrac><mo>×</mo><mfrac><mn>35</mn><mn>36</mn></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>3185</mn><mn>7776</mn></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>≈</mo><mn>0.409594</mn><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
-P(\text{piece remains out})
-&amp;=P(\text{first six within three attempts})\\
-&amp;\quad\times P(\text{avoid cancellation}\mid\text{first six reached})\\
-&amp;=\frac{91}{216}\times\frac{35}{36}\\
-&amp;=\boxed{\frac{3185}{7776}\approx40.959362\%.}
+P(\text{piece stays out})
+&amp;=\frac{91}{216}\times\frac{35}{36}\\[4pt]
+&amp;=\frac{3185}{7776}\\[4pt]
+&amp;\approx 0.409594.
 \end{aligned}
 </annotation></semantics></math></p>
-<p>The probability that no piece remains out is</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The probability that a piece remains out at the end of the opening turn is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>≈</mo><mn>40.96</mn><mi>%</mi><mi>.</mi></mrow></menclose><annotation encoding="application/x-tex">
+\boxed{\frac{3185}{7776}\approx40.96\%.}
+</annotation></semantics></math></p>
+<p>Think of it as roughly <strong>41 successful opening turns out of every 100</strong>, over a large number of turns. It does not mean that every group of 100 turns will contain exactly 41 successes.</p>
+</div>
+</div>
+<p>The remaining probability is</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>=</mo><mfrac><mn>4591</mn><mn>7776</mn></mfrac><mo>≈</mo><mn>59.04</mn><mi>%</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
-1-\frac{3185}{7776}=\frac{4591}{7776}\approx59.04\%.
+1-\frac{3185}{7776}
+=\frac{4591}{7776}
+\approx59.04\%.
 </annotation></semantics></math></p>
-<p>Under these rules, an unsuccessful opening turn is more likely than a successful one.</p>
-</section>
-<section id="a-second-view-list-every-possible-ending" class="level2">
-<h2 class="anchored" data-anchor-id="a-second-view-list-every-possible-ending">A second view: list every possible ending</h2>
-<p>To see the structure more clearly, write</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mtext mathvariant="normal">a six</mtext><mo>,</mo><mspace width="2.0em"></mspace><mi>F</mi><mo>=</mo><mtext mathvariant="normal">any non-six</mtext><mo>,</mo></mrow><annotation encoding="application/x-tex">
-S=\text{a six},\qquad F=\text{any non-six},
-</annotation></semantics></math></p>
-<p>and let</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>p</mi><mo>,</mo><mspace width="2.0em"></mspace><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>F</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>q</mi><mo>=</mo><mn>1</mn><mo>−</mo><mi>p</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
-P(S)=p,\qquad P(F)=q=1-p.
-</annotation></semantics></math></p>
-<p>Here, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> groups the five non-six faces together. For a fair die, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>1</mn><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">p=1/6</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>=</mo><mn>5</mn><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">q=5/6</annotation></semantics></math>.</p>
-<p>The six successful terminal patterns are:</p>
+<p>So, under this rule, we are more likely to finish the opening turn with no piece out.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>If you want to list all the cases
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Write <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math> for a six and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> for any face other than six. Let <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">P(S)=p</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>F</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>q</mi><mo>=</mo><mn>1</mn><mo>−</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">P(F)=q=1-p</annotation></semantics></math>. For our fair die, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>1</mn><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">p=1/6</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>=</mo><mn>5</mn><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">q=5/6</annotation></semantics></math>.</p>
+<p>There are six ways for a complete turn to end successfully:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -137,33 +191,35 @@ P(S)=p,\qquad P(F)=q=1-p.
 </tr>
 </tbody>
 </table>
-<p>For instance, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>S</mi><mi>S</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FFSSF</annotation></semantics></math> means two unsuccessful starting attempts, followed by two sixes and a non-six. Its probability is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>⋅</mo><mi>q</mi><mo>⋅</mo><mi>p</mi><mo>⋅</mo><mi>p</mi><mo>⋅</mo><mi>q</mi><mo>=</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">q\cdot q\cdot p\cdot p\cdot q=p^2q^3</annotation></semantics></math>.</p>
-<p>These patterns cannot occur together in one turn, so we add their probabilities:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">success</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>p</mi><mi>q</mi><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><mi>q</mi><mo>+</mo><mi>p</mi><msup><mi>q</mi><mn>2</mn></msup><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>2</mn></msup><mo>+</mo><mi>p</mi><msup><mi>q</mi><mn>3</mn></msup><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>3</mn></msup></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>p</mi><mi>q</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>q</mi><mo>+</mo><msup><mi>q</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+<p>For example, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>S</mi><mi>S</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FFSSF</annotation></semantics></math> means two non-sixes, two sixes, and finally a non-six. Multiply the five roll probabilities to get <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>⋅</mo><mi>q</mi><mo>⋅</mo><mi>p</mi><mo>⋅</mo><mi>p</mi><mo>⋅</mo><mi>q</mi><mo>=</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">q\cdot q\cdot p\cdot p\cdot q=p^2q^3</annotation></semantics></math>.</p>
+<p>Only one row can describe a given turn, so we add the probabilities:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">piece stays out</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>p</mi><mi>q</mi><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><mi>q</mi><mo>+</mo><mi>p</mi><msup><mi>q</mi><mn>2</mn></msup><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>2</mn></msup><mo>+</mo><mi>p</mi><msup><mi>q</mi><mn>3</mn></msup><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>3</mn></msup></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>p</mi><mi>q</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>q</mi><mo>+</mo><msup><mi>q</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
-P(\text{success})
+P(\text{piece stays out})
 &amp;=pq+p^2q+pq^2+p^2q^2+pq^3+p^2q^3\\
 &amp;=pq(1+p)(1+q+q^2).
 \end{aligned}
 </annotation></semantics></math></p>
-<p>The unsuccessful patterns are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FFF</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>S</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">SSS</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>S</mi><mi>S</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">FSSS</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>S</mi><mi>S</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">FFSSS</annotation></semantics></math>. Thus</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">failure</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msup><mi>q</mi><mn>3</mn></msup><mo>+</mo><msup><mi>p</mi><mn>3</mn></msup><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>q</mi><mo>+</mo><msup><mi>q</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
-P(\text{failure})=q^3+p^3(1+q+q^2).
+<p>The same two-part reasoning we used above gives</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">piece stays out</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>q</mi><mn>3</mn></msup><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>p</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(\text{piece stays out})=(1-q^3)(1-p^2).
 </annotation></semantics></math></p>
-<p>There are six successful patterns and four unsuccessful ones, but <strong>the answer is not <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mi>/</mi><mn>10</mn></mrow><annotation encoding="application/x-tex">6/10</annotation></semantics></math></strong>. These patterns have different probabilities and different lengths. Counting patterns only works when they are equally likely.</p>
-<p>The shorter derivation also gives a useful general formula:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">success</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>q</mi><mn>3</mn></msup><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>p</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow></menclose><annotation encoding="application/x-tex">
-\boxed{P(\text{success})=(1-q^3)(1-p^2).}
-</annotation></semantics></math></p>
-<p>It agrees with the sum because</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><msup><mi>q</mi><mn>3</mn></msup><mo>=</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>q</mi><mo>+</mo><msup><mi>q</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mspace width="2.0em"></mspace><mn>1</mn><mo>−</mo><msup><mi>p</mi><mn>2</mn></msup><mo>=</mo><mi>q</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
-1-q^3=p(1+q+q^2),\qquad 1-p^2=q(1+p).
-</annotation></semantics></math></p>
+<p>These expressions agree because <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><msup><mi>q</mi><mn>3</mn></msup><mo>=</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>q</mi><mo>+</mo><msup><mi>q</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">1-q^3=p(1+q+q^2)</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><msup><mi>p</mi><mn>2</mn></msup><mo>=</mo><mi>q</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">1-p^2=q(1+p)</annotation></semantics></math>.</p>
+<p>The four unsuccessful endings are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FFF</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>S</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">SSS</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>S</mi><mi>S</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">FSSS</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>S</mi><mi>S</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">FFSSS</annotation></semantics></math>. Do not use “six successful patterns out of ten” to get <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mi>/</mi><mn>10</mn></mrow><annotation encoding="application/x-tex">6/10</annotation></semantics></math>: these ten patterns are not equally likely.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="let-python-play-the-opening-turn" class="level2">
-<h2 class="anchored" data-anchor-id="let-python-play-the-opening-turn">Let Python play the opening turn</h2>
-<p>The mathematics gives an exact answer. A simulation lets us observe how the fraction of successful turns behaves in repeated play.</p>
-<p>The program below follows the actual rolling and stopping rules. Each call to <code>piece_out</code> simulates one complete turn, returning <code>True</code> if a piece remains out and <code>False</code> otherwise.</p>
+<section id="checking-with-python" class="level2">
+<h2 class="anchored" data-anchor-id="checking-with-python">Checking with Python</h2>
+<p>We have the mathematical answer. Now let us try the same rules many times on a computer.</p>
+<p>For each turn, the program rolls a simulated die until the rules say to stop. It records whether a piece stays out. After many turns, we calculate</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">experimental probability</mtext><mo>=</mo><mfrac><mtext mathvariant="normal">successful turns</mtext><mtext mathvariant="normal">total turns</mtext></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\text{experimental probability}
+=\frac{\text{successful turns}}{\text{total turns}}.
+</annotation></semantics></math></p>
+<p>For example, if 399 out of 1,000 turns succeed, the experimental probability is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>399</mn><mi>/</mi><mn>1000</mn><mo>=</mo><mn>39.9</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">399/1000=39.9\%</annotation></semantics></math>.</p>
+<p>Here is the code. You can skip it and go straight to the results if you only want the probability explanation.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> random</span>
@@ -382,30 +438,18 @@ font-style: inherit;">==</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"__main__"</span>:</span>
 <span id="cb1-35">    experiment()</span></code></pre></div></div>
-<p>Save this as <code>ludo_experiment.py</code> and run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">python3</span> ludo_experiment.py</span></code></pre></div></div>
-<p>Only Python’s standard library is required.</p>
-<p>The first loop’s <code>else</code> runs only when the loop finishes without hitting <code>break</code>. Here, that means all three starting attempts failed. After a six is found, the second loop allows at most two additional rolls: either a non-six secures success, or two more sixes cancel the turn.</p>
-<p>The <code>roll</code> parameter supplies the next die result. Passing it as a function also makes the rule easy to test with predetermined sequences.</p>
+<p>Save the code as <code>ludo_experiment.py</code> and run <code>python3 ludo_experiment.py</code>. It uses only Python’s standard library.</p>
+<p>The function <code>piece_out</code> handles one turn. It returns <code>True</code> when a piece stays out and <code>False</code> when it does not. Its first loop looks for the first six. If that fails in three attempts, the turn is over. Once a six appears, the second loop checks the extra rolls: a non-six ends successfully, while two more sixes cancel the turn.</p>
 </section>
-<section id="what-happened-in-one-million-turns" class="level2">
-<h2 class="anchored" data-anchor-id="what-happened-in-one-million-turns">What happened in one million turns?</h2>
-<p>Running the experiment with seed <code>20261030</code> gives these results. Each row is a cumulative checkpoint in the same run.</p>
+<section id="what-the-experiment-gave" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-experiment-gave">What the experiment gave</h2>
+<p>Using the seed <code>20261030</code>, I get the following counts. The seed fixes the sequence of simulated rolls so that the experiment can be repeated.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Turns</th>
+<th style="text-align: right;">Turns played</th>
 <th style="text-align: right;">Successful turns</th>
 <th style="text-align: right;">Experimental probability</th>
-<th style="text-align: right;">Error in percentage points</th>
 </tr>
 </thead>
 <tbody>
@@ -413,60 +457,68 @@ font-style: inherit;">python3</span> ludo_experiment.py</span></code></pre></div
 <td style="text-align: right;">1,000</td>
 <td style="text-align: right;">399</td>
 <td style="text-align: right;">39.9000%</td>
-<td style="text-align: right;">−1.05936</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">10,000</td>
 <td style="text-align: right;">4,050</td>
 <td style="text-align: right;">40.5000%</td>
-<td style="text-align: right;">−0.45936</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">100,000</td>
 <td style="text-align: right;">40,961</td>
 <td style="text-align: right;">40.9610%</td>
-<td style="text-align: right;">+0.00164</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1,000,000</td>
 <td style="text-align: right;">409,796</td>
 <td style="text-align: right;">40.9796%</td>
-<td style="text-align: right;">+0.02024</td>
 </tr>
 </tbody>
 </table>
-<p>The experimental probability is simply</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>P</mi><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mtext mathvariant="normal">number of successful turns</mtext><mtext mathvariant="normal">number of simulated turns</mtext></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\widehat P=\frac{\text{number of successful turns}}{\text{number of simulated turns}}.
-</annotation></semantics></math></p>
-<p>After one million turns, it is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>P</mi><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mn>409796</mn><mn>1000000</mn></mfrac><mo>=</mo><mn>40.9796</mn><mi>%</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">
-\widehat P=\frac{409796}{1000000}=40.9796\%,
-</annotation></semantics></math></p>
-<p>close to the theoretical <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40.959362</mn><mi>…</mi><mi>%</mi></mrow><annotation encoding="application/x-tex">40.959362\ldots\%</annotation></semantics></math>. The signed error is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mo stretchy="false" form="prefix">(</mo><mover><mi>P</mi><mo accent="true">̂</mo></mover><mo>−</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">100(\widehat P-P)</annotation></semantics></math>, measured in <strong>percentage points</strong>.</p>
-<p>Notice something interesting: the estimate at 100,000 turns was closer to the exact answer than the estimate at one million turns. This is perfectly possible. More trials improve typical accuracy, but a random estimate need not get closer at every checkpoint.</p>
-<p>The fixed seed makes this run reproducible. It does not turn the simulation into a proof. Changing the seed will generally change the counts while leaving the theoretical probability unchanged.</p>
+<p>These are checkpoints in one run. The first 1,000 turns are included in the first 10,000, and so on.</p>
+<p>After one million turns, the experimental answer is <strong>40.9796%</strong>, compared with the calculated answer of <strong>40.959362…%</strong>. The difference is about <strong>0.02024 percentage points</strong>.</p>
+<p>They are close, but we should not expect an exact match. The number of successful turns varies from one random experiment to another.</p>
+<p>Also notice that the result at 100,000 turns is closer to the calculated value than the result at one million turns. There is no mistake here. More trials generally give a better estimate, but the estimate can move away from the exact value for a while. It need not improve at every checkpoint.</p>
 </section>
-<section id="can-we-check-the-code-exactly" class="level2">
-<h2 class="anchored" data-anchor-id="can-we-check-the-code-exactly">Can we check the code exactly?</h2>
-<p>Yes. Every opening turn ends within five rolls, so imagine generating five die results in advance. There are</p>
+<section id="a-check-without-randomness" class="level2">
+<h2 class="anchored" data-anchor-id="a-check-without-randomness">A check without randomness</h2>
+<p>There is one more useful check in the Python file.</p>
+<p>The longest possible turn uses five rolls. Imagine writing down five die results in advance, even if the turn will finish before we use all of them. There are</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>6</mn><mn>5</mn></msup><mo>=</mo><mn>7776</mn></mrow><annotation encoding="application/x-tex">
 6^5=7776
 </annotation></semantics></math></p>
-<p>equally likely five-roll records. For each record, apply the stopping rule and ignore unused trailing rolls.</p>
-<p>After the <code>piece_out</code> definition, this code checks every record:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+<p>possible five-roll lists, all equally likely for a fair die.</p>
+<p>We can check every one. For a list such as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">6,2,4,5,1</annotation></semantics></math>, the turn ends at the second roll; the last three numbers are simply ignored.</p>
+<p>Exactly <strong>3,185 of these 7,776 lists</strong> leave a piece out. That gives</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex">
+\frac{3185}{7776},
+</annotation></semantics></math></p>
+<p>the same answer as before. This check covers every possible five-roll list; it does not depend on getting a lucky simulation result.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Python code for the exact check
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run this after defining <code>piece_out</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> itertools <span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> product</span>
-<span id="cb3-2"></span>
-<span id="cb3-3">successes <span class="op" style="color: #5E5E5E;
+<span id="cb2-2"></span>
+<span id="cb2-3">successes <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span></span>
-<span id="cb3-4"><span class="cf" style="color: #003B4F;
+<span id="cb2-4"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> sequence <span class="kw" style="color: #003B4F;
@@ -483,12 +535,12 @@ background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span>):</span>
-<span id="cb3-5">    rolls <span class="op" style="color: #5E5E5E;
+<span id="cb2-5">    rolls <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">iter</span>(sequence)</span>
-<span id="cb3-6">    successes <span class="op" style="color: #5E5E5E;
+<span id="cb2-6">    successes <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+=</span> piece_out(<span class="kw" style="color: #003B4F;
 background-color: null;
@@ -496,8 +548,8 @@ font-weight: bold;
 font-style: inherit;">lambda</span>: <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">next</span>(rolls))</span>
-<span id="cb3-7"></span>
-<span id="cb3-8"><span class="cf" style="color: #003B4F;
+<span id="cb2-7"></span>
+<span id="cb2-8"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">assert</span> successes <span class="op" style="color: #5E5E5E;
@@ -505,7 +557,7 @@ background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3185</span></span>
-<span id="cb3-9"><span class="bu" style="color: null;
+<span id="cb2-9"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -528,24 +580,17 @@ background-color: null;
 font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span></code></pre></div></div>
-<p>It finds exactly <strong>3,185 successful records out of 7,776</strong>, agreeing with the mathematical derivation. Unlike the ten terminal patterns, these fixed-length records really are equally likely.</p>
-<p>The original experiment file also tests all six successful and four unsuccessful terminal patterns, checking that the function stops at the correct roll.</p>
-</section>
-<section id="one-rule-three-ways-to-understand-it" class="level2">
-<h2 class="anchored" data-anchor-id="one-rule-three-ways-to-understand-it">One rule, three ways to understand it</h2>
-<p>The conditional calculation explains the answer as two stages: reach a first six, then avoid cancellation. The terminal-pattern calculation makes every possible ending visible. Python lets us check the implementation exactly and observe random variation over many turns.</p>
-<p>All three lead to the same result:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">a piece remains out after the opening turn</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>≈</mo><mn>40.96</mn><mi>%</mi><mi>.</mi></mrow></menclose><annotation encoding="application/x-tex">
-\boxed{P(\text{a piece remains out after the opening turn})
-=\frac{3185}{7776}\approx40.96\%.}
-</annotation></semantics></math></p>
-<p>The next time you wait for a six, there is a useful probability lesson hiding in the turn: define exactly what counts as success, follow the rule until the turn is finished, and only then count the outcomes.</p>
+<p>The downloadable script also checks all six successful and four unsuccessful endings listed earlier, including where the rolling should stop.</p>
+</div>
+</div>
+</div>
+<p>The distinction to keep in mind is simple: <strong>getting a six within three attempts has probability about 42.13%; finishing the turn with a piece still out has probability about 40.96%.</strong> The difference comes from the turns cancelled by three consecutive sixes.</p>
 </section>
 <section id="downloads" class="level2">
 <h2 class="anchored" data-anchor-id="downloads">Downloads</h2>
 <ul>
-<li><a href="Ludo_Opening_Turn_Probability.pdf">Download the five-page mathematical note (PDF)</a>.</li>
-<li><a href="ludo_experiment.py">Download the complete Python experiment, including rule tests</a>.</li>
+<li><a href="Ludo_Opening_Turn_Probability.pdf">Mathematical note (PDF)</a></li>
+<li><a href="ludo_experiment.py">Complete Python experiment, including the checks</a></li>
 </ul>
 
 
