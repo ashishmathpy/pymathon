@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ashish K. Srivastava">
+<meta name="dcterms.date" content="2026-10-30">
+<meta name="description" content="What is the chance of getting a piece out in Ludo? Derive the 40.96% opening-turn probability and verify it with a million Python simulations.">
+
+<title>Getting a Piece Out in Ludo: What Are the Chances? – PyMathon</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-9de9f6925d305bcf5b7eb9351f368d06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-858fa3a77d60bad26bcac1712a2fce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "PyMathon",
+  "url": "https://ashishmathpy.github.io/pymathon/",
+  "description": "Carefully written mathematics through definitions, proofs, worked examples, problem solving, and selective computational exploration.",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Person",
+    "name": "Ashish K. Srivastava"
+  }
+}
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Getting a Piece Out in Ludo: What Are the Chances? – PyMathon">
+<meta property="og:description" content="What is the chance of getting a piece out in Ludo? Derive the 40.96% opening-turn probability and verify it with a million Python simulations.">
+<meta property="og:site_name" content="PyMathon">
+<link rel="canonical" href="https://ashishmathpy.github.io/pymathon/posts/ludo-opening-turn-probability/">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../image.png" alt="PyMathon logo" class="navbar-logo light-content">
+    <img src="../../image.png" alt="PyMathon logo" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">PyMathon</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#latest-articles"> 
+<span class="menu-text">Articles</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Getting a Piece Out in Ludo: What Are the Chances?</h1>
+            <p class="subtitle lead">An opening-turn probability explored through mathematics and simulation</p>
+                  <div>
+        <div class="description">
+          What is the chance of getting a piece out in Ludo? Derive the 40.96% opening-turn probability and verify it with a million Python simulations.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Probability</div>
+                <div class="quarto-category">Recreational Mathematics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Ashish K. Srivastava </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 30, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#first-agree-on-the-rules" id="toc-first-agree-on-the-rules" class="nav-link active" data-scroll-target="#first-agree-on-the-rules">First, agree on the rules</a></li>
+  <li><a href="#why-three-attempts-do-not-give-a-probability-of-one-half" id="toc-why-three-attempts-do-not-give-a-probability-of-one-half" class="nav-link" data-scroll-target="#why-three-attempts-do-not-give-a-probability-of-one-half">Why three attempts do not give a probability of one-half</a></li>
+  <li><a href="#getting-out-then-staying-out" id="toc-getting-out-then-staying-out" class="nav-link" data-scroll-target="#getting-out-then-staying-out">Getting out, then staying out</a></li>
+  <li><a href="#a-second-view-list-every-possible-ending" id="toc-a-second-view-list-every-possible-ending" class="nav-link" data-scroll-target="#a-second-view-list-every-possible-ending">A second view: list every possible ending</a></li>
+  <li><a href="#let-python-play-the-opening-turn" id="toc-let-python-play-the-opening-turn" class="nav-link" data-scroll-target="#let-python-play-the-opening-turn">Let Python play the opening turn</a></li>
+  <li><a href="#what-happened-in-one-million-turns" id="toc-what-happened-in-one-million-turns" class="nav-link" data-scroll-target="#what-happened-in-one-million-turns">What happened in one million turns?</a></li>
+  <li><a href="#can-we-check-the-code-exactly" id="toc-can-we-check-the-code-exactly" class="nav-link" data-scroll-target="#can-we-check-the-code-exactly">Can we check the code exactly?</a></li>
+  <li><a href="#one-rule-three-ways-to-understand-it" id="toc-one-rule-three-ways-to-understand-it" class="nav-link" data-scroll-target="#one-rule-three-ways-to-understand-it">One rule, three ways to understand it</a></li>
+  <li><a href="#downloads" id="toc-downloads" class="nav-link" data-scroll-target="#downloads">Downloads</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>You are waiting to bring your first piece onto the Ludo board. You have three attempts to roll a six. Surely that gives you a decent chance of getting started?</p>
+<p>It does. But there is a catch: if three consecutive sixes cancel your entire turn, the six that brought your piece out might not count after all.</p>
+<p>That small rule changes the question. We need to find the probability that <strong>a piece remains out at the end of the opening turn</strong>.</p>
+<p>For the rules below, the answer is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>≈</mo><mn>40.96</mn><mi>%</mi><mi>.</mi></mrow></menclose><annotation encoding="application/x-tex">
+\boxed{\frac{3185}{7776}\approx 40.96\%.}
+</annotation></semantics></math></p>
+<p>Let’s work out why, then ask Python to play one million opening turns.</p>
+<section id="first-agree-on-the-rules" class="level2">
+<h2 class="anchored" data-anchor-id="first-agree-on-the-rules">First, agree on the rules</h2>
+<p>Ludo has different rule variations. This article uses the following precise version:</p>
+<ol type="1">
+<li>You begin with no piece outside the starting area and get up to three attempts to obtain your first six.</li>
+<li>If all three attempts are non-sixes, your turn ends without bringing a piece out.</li>
+<li>Your first six brings a piece out and gives you an extra roll. A second consecutive six gives you another extra roll.</li>
+<li>A non-six after one or two consecutive sixes ends the turn successfully: a piece remains out.</li>
+<li>Three consecutive sixes cancel the <strong>entire turn</strong>, including bringing the piece out.</li>
+</ol>
+<p>We assume a fair die, independent rolls, and that you choose to bring a piece out when permitted. We only track whether a piece remains out; later movement around the board is outside this experiment.</p>
+<p>An opening turn can therefore last more than three rolls. For example, <code>2, 4, 6, 6, 3</code> is a successful five-roll turn. The first two rolls use up unsuccessful starting attempts; the sixes then earn extra rolls. In contrast, <code>2, 4, 6, 6, 6</code> cancels the turn.</p>
+</section>
+<section id="why-three-attempts-do-not-give-a-probability-of-one-half" class="level2">
+<h2 class="anchored" data-anchor-id="why-three-attempts-do-not-give-a-probability-of-one-half">Why three attempts do not give a probability of one-half</h2>
+<p>A tempting calculation is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+3\times\frac16=\frac12.
+</annotation></semantics></math></p>
+<p>However, the events “a six on roll one”, “a six on roll two”, and “a six on roll three” overlap when we imagine three pre-generated rolls. Adding their probabilities counts some outcomes more than once.</p>
+<p>The easier calculation uses the opposite event. The probability of no six in three rolls is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>3</mn></msup><mo>=</mo><mfrac><mn>125</mn><mn>216</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\left(\frac56\right)^3=\frac{125}{216}.
+</annotation></semantics></math></p>
+<p>Therefore, the probability of reaching the first six within your starting allowance is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>5</mn><mn>6</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>3</mn></msup><mo>=</mo><mfrac><mn>91</mn><mn>216</mn></mfrac><mo>≈</mo><mn>42.13</mn><mi>%</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+1-\left(\frac56\right)^3=\frac{91}{216}\approx42.13\%.
+</annotation></semantics></math></p>
+<p>This answers the first part of the problem. We still have to account for a possible cancellation.</p>
+</section>
+<section id="getting-out-then-staying-out" class="level2">
+<h2 class="anchored" data-anchor-id="getting-out-then-staying-out">Getting out, then staying out</h2>
+<p>Once your first six appears, there are three possible endings:</p>
+<ul>
+<li>The next roll is a non-six: the piece remains out.</li>
+<li>The next roll is a six, followed by a non-six: the piece remains out.</li>
+<li>The next two rolls are both sixes: three consecutive sixes cancel the turn.</li>
+</ul>
+<p>Given that the first six has occurred, cancellation requires two more sixes. Its probability is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>×</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>36</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\frac16\times\frac16=\frac1{36}.
+</annotation></semantics></math></p>
+<p>The probability of avoiding cancellation from that point is consequently</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><mn>36</mn></mfrac><mo>=</mo><mfrac><mn>35</mn><mn>36</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+1-\frac1{36}=\frac{35}{36}.
+</annotation></semantics></math></p>
+<p>Future rolls are independent of the rolls that led to the first six. This remaining chance is the same whether the first six appeared on attempt one, two, or three. Multiplying gives</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">piece remains out</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">first six within three attempts</mtext><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mspace width="1.0em"></mspace><mo>×</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">avoid cancellation</mtext><mo>∣</mo><mtext mathvariant="normal">first six reached</mtext><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>91</mn><mn>216</mn></mfrac><mo>×</mo><mfrac><mn>35</mn><mn>36</mn></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><menclose notation="box"><mrow><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>≈</mo><mn>40.959362</mn><mi>%</mi><mi>.</mi></mrow></menclose></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+P(\text{piece remains out})
+&amp;=P(\text{first six within three attempts})\\
+&amp;\quad\times P(\text{avoid cancellation}\mid\text{first six reached})\\
+&amp;=\frac{91}{216}\times\frac{35}{36}\\
+&amp;=\boxed{\frac{3185}{7776}\approx40.959362\%.}
+\end{aligned}
+</annotation></semantics></math></p>
+<p>The probability that no piece remains out is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>=</mo><mfrac><mn>4591</mn><mn>7776</mn></mfrac><mo>≈</mo><mn>59.04</mn><mi>%</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+1-\frac{3185}{7776}=\frac{4591}{7776}\approx59.04\%.
+</annotation></semantics></math></p>
+<p>Under these rules, an unsuccessful opening turn is more likely than a successful one.</p>
+</section>
+<section id="a-second-view-list-every-possible-ending" class="level2">
+<h2 class="anchored" data-anchor-id="a-second-view-list-every-possible-ending">A second view: list every possible ending</h2>
+<p>To see the structure more clearly, write</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mtext mathvariant="normal">a six</mtext><mo>,</mo><mspace width="2.0em"></mspace><mi>F</mi><mo>=</mo><mtext mathvariant="normal">any non-six</mtext><mo>,</mo></mrow><annotation encoding="application/x-tex">
+S=\text{a six},\qquad F=\text{any non-six},
+</annotation></semantics></math></p>
+<p>and let</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>p</mi><mo>,</mo><mspace width="2.0em"></mspace><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>F</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>q</mi><mo>=</mo><mn>1</mn><mo>−</mo><mi>p</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(S)=p,\qquad P(F)=q=1-p.
+</annotation></semantics></math></p>
+<p>Here, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> groups the five non-six faces together. For a fair die, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>1</mn><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">p=1/6</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>=</mo><mn>5</mn><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">q=5/6</annotation></semantics></math>.</p>
+<p>The six successful terminal patterns are:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Complete turn</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">SF</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>q</mi></mrow><annotation encoding="application/x-tex">pq</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>S</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">SSF</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>p</mi><mn>2</mn></msup><mi>q</mi></mrow><annotation encoding="application/x-tex">p^2q</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>S</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FSF</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><msup><mi>q</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">pq^2</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>S</mi><mi>S</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FSSF</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">p^2q^2</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>S</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FFSF</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><msup><mi>q</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">pq^3</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>S</mi><mi>S</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FFSSF</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">p^2q^3</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p>For instance, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>S</mi><mi>S</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FFSSF</annotation></semantics></math> means two unsuccessful starting attempts, followed by two sixes and a non-six. Its probability is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>⋅</mo><mi>q</mi><mo>⋅</mo><mi>p</mi><mo>⋅</mo><mi>p</mi><mo>⋅</mo><mi>q</mi><mo>=</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">q\cdot q\cdot p\cdot p\cdot q=p^2q^3</annotation></semantics></math>.</p>
+<p>These patterns cannot occur together in one turn, so we add their probabilities:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">success</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>p</mi><mi>q</mi><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><mi>q</mi><mo>+</mo><mi>p</mi><msup><mi>q</mi><mn>2</mn></msup><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>2</mn></msup><mo>+</mo><mi>p</mi><msup><mi>q</mi><mn>3</mn></msup><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>3</mn></msup></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>p</mi><mi>q</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>q</mi><mo>+</mo><msup><mi>q</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+P(\text{success})
+&amp;=pq+p^2q+pq^2+p^2q^2+pq^3+p^2q^3\\
+&amp;=pq(1+p)(1+q+q^2).
+\end{aligned}
+</annotation></semantics></math></p>
+<p>The unsuccessful patterns are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">FFF</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>S</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">SSS</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>S</mi><mi>S</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">FSSS</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>F</mi><mi>S</mi><mi>S</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">FFSSS</annotation></semantics></math>. Thus</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">failure</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msup><mi>q</mi><mn>3</mn></msup><mo>+</mo><msup><mi>p</mi><mn>3</mn></msup><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>q</mi><mo>+</mo><msup><mi>q</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(\text{failure})=q^3+p^3(1+q+q^2).
+</annotation></semantics></math></p>
+<p>There are six successful patterns and four unsuccessful ones, but <strong>the answer is not <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mi>/</mi><mn>10</mn></mrow><annotation encoding="application/x-tex">6/10</annotation></semantics></math></strong>. These patterns have different probabilities and different lengths. Counting patterns only works when they are equally likely.</p>
+<p>The shorter derivation also gives a useful general formula:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">success</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>q</mi><mn>3</mn></msup><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>p</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow></menclose><annotation encoding="application/x-tex">
+\boxed{P(\text{success})=(1-q^3)(1-p^2).}
+</annotation></semantics></math></p>
+<p>It agrees with the sum because</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><msup><mi>q</mi><mn>3</mn></msup><mo>=</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>q</mi><mo>+</mo><msup><mi>q</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mspace width="2.0em"></mspace><mn>1</mn><mo>−</mo><msup><mi>p</mi><mn>2</mn></msup><mo>=</mo><mi>q</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+1-q^3=p(1+q+q^2),\qquad 1-p^2=q(1+p).
+</annotation></semantics></math></p>
+</section>
+<section id="let-python-play-the-opening-turn" class="level2">
+<h2 class="anchored" data-anchor-id="let-python-play-the-opening-turn">Let Python play the opening turn</h2>
+<p>The mathematics gives an exact answer. A simulation lets us observe how the fraction of successful turns behaves in repeated play.</p>
+<p>The program below follows the actual rolling and stopping rules. Each call to <code>piece_out</code> simulates one complete turn, returning <code>True</code> if a piece remains out and <code>False</code> otherwise.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> random</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">def</span> piece_out(roll):</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="co"># Up to three attempts to obtain the first six.</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="cf">for</span> attempt <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb1-7"><a href="#cb1-7"></a>        <span class="cf">if</span> roll() <span class="op">==</span> <span class="dv">6</span>:</span>
+<span id="cb1-8"><a href="#cb1-8"></a>            <span class="cf">break</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-10"><a href="#cb1-10"></a>        <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="co"># One six has occurred. A non-six now ends a valid turn.</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="cf">for</span> extra <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):</span>
+<span id="cb1-14"><a href="#cb1-14"></a>        <span class="cf">if</span> roll() <span class="op">!=</span> <span class="dv">6</span>:</span>
+<span id="cb1-15"><a href="#cb1-15"></a>            <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>    <span class="cf">return</span> <span class="va">False</span>  <span class="co"># Three consecutive sixes cancel the turn.</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="kw">def</span> experiment():</span>
+<span id="cb1-20"><a href="#cb1-20"></a>    rng <span class="op">=</span> random.Random(<span class="dv">20261030</span>)</span>
+<span id="cb1-21"><a href="#cb1-21"></a>    theoretical <span class="op">=</span> <span class="dv">3185</span> <span class="op">/</span> <span class="dv">7776</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>    checkpoints <span class="op">=</span> {<span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">100000</span>, <span class="dv">1000000</span>}</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    successes <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>    <span class="bu">print</span>(<span class="st">"Turns,Successes,Experimental,Theoretical,Error_pp"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">1000001</span>):</span>
+<span id="cb1-26"><a href="#cb1-26"></a>        successes <span class="op">+=</span> piece_out(<span class="kw">lambda</span>: rng.randint(<span class="dv">1</span>, <span class="dv">6</span>))</span>
+<span id="cb1-27"><a href="#cb1-27"></a>        <span class="cf">if</span> n <span class="kw">in</span> checkpoints:</span>
+<span id="cb1-28"><a href="#cb1-28"></a>            estimate <span class="op">=</span> successes <span class="op">/</span> n</span>
+<span id="cb1-29"><a href="#cb1-29"></a>            error <span class="op">=</span> <span class="dv">100</span> <span class="op">*</span> (estimate <span class="op">-</span> theoretical)</span>
+<span id="cb1-30"><a href="#cb1-30"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">,</span><span class="sc">{</span>successes<span class="sc">}</span><span class="ss">,</span><span class="sc">{</span>estimate<span class="sc">:.8f}</span><span class="ss">,"</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>                  <span class="ss">f"</span><span class="sc">{</span>theoretical<span class="sc">:.8f}</span><span class="ss">,</span><span class="sc">{</span>error<span class="sc">:+.5f}</span><span class="ss">"</span>)</span>
+<span id="cb1-32"><a href="#cb1-32"></a></span>
+<span id="cb1-33"><a href="#cb1-33"></a></span>
+<span id="cb1-34"><a href="#cb1-34"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb1-35"><a href="#cb1-35"></a>    experiment()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Save this as <code>ludo_experiment.py</code> and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">python3</span> ludo_experiment.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Only Python’s standard library is required.</p>
+<p>The first loop’s <code>else</code> runs only when the loop finishes without hitting <code>break</code>. Here, that means all three starting attempts failed. After a six is found, the second loop allows at most two additional rolls: either a non-six secures success, or two more sixes cancel the turn.</p>
+<p>The <code>roll</code> parameter supplies the next die result. Passing it as a function also makes the rule easy to test with predetermined sequences.</p>
+</section>
+<section id="what-happened-in-one-million-turns" class="level2">
+<h2 class="anchored" data-anchor-id="what-happened-in-one-million-turns">What happened in one million turns?</h2>
+<p>Running the experiment with seed <code>20261030</code> gives these results. Each row is a cumulative checkpoint in the same run.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Turns</th>
+<th style="text-align: right;">Successful turns</th>
+<th style="text-align: right;">Experimental probability</th>
+<th style="text-align: right;">Error in percentage points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1,000</td>
+<td style="text-align: right;">399</td>
+<td style="text-align: right;">39.9000%</td>
+<td style="text-align: right;">−1.05936</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10,000</td>
+<td style="text-align: right;">4,050</td>
+<td style="text-align: right;">40.5000%</td>
+<td style="text-align: right;">−0.45936</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">100,000</td>
+<td style="text-align: right;">40,961</td>
+<td style="text-align: right;">40.9610%</td>
+<td style="text-align: right;">+0.00164</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1,000,000</td>
+<td style="text-align: right;">409,796</td>
+<td style="text-align: right;">40.9796%</td>
+<td style="text-align: right;">+0.02024</td>
+</tr>
+</tbody>
+</table>
+<p>The experimental probability is simply</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>P</mi><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mtext mathvariant="normal">number of successful turns</mtext><mtext mathvariant="normal">number of simulated turns</mtext></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\widehat P=\frac{\text{number of successful turns}}{\text{number of simulated turns}}.
+</annotation></semantics></math></p>
+<p>After one million turns, it is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>P</mi><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mn>409796</mn><mn>1000000</mn></mfrac><mo>=</mo><mn>40.9796</mn><mi>%</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">
+\widehat P=\frac{409796}{1000000}=40.9796\%,
+</annotation></semantics></math></p>
+<p>close to the theoretical <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40.959362</mn><mi>…</mi><mi>%</mi></mrow><annotation encoding="application/x-tex">40.959362\ldots\%</annotation></semantics></math>. The signed error is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mo stretchy="false" form="prefix">(</mo><mover><mi>P</mi><mo accent="true">̂</mo></mover><mo>−</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">100(\widehat P-P)</annotation></semantics></math>, measured in <strong>percentage points</strong>.</p>
+<p>Notice something interesting: the estimate at 100,000 turns was closer to the exact answer than the estimate at one million turns. This is perfectly possible. More trials improve typical accuracy, but a random estimate need not get closer at every checkpoint.</p>
+<p>The fixed seed makes this run reproducible. It does not turn the simulation into a proof. Changing the seed will generally change the counts while leaving the theoretical probability unchanged.</p>
+</section>
+<section id="can-we-check-the-code-exactly" class="level2">
+<h2 class="anchored" data-anchor-id="can-we-check-the-code-exactly">Can we check the code exactly?</h2>
+<p>Yes. Every opening turn ends within five rolls, so imagine generating five die results in advance. There are</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>6</mn><mn>5</mn></msup><mo>=</mo><mn>7776</mn></mrow><annotation encoding="application/x-tex">
+6^5=7776
+</annotation></semantics></math></p>
+<p>equally likely five-roll records. For each record, apply the stopping rule and ignore unused trailing rolls.</p>
+<p>After the <code>piece_out</code> definition, this code checks every record:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>successes <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="cf">for</span> sequence <span class="kw">in</span> product(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">7</span>), repeat<span class="op">=</span><span class="dv">5</span>):</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    rolls <span class="op">=</span> <span class="bu">iter</span>(sequence)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    successes <span class="op">+=</span> piece_out(<span class="kw">lambda</span>: <span class="bu">next</span>(rolls))</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="cf">assert</span> successes <span class="op">==</span> <span class="dv">3185</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="bu">print</span>(<span class="ss">f"Exact check: </span><span class="sc">{</span>successes<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="dv">6</span><span class="op">**</span><span class="dv">5</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>It finds exactly <strong>3,185 successful records out of 7,776</strong>, agreeing with the mathematical derivation. Unlike the ten terminal patterns, these fixed-length records really are equally likely.</p>
+<p>The original experiment file also tests all six successful and four unsuccessful terminal patterns, checking that the function stops at the correct roll.</p>
+</section>
+<section id="one-rule-three-ways-to-understand-it" class="level2">
+<h2 class="anchored" data-anchor-id="one-rule-three-ways-to-understand-it">One rule, three ways to understand it</h2>
+<p>The conditional calculation explains the answer as two stages: reach a first six, then avoid cancellation. The terminal-pattern calculation makes every possible ending visible. Python lets us check the implementation exactly and observe random variation over many turns.</p>
+<p>All three lead to the same result:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><menclose notation="box"><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">a piece remains out after the opening turn</mtext><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mn>3185</mn><mn>7776</mn></mfrac><mo>≈</mo><mn>40.96</mn><mi>%</mi><mi>.</mi></mrow></menclose><annotation encoding="application/x-tex">
+\boxed{P(\text{a piece remains out after the opening turn})
+=\frac{3185}{7776}\approx40.96\%.}
+</annotation></semantics></math></p>
+<p>The next time you wait for a six, there is a useful probability lesson hiding in the turn: define exactly what counts as success, follow the rule until the turn is finished, and only then count the outcomes.</p>
+</section>
+<section id="downloads" class="level2">
+<h2 class="anchored" data-anchor-id="downloads">Downloads</h2>
+<ul>
+<li><a href="Ludo_Opening_Turn_Probability.pdf">Download the five-page mathematical note (PDF)</a>.</li>
+<li><a href="ludo_experiment.py">Download the complete Python experiment, including rule tests</a>.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<section class="article-share" aria-labelledby="share-heading">
+  <h2 id="share-heading">Share this article</h2>
+  <p>Share this article with someone who may enjoy exploring the idea.</p>
+  <div class="share-controls" role="group" aria-label="Article sharing options">
+    <a class="share-button" data-share="whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Share this article on WhatsApp">WhatsApp</a>
+    <a class="share-button" data-share="linkedin" target="_blank" rel="noopener noreferrer" aria-label="Share this article on LinkedIn">LinkedIn</a>
+    <a class="share-button" data-share="x" target="_blank" rel="noopener noreferrer" aria-label="Share this article on X">X</a>
+    <a class="share-button" data-share="facebook" target="_blank" rel="noopener noreferrer" aria-label="Share this article on Facebook">Facebook</a>
+    <a class="share-button" data-share="email" aria-label="Share this article by email">Email</a>
+    <button class="share-button" type="button" data-share="copy" aria-label="Copy this article's link">Copy link</button>
+  </div>
+</section>
+
+<script src="../../share.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ashishmathpy\.github\.io\/pymathon\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

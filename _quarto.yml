@@ -8,6 +8,7 @@ project:
     - posts/kings-property/index.qmd
     - posts/sumsets-and-arithmetic-progressions/index.qmd
     - posts/longest-collatz-sequence/index.ipynb
+    - posts/ludo-opening-turn-probability/index.qmd
   resources:
     - share.js
     - fonts/**

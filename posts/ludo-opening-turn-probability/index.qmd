@@ -1,0 +1,303 @@
+---
+title: "Getting a Piece Out in Ludo: What Are the Chances?"
+subtitle: "An opening-turn probability explored through mathematics and simulation"
+author: "Ashish K. Srivastava"
+date: "2026-10-30"
+description: "What is the chance of getting a piece out in Ludo? Derive the 40.96% opening-turn probability and verify it with a million Python simulations."
+categories:
+  - Probability
+  - Recreational Mathematics
+difficulty: "Beginner"
+prerequisites: "Basic probability, independent events, and complementary events"
+estimated-reading-time: "10 minutes"
+draft: false
+toc: true
+code-fold: show
+code-summary: "Hide code"
+resources:
+  - Ludo_Opening_Turn_Probability.pdf
+  - ludo_experiment.py
+---
+
+You are waiting to bring your first piece onto the Ludo board. You have three attempts to roll a six. Surely that gives you a decent chance of getting started?
+
+It does. But there is a catch: if three consecutive sixes cancel your entire turn, the six that brought your piece out might not count after all.
+
+That small rule changes the question. We need to find the probability that **a piece remains out at the end of the opening turn**.
+
+For the rules below, the answer is
+
+$$
+\boxed{\frac{3185}{7776}\approx 40.96\%.}
+$$
+
+Let's work out why, then ask Python to play one million opening turns.
+
+## First, agree on the rules
+
+Ludo has different rule variations. This article uses the following precise version:
+
+1. You begin with no piece outside the starting area and get up to three attempts to obtain your first six.
+2. If all three attempts are non-sixes, your turn ends without bringing a piece out.
+3. Your first six brings a piece out and gives you an extra roll. A second consecutive six gives you another extra roll.
+4. A non-six after one or two consecutive sixes ends the turn successfully: a piece remains out.
+5. Three consecutive sixes cancel the **entire turn**, including bringing the piece out.
+
+We assume a fair die, independent rolls, and that you choose to bring a piece out when permitted. We only track whether a piece remains out; later movement around the board is outside this experiment.
+
+An opening turn can therefore last more than three rolls. For example, `2, 4, 6, 6, 3` is a successful five-roll turn. The first two rolls use up unsuccessful starting attempts; the sixes then earn extra rolls. In contrast, `2, 4, 6, 6, 6` cancels the turn.
+
+## Why three attempts do not give a probability of one-half
+
+A tempting calculation is
+
+$$
+3\times\frac16=\frac12.
+$$
+
+However, the events “a six on roll one”, “a six on roll two”, and “a six on roll three” overlap when we imagine three pre-generated rolls. Adding their probabilities counts some outcomes more than once.
+
+The easier calculation uses the opposite event. The probability of no six in three rolls is
+
+$$
+\left(\frac56\right)^3=\frac{125}{216}.
+$$
+
+Therefore, the probability of reaching the first six within your starting allowance is
+
+$$
+1-\left(\frac56\right)^3=\frac{91}{216}\approx42.13\%.
+$$
+
+This answers the first part of the problem. We still have to account for a possible cancellation.
+
+## Getting out, then staying out
+
+Once your first six appears, there are three possible endings:
+
+- The next roll is a non-six: the piece remains out.
+- The next roll is a six, followed by a non-six: the piece remains out.
+- The next two rolls are both sixes: three consecutive sixes cancel the turn.
+
+Given that the first six has occurred, cancellation requires two more sixes. Its probability is
+
+$$
+\frac16\times\frac16=\frac1{36}.
+$$
+
+The probability of avoiding cancellation from that point is consequently
+
+$$
+1-\frac1{36}=\frac{35}{36}.
+$$
+
+Future rolls are independent of the rolls that led to the first six. This remaining chance is the same whether the first six appeared on attempt one, two, or three. Multiplying gives
+
+$$
+\begin{aligned}
+P(\text{piece remains out})
+&=P(\text{first six within three attempts})\\
+&\quad\times P(\text{avoid cancellation}\mid\text{first six reached})\\
+&=\frac{91}{216}\times\frac{35}{36}\\
+&=\boxed{\frac{3185}{7776}\approx40.959362\%.}
+\end{aligned}
+$$
+
+The probability that no piece remains out is
+
+$$
+1-\frac{3185}{7776}=\frac{4591}{7776}\approx59.04\%.
+$$
+
+Under these rules, an unsuccessful opening turn is more likely than a successful one.
+
+## A second view: list every possible ending
+
+To see the structure more clearly, write
+
+$$
+S=\text{a six},\qquad F=\text{any non-six},
+$$
+
+and let
+
+$$
+P(S)=p,\qquad P(F)=q=1-p.
+$$
+
+Here, $F$ groups the five non-six faces together. For a fair die, $p=1/6$ and $q=5/6$.
+
+The six successful terminal patterns are:
+
+| Complete turn | Probability |
+| --- | --- |
+| $SF$ | $pq$ |
+| $SSF$ | $p^2q$ |
+| $FSF$ | $pq^2$ |
+| $FSSF$ | $p^2q^2$ |
+| $FFSF$ | $pq^3$ |
+| $FFSSF$ | $p^2q^3$ |
+
+For instance, $FFSSF$ means two unsuccessful starting attempts, followed by two sixes and a non-six. Its probability is $q\cdot q\cdot p\cdot p\cdot q=p^2q^3$.
+
+These patterns cannot occur together in one turn, so we add their probabilities:
+
+$$
+\begin{aligned}
+P(\text{success})
+&=pq+p^2q+pq^2+p^2q^2+pq^3+p^2q^3\\
+&=pq(1+p)(1+q+q^2).
+\end{aligned}
+$$
+
+The unsuccessful patterns are $FFF$, $SSS$, $FSSS$, and $FFSSS$. Thus
+
+$$
+P(\text{failure})=q^3+p^3(1+q+q^2).
+$$
+
+There are six successful patterns and four unsuccessful ones, but **the answer is not $6/10$**. These patterns have different probabilities and different lengths. Counting patterns only works when they are equally likely.
+
+The shorter derivation also gives a useful general formula:
+
+$$
+\boxed{P(\text{success})=(1-q^3)(1-p^2).}
+$$
+
+It agrees with the sum because
+
+$$
+1-q^3=p(1+q+q^2),\qquad 1-p^2=q(1+p).
+$$
+
+## Let Python play the opening turn
+
+The mathematics gives an exact answer. A simulation lets us observe how the fraction of successful turns behaves in repeated play.
+
+The program below follows the actual rolling and stopping rules. Each call to `piece_out` simulates one complete turn, returning `True` if a piece remains out and `False` otherwise.
+
+```python
+import random
+
+
+def piece_out(roll):
+    # Up to three attempts to obtain the first six.
+    for attempt in range(3):
+        if roll() == 6:
+            break
+    else:
+        return False
+
+    # One six has occurred. A non-six now ends a valid turn.
+    for extra in range(2):
+        if roll() != 6:
+            return True
+    return False  # Three consecutive sixes cancel the turn.
+
+
+def experiment():
+    rng = random.Random(20261030)
+    theoretical = 3185 / 7776
+    checkpoints = {1000, 10000, 100000, 1000000}
+    successes = 0
+    print("Turns,Successes,Experimental,Theoretical,Error_pp")
+    for n in range(1, 1000001):
+        successes += piece_out(lambda: rng.randint(1, 6))
+        if n in checkpoints:
+            estimate = successes / n
+            error = 100 * (estimate - theoretical)
+            print(f"{n},{successes},{estimate:.8f},"
+                  f"{theoretical:.8f},{error:+.5f}")
+
+
+if __name__ == "__main__":
+    experiment()
+```
+
+Save this as `ludo_experiment.py` and run:
+
+```bash
+python3 ludo_experiment.py
+```
+
+Only Python's standard library is required.
+
+The first loop's `else` runs only when the loop finishes without hitting `break`. Here, that means all three starting attempts failed. After a six is found, the second loop allows at most two additional rolls: either a non-six secures success, or two more sixes cancel the turn.
+
+The `roll` parameter supplies the next die result. Passing it as a function also makes the rule easy to test with predetermined sequences.
+
+## What happened in one million turns?
+
+Running the experiment with seed `20261030` gives these results. Each row is a cumulative checkpoint in the same run.
+
+| Turns | Successful turns | Experimental probability | Error in percentage points |
+| ---: | ---: | ---: | ---: |
+| 1,000 | 399 | 39.9000% | −1.05936 |
+| 10,000 | 4,050 | 40.5000% | −0.45936 |
+| 100,000 | 40,961 | 40.9610% | +0.00164 |
+| 1,000,000 | 409,796 | 40.9796% | +0.02024 |
+
+The experimental probability is simply
+
+$$
+\widehat P=\frac{\text{number of successful turns}}{\text{number of simulated turns}}.
+$$
+
+After one million turns, it is
+
+$$
+\widehat P=\frac{409796}{1000000}=40.9796\%,
+$$
+
+close to the theoretical $40.959362\ldots\%$. The signed error is $100(\widehat P-P)$, measured in **percentage points**.
+
+Notice something interesting: the estimate at 100,000 turns was closer to the exact answer than the estimate at one million turns. This is perfectly possible. More trials improve typical accuracy, but a random estimate need not get closer at every checkpoint.
+
+The fixed seed makes this run reproducible. It does not turn the simulation into a proof. Changing the seed will generally change the counts while leaving the theoretical probability unchanged.
+
+## Can we check the code exactly?
+
+Yes. Every opening turn ends within five rolls, so imagine generating five die results in advance. There are
+
+$$
+6^5=7776
+$$
+
+equally likely five-roll records. For each record, apply the stopping rule and ignore unused trailing rolls.
+
+After the `piece_out` definition, this code checks every record:
+
+```python
+from itertools import product
+
+successes = 0
+for sequence in product(range(1, 7), repeat=5):
+    rolls = iter(sequence)
+    successes += piece_out(lambda: next(rolls))
+
+assert successes == 3185
+print(f"Exact check: {successes} / {6**5}")
+```
+
+It finds exactly **3,185 successful records out of 7,776**, agreeing with the mathematical derivation. Unlike the ten terminal patterns, these fixed-length records really are equally likely.
+
+The original experiment file also tests all six successful and four unsuccessful terminal patterns, checking that the function stops at the correct roll.
+
+## One rule, three ways to understand it
+
+The conditional calculation explains the answer as two stages: reach a first six, then avoid cancellation. The terminal-pattern calculation makes every possible ending visible. Python lets us check the implementation exactly and observe random variation over many turns.
+
+All three lead to the same result:
+
+$$
+\boxed{P(\text{a piece remains out after the opening turn})
+=\frac{3185}{7776}\approx40.96\%.}
+$$
+
+The next time you wait for a six, there is a useful probability lesson hiding in the turn: define exactly what counts as success, follow the rule until the turn is finished, and only then count the outcomes.
+
+
+## Downloads
+
+- [Download the five-page mathematical note (PDF)](Ludo_Opening_Turn_Probability.pdf).
+- [Download the complete Python experiment, including rule tests](ludo_experiment.py).
